@@ -51,29 +51,29 @@ pre, code {
 /* --- Gamer HUD Floating Badge Bar --- */
 .gamer-hud {
   position: fixed;
-  bottom: 24px;
-  right: 24px;
+  bottom: 20px;
+  right: 20px;
   z-index: 9000;
   display: flex;
   align-items: center;
   gap: 12px;
-  background: var(--game-hud-bg);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid var(--game-hud-border);
-  padding: 8px 16px;
-  border-radius: 50px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(56, 189, 248, 0.15);
+  background: rgba(11, 15, 26, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 6px 14px;
+  border-radius: 40px;
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.06);
   font-family: 'Outfit', sans-serif;
-  color: #f8fafc;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  color: #f1f5f9;
+  transition: all 0.25s ease;
   user-select: none;
 }
 
 .gamer-hud:hover {
-  transform: translateY(-3px) scale(1.02);
-  border-color: rgba(56, 189, 248, 0.6);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), 0 0 30px rgba(56, 189, 248, 0.25);
+  transform: translateY(-2px);
+  border-color: rgba(56, 189, 248, 0.35);
+  box-shadow: 0 12px 28px -4px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 .hud-avatar {
@@ -503,24 +503,21 @@ pre, code {
 
 /* --- Fun "Did You Know?" & Real-World Analogy Cards --- */
 .fun-fact-card {
-  background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.85));
-  border: 1px solid rgba(245, 158, 11, 0.35);
-  border-radius: 16px;
-  padding: 20px;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-left: 3px solid #f59e0b;
+  border-radius: 14px;
+  padding: 20px 22px;
   margin: 25px 0;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4);
 }
 
 .fun-fact-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 5px;
-  height: 100%;
-  background: linear-gradient(180deg, #f59e0b, #ec4899);
+  display: none;
 }
 
 .fun-fact-header {
@@ -531,9 +528,9 @@ pre, code {
 }
 
 .fun-fact-badge {
-  background: rgba(245, 158, 11, 0.15);
+  background: rgba(245, 158, 11, 0.1);
   color: #fbbf24;
-  border: 1px solid rgba(245, 158, 11, 0.4);
+  border: 1px solid rgba(245, 158, 11, 0.25);
   font-size: 0.72rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -545,12 +542,12 @@ pre, code {
 .fun-fact-title {
   font-size: 1.05rem;
   font-weight: 700;
-  color: #fef08a;
+  color: #f8fafc;
 }
 
 .fun-fact-body {
   font-size: 0.92rem;
-  line-height: 1.6;
+  line-height: 1.65;
   color: #cbd5e1;
 }
 
@@ -561,12 +558,14 @@ pre, code {
 
 /* --- Mini-Game Containers & Buttons --- */
 .minigame-card {
-  background: linear-gradient(145deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.85));
-  border: 2px solid rgba(99, 102, 241, 0.4);
-  border-radius: 20px;
-  padding: 26px;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(99, 102, 241, 0.25);
+  border-radius: 16px;
+  padding: 24px;
   margin: 30px 0;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 30px rgba(99, 102, 241, 0.2);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.04);
   position: relative;
 }
 
@@ -699,37 +698,39 @@ pre, code {
    EXAM MASTER VAULT & SOLVED MATH STYLING
    ========================================================================== */
 .exam-vault-container {
-  background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(30, 41, 59, 0.9));
-  border: 2px solid rgba(245, 158, 11, 0.4);
-  border-radius: 20px;
-  padding: 28px;
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  border-radius: 16px;
+  padding: 26px;
   margin: 35px 0;
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4), 0 0 25px rgba(245, 158, 11, 0.15);
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
 .vault-header {
-  margin-bottom: 22px;
+  margin-bottom: 20px;
 }
 
 .vault-badge {
   display: inline-block;
-  background: rgba(245, 158, 11, 0.15);
-  border: 1px solid #f59e0b;
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid rgba(245, 158, 11, 0.25);
   color: #fbbf24;
   font-family: 'Outfit', sans-serif;
-  font-size: 0.75rem;
-  font-weight: 800;
-  padding: 4px 12px;
-  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 6px;
   text-transform: uppercase;
-  letter-spacing: 0.8px;
+  letter-spacing: 0.6px;
   margin-bottom: 8px;
 }
 
 .vault-header h3 {
-  font-size: 1.45rem;
+  font-size: 1.35rem;
   color: #fff;
-  font-weight: 800;
+  font-weight: 700;
   margin-bottom: 6px;
 }
 
@@ -1734,6 +1735,207 @@ pre, code {
     flex: 1 1 100% !important;
   }
 }
+
+/* ==========================================================================
+   CLEAN & POLISHED MINIMALIST DESIGN SYSTEM
+   Unifies visual aesthetics, reduces visual clutter, and creates a sleek,
+   premium modern interface across all 5 lectures and the Master Portal.
+   ========================================================================== */
+
+/* 1. Crisp Canvas Background & Orb Softening */
+body {
+  background-color: #090d16 !important;
+  background-image: 
+    radial-gradient(ellipse 70% 40% at 50% -10%, rgba(56, 189, 248, 0.08), transparent 70%),
+    radial-gradient(ellipse 50% 30% at 100% 100%, rgba(99, 102, 241, 0.05), transparent 70%) !important;
+  background-attachment: fixed !important;
+  color: #f1f5f9 !important;
+  -webkit-font-smoothing: antialiased;
+}
+
+.glow-orb, .ambient-glow {
+  opacity: 0.12 !important;
+  filter: blur(140px) !important;
+}
+
+/* 2. Clean Modern Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.22);
+}
+
+/* 3. Sleek Frosted Glass Cards */
+.interactive-lab-card,
+.element-card,
+.method-card,
+.history-card,
+.function-card,
+.function-bridge-box,
+.word-visualizer-box,
+.sliderule-simulator,
+.adder-interactive-container,
+.table-container-card,
+.conversion-steps-box,
+.twos-step-box,
+.code-flow-panel,
+.visual-hardware-panel,
+.endian-column,
+.quiz-container-card,
+.exam-cheat-sheet {
+  background: rgba(15, 23, 42, 0.65) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.04) !important;
+}
+
+/* 4. Refined Navigation Active State & Controls */
+.nav-link.active {
+  background: rgba(255, 255, 255, 0.06) !important;
+  color: #38bdf8 !important;
+  box-shadow: none !important;
+}
+.nav-link.active::after {
+  background: #38bdf8 !important;
+  box-shadow: 0 0 6px rgba(56, 189, 248, 0.6) !important;
+}
+
+.dropdown-toggle {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  color: #e2e8f0 !important;
+  border-radius: 8px !important;
+}
+.dropdown-toggle:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.16) !important;
+}
+
+.dropdown-menu {
+  background: rgba(11, 15, 26, 0.96) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 16px 36px -4px rgba(0, 0, 0, 0.7) !important;
+  border-radius: 12px !important;
+}
+
+/* 5. Clean Buttons & Interactive Switches */
+.action-btn {
+  border-radius: 8px !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+  font-weight: 600 !important;
+  transition: all 0.2s ease !important;
+}
+.action-btn:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.18) !important;
+}
+
+.primary-btn {
+  background: linear-gradient(135deg, #0284c7, #0ea5e9) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.25) !important;
+  color: #ffffff !important;
+}
+.primary-btn:hover {
+  background: linear-gradient(135deg, #0369a1, #0284c7) !important;
+  box-shadow: 0 6px 16px rgba(14, 165, 233, 0.35) !important;
+}
+
+.toggle-group {
+  background: rgba(0, 0, 0, 0.35) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  padding: 3px !important;
+  border-radius: 10px !important;
+}
+.toggle-btn {
+  border-radius: 7px !important;
+  font-size: 0.82rem !important;
+  color: #94a3b8 !important;
+  transition: all 0.2s ease !important;
+}
+.toggle-btn.active {
+  background: #0284c7 !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 8px rgba(2, 132, 199, 0.35) !important;
+}
+
+/* 6. Clean Typography & Heading Hierarchy */
+h1, h2, h3, h4 {
+  color: #ffffff !important;
+  letter-spacing: -0.3px !important;
+}
+
+.section-tag {
+  background: rgba(56, 189, 248, 0.08) !important;
+  border: 1px solid rgba(56, 189, 248, 0.25) !important;
+  color: #38bdf8 !important;
+  font-size: 0.72rem !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.6px !important;
+  padding: 3px 10px !important;
+  border-radius: 20px !important;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #38bdf8 0%, #818cf8 50%, #c084fc 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+/* 7. Clean Form Inputs & Code Blocks */
+input[type="text"], input[type="number"], select {
+  background: rgba(15, 23, 42, 0.8) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 8px !important;
+  color: #38bdf8 !important;
+  padding: 6px 12px !important;
+}
+input[type="text"]:focus, input[type="number"]:focus, select:focus {
+  border-color: #38bdf8 !important;
+  outline: none !important;
+  box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.2) !important;
+}
+
+pre, code {
+  font-family: 'Fira Code', monospace !important;
+}
+pre {
+  background: #080c16 !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  border-radius: 10px !important;
+}
+
+/* 8. Clean Table Rows */
+.styled-table th {
+  background: rgba(255, 255, 255, 0.02) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #94a3b8 !important;
+  font-weight: 600 !important;
+  font-size: 0.8rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+}
+.styled-table td {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05) !important;
+}
+.styled-table tr:hover td {
+  background: rgba(255, 255, 255, 0.02) !important;
+}
+
 
 
 
