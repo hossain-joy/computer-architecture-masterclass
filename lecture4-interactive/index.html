@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAO Lecture 4: Data Representation - Interactive Masterclass</title>
+  <meta name="description" content="Computer Architecture and Organization (CAO) Lecture 4: Data Representation - Interactive visual platform covering Binary, Octal, Hexadecimal conversions, 2's Complement, ASCII, Full Adders, and Universal Gates.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Hind+Siliguri:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../shared-gamification.css">
+</head>
+<body>
+  <!-- Ambient Background Glows -->
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
+  <div class="glow-orb orb-3"></div>
+
+  <!-- Navigation Bar -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="brand">
+        <a href="../index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 0.75rem;">
+          <span class="brand-badge">CAO L-04</span>
+          <div class="brand-title">
+            <span class="main-title">Data Representation</span>
+            <span class="sub-title" data-i18n="nav_brand_sub">DIU CSE • John P. Hayes</span>
+          </div>
+        </a>
+      </div>
+      <nav class="nav-links" id="navLinks">
+        <a href="#number-converter" class="nav-link" data-i18n="nav_converter">Base Converter</a>
+        <a href="#twos-complement" class="nav-link" data-i18n="nav_twos">2's Complement</a>
+        <a href="#ascii-explorer" class="nav-link" data-i18n="nav_ascii">ASCII & Text</a>
+        <a href="#adders-lab" class="nav-link" data-i18n="nav_adders">Decomposed Adder</a>
+        <a href="#universal-gates" class="nav-link" data-i18n="nav_universal">Universal Gates</a>
+        <a href="#quiz-zone" class="nav-link" data-i18n="nav_quiz">Exam Quiz</a>
+      </nav>
+      <div class="nav-actions">
+        <!-- Language Switcher Toggle -->
+        <div class="lang-switch-group" id="langSwitchGroup">
+          <button id="langBnBtn" class="lang-btn active" data-lang="bn">বাংলা</button>
+          <button id="langEnBtn" class="lang-btn" data-lang="en">English</button>
+        </div>
+
+        <button id="soundToggleBtn" class="action-btn" title="Toggle Sound FX">
+          <span class="icon">🔊</span>
+        </button>
+
+        <!-- Lecture Switcher Dropdown (Replaces static L-01, L-02, etc.) -->
+        <div class="lecture-dropdown" id="lectureDropdown">
+          <button class="action-btn dropdown-toggle" id="lectureDropdownBtn" type="button" aria-haspopup="true" aria-expanded="false" title="Switch Lecture">
+            <span class="icon">📚</span>
+            <span class="dropdown-label">Lectures</span>
+            <span class="dropdown-arrow">▾</span>
+          </button>
+          <div class="dropdown-menu" id="lectureDropdownMenu">
+            <a href="../index.html" class="dropdown-item">
+              <span class="dropdown-badge b-portal">🏠 Portal</span>
+              <span class="dropdown-item-title">Course Overview & Home</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="../lecture1-interactive/index.html" class="dropdown-item">
+              <span class="dropdown-badge b-l1">L-01</span>
+              <span class="dropdown-item-title">Intro & Architecture</span>
+            </a>
+            <a href="../lecture2-interactive/index.html" class="dropdown-item">
+              <span class="dropdown-badge b-l2">L-02</span>
+              <span class="dropdown-item-title">Evolution of Computers</span>
+            </a>
+            <a href="../lecture3-interactive/index.html" class="dropdown-item">
+              <span class="dropdown-badge b-l3">L-03</span>
+              <span class="dropdown-item-title">Design Methodology</span>
+            </a>
+            <a href="../lecture4-interactive/index.html" class="dropdown-item current-lecture">
+              <span class="dropdown-badge b-l4">L-04</span>
+              <span class="dropdown-item-title">Data Representation</span>
+              <span class="current-dot"></span>
+            </a>
+            <a href="../lecture5-interactive/index.html" class="dropdown-item">
+              <span class="dropdown-badge b-l5">L-05</span>
+              <span class="dropdown-item-title">Processor Basics</span>
+            </a>
+          </div>
+        </div>
+
+        <a href="#quiz-zone" class="action-btn primary-btn quiz-nav-btn">
+          <span data-i18n="nav_take_test">টেস্ট দাও</span>
+        </a>
+
+        <!-- Mobile Hamburger Toggle Button -->
+        <button class="nav-toggle-btn" id="navToggleBtn" type="button" aria-label="Toggle Navigation Menu" aria-expanded="false">
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-badge">
+        <span class="badge-dot"></span> <span data-i18n="hero_badge">লেকচার ৪ এর সম্পূর্ণ ইন্টারেক্টিভ গাইড</span>
+      </div>
+      <h1 class="hero-title" data-i18n="hero_title">
+        কম্পিউটারে ডেটা উপস্থাপন (Data Representation)<br>
+        <span class="gradient-text">সংখ্যা রূপান্তর, ২'স কমপ্লিমেন্ট, আসকি ও ফুল অ্যাডার</span>
+      </h1>
+      <p class="hero-subtitle" data-i18n="hero_subtitle">
+        দশমিক, বাইনারি, অক্টাল ও হেক্সাডেসিমেলের রূপান্তর থেকে শুরু করে ঋণাত্মক সংখ্যার ২'স কমপ্লিমেন্ট, আসকি কোড 
+        এবং ২টি হাফ অ্যাডার দিয়ে ফুল অ্যাডার তৈরির সম্পূর্ণ সমাধান দেখে নাও লাইভ সিমুলেটরে!
+      </p>
+
+      <div class="hero-stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">🔢</div>
+          <div class="stat-data">
+            <span class="stat-number">2ⁿ Codes</span>
+            <span class="stat-label" data-i18n="stat_binary">বাইনারি সংখ্যা পদ্ধতি</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">➖</div>
+          <div class="stat-data">
+            <span class="stat-number">2's Complement</span>
+            <span class="stat-label" data-i18n="stat_twos">ঋণাত্মক সংখ্যার ৩ ধাপ</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🔤</div>
+          <div class="stat-data">
+            <span class="stat-number">ASCII & EBCDIC</span>
+            <span class="stat-label" data-i18n="stat_ascii">অক্ষর ও ক্যারেক্টার কোডিং</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">⚙️</div>
+          <div class="stat-data">
+            <span class="stat-number">2 HA + 1 OR</span>
+            <span class="stat-label" data-i18n="stat_adder">ডিকম্পোজড ফুল অ্যাডার</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: Base Conversion Lab -->
+    <section id="number-converter" class="content-section">
+      <div class="section-header">
+        <div class="section-tag" data-i18n="sec1_tag">মডিউল ১ • স্লাইড ৫ থেকে ১০</div>
+        <h2 data-i18n="sec1_title">নাম্বার সিস্টেম কনভার্টার ল্যাব (Base Conversion Lab)</h2>
+        <p class="section-desc" data-i18n="sec1_desc">
+          যে কোনো সংখ্যা টাইপ করো অথবা স্লাইডের উদাহরণগুলো (যেমন: 13, 125, 150) এক ক্লিকে লোড করে স্টেপ-বাই-স্টেপ ভাগ ও রূপান্তর দেখো!
+        </p>
+      </div>
+
+      <div class="interactive-lab-card" id="converter-lab">
+        <div class="converter-input-bar">
+          <label for="decimalInput" data-i18n="conv_label">দশমিক সংখ্যা (Decimal):</label>
+          <input type="number" id="decimalInput" value="125" min="0" max="65535">
+          <div class="preset-pills">
+            <button class="pill-btn" data-val="13">13 (Slide 7)</button>
+            <button class="pill-btn active" data-val="125">125 (Slide 8)</button>
+            <button class="pill-btn" data-val="150">150 (Slide 11)</button>
+          </div>
+        </div>
+
+        <!-- 4 Bases Grid Display -->
+        <div class="bases-grid">
+          <div class="base-card dec-card">
+            <span class="base-tag">DECIMAL (Base 10)</span>
+            <span class="base-value" id="valDec">125</span>
+            <span class="base-formula">1×10² + 2×10¹ + 5×10⁰</span>
+          </div>
+
+          <div class="base-card bin-card">
+            <span class="base-tag">BINARY (Base 2)</span>
+            <span class="base-value" id="valBin">01111101</span>
+            <span class="base-formula" id="binBitGrouping">0111 1101</span>
+          </div>
+
+          <div class="base-card oct-card">
+            <span class="base-tag">OCTAL (Base 8)</span>
+            <span class="base-value" id="valOct">175</span>
+            <span class="base-formula" id="octGrouping">1 7 5 (8¹⁵ - 5, 8¹ - 7)</span>
+          </div>
+
+          <div class="base-card hex-card">
+            <span class="base-tag">HEXADECIMAL (Base 16)</span>
+            <span class="base-value" id="valHex">7D</span>
+            <span class="base-formula" id="hexGrouping">7 D (D = 13)</span>
+          </div>
+        </div>
+
+        <!-- Step-by-step division display -->
+        <div class="conversion-steps-box">
+          <h4 data-i18n="conv_steps_title">🔍 স্লাইড ৮ অনুযায়ী রূপান্তরের ভাগ প্রক্রিয়া:</h4>
+          <div class="steps-two-col">
+            <div class="step-col" id="octalSteps">
+              <strong>Decimal 125 ➔ Octal (Divide by 8):</strong>
+              <div class="division-table">
+                125 ÷ 8 = 15 &nbsp; (Remainder 5) ➔ LSB<br>
+                15 ÷ 8 = 1 &nbsp;&nbsp;&nbsp;&nbsp; (Remainder 7)<br>
+                1 ÷ 8 = 0 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (Remainder 1) ➔ MSB<br>
+                <strong>Result: (175)₈</strong>
+              </div>
+            </div>
+            <div class="step-col" id="hexSteps">
+              <strong>Decimal 125 ➔ Hexadecimal (Divide by 16):</strong>
+              <div class="division-table">
+                125 ÷ 16 = 7 &nbsp; (Remainder 13 = D) ➔ LSB<br>
+                7 ÷ 16 = 0 &nbsp;&nbsp;&nbsp;&nbsp; (Remainder 7) ➔ MSB<br><br>
+                <strong>Result: (7D)₁₆</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mini-Game: Binary Ninja 30-Second Speed Run -->
+      <div class="minigame-card" id="binaryNinjaGame">
+        <div class="minigame-header">
+          <div class="minigame-badge" data-i18n="ninja_badge">🥷 Mini-Game • Binary Ninja</div>
+          <div class="minigame-score"><span data-i18n="ninja_time_label">Time:</span> <span id="ninjaTimer">30</span>s | <span data-i18n="ninja_score_label">Score:</span> <span id="ninjaScore">0</span></div>
+        </div>
+        <h3 style="color:#f8fafc; margin-bottom:8px;" data-i18n="ninja_title">বাইনারি নিনজা: ৩০ সেকেন্ড স্পিড রান (Binary Ninja Speed Run)</h3>
+        <p style="color:#cbd5e1; font-size:0.92rem; margin-bottom:16px;" data-i18n="ninja_desc">
+          লক্ষ্য ডেসিমেল সংখ্যার সাথে মেলাতে নিচের ৮টি বিট সুইচ ($128, 64, 32, 16, 8, 4, 2, 1$) ক্লিক করে ON/OFF করো! 
+          সময় শেষ হওয়ার আগে যত বেশি পারো রূপান্তর সম্পন্ন করো! ৩টি সঠিকভাবে মেলালে <strong>Binary Ninja</strong> ব্যাজ আনলক হবে!
+        </p>
+
+        <div class="ninja-arena">
+          <div class="ninja-target-row">
+            <div class="target-box">
+              <span class="target-lbl" data-i18n="ninja_target_label">TARGET DECIMAL</span>
+              <span class="target-num" id="ninjaTargetNum">45</span>
+            </div>
+            <div class="current-box">
+              <span class="target-lbl" data-i18n="ninja_current_label">YOUR BINARY SUM</span>
+              <span class="target-num" id="ninjaCurrentSum">0</span>
+            </div>
+          </div>
+
+          <div class="ninja-switches-grid" id="ninjaSwitchesGrid">
+            <!-- 8 Bit toggle buttons -->
+          </div>
+
+          <div class="ninja-actions-row" style="margin-top: 18px; display: flex; gap: 12px; justify-content: center;">
+            <button id="btnStartNinja" class="action-btn primary-btn" data-i18n="btn_ninja_start">🥷 Start Speed Run!</button>
+          </div>
+
+          <div class="ninja-feedback" id="ninjaFeedback" style="margin-top: 14px; text-align: center; font-size: 0.95rem; font-weight: 600; min-height: 24px;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: Negative Number Representation & 2's Complement -->
+    <section id="twos-complement" class="content-section">
+      <div class="section-header">
+        <div class="section-tag" data-i18n="sec2_tag">মডিউল ২ • স্লাইড ১৯ ও ২০</div>
+        <h2 data-i18n="sec2_title">ঋণাত্মক সংখ্যা ও ২'স কমপ্লিমেন্ট (2's Complement)</h2>
+        <p class="section-desc" data-i18n="sec2_desc">
+          কম্পিউটার কোনো বিয়োগের সার্কিট ছাড়াই ২'স কমপ্লিমেন্টের সাহায্যে যোগের মাধ্যমেই বিয়োগ করে ফেলে!
+        </p>
+      </div>
+
+      <!-- 3 Methods of Negative Numbers (Slide 19) -->
+      <div class="three-methods-grid">
+        <div class="method-card">
+          <span class="method-num">1</span>
+          <h3>Sign and Magnitude</h3>
+          <p data-i18n="sm_desc">সবচেয়ে বামের বিট (MSB) হলো চিহ্নের বিট (০ হলে ধনাত্মক, ১ হলে ঋণাত্মক) এবং বাকি বিটগুলো সংখ্যার পরম মান।</p>
+        </div>
+
+        <div class="method-card">
+          <span class="method-num">2</span>
+          <h3>1's Complement</h3>
+          <p data-i18n="ones_desc">ধনাত্মক বাইনারি সংখ্যার প্রতিটি ০-কে ১ এবং প্রতিটি ১-কে ০-এ উল্টে দিলে ১'স কমপ্লিমেন্ট পাওয়া যায়।</p>
+        </div>
+
+        <div class="method-card featured-card">
+          <span class="method-num">3</span>
+          <h3 data-i18n="twos_method_title">2's Complement (আদর্শ পদ্ধতি)</h3>
+          <p data-i18n="twos_desc">১'স কমপ্লিমেন্টের সাথে ১ যোগ করলেই ২'স কমপ্লিমেন্ট তৈরি হয়। আধুনিক সব কম্পিউটার এটিই ব্যবহার করে।</p>
+        </div>
+      </div>
+
+      <!-- Interactive 2's Complement Calculator (Slide 20) -->
+      <div class="interactive-lab-card" id="twos-lab">
+        <div class="lab-header">
+          <div>
+            <span class="badge-status highlight-orange" data-i18n="twos_badge">স্লাইড ৫ ও ২০ এর ৩-ধাপের নিয়ম</span>
+            <h3 data-i18n="twos_title">⚡ ঋণাত্মক সংখ্যার ২'স কমপ্লিমেন্ট লাইভ ক্যালকুলেটর</h3>
+            <p data-i18n="twos_desc_head">যে কোনো ঋণাত্মক দশমিক সংখ্যা নির্বাচন করো (যেমন: -1, -4, -9):</p>
+          </div>
+          <div class="twos-presets">
+            <button class="pill-btn" data-val="-1">-1</button>
+            <button class="pill-btn" data-val="-4">-4</button>
+            <button class="pill-btn active" data-val="-9">-9 (Slide 5)</button>
+            <button class="pill-btn" data-val="-13">-13</button>
+          </div>
+        </div>
+
+        <div class="twos-step-walkthrough">
+          <!-- Step 1 -->
+          <div class="twos-step-box">
+            <div class="step-badge" data-i18n="twos_s1_title">ধাপ ১: সমতুল্য ধনাত্মক বাইনারি মান নির্ণয় (+9)</div>
+            <div class="bit-blocks" id="step1Bits">
+              <span class="bit-cell">0</span><span class="bit-cell">0</span><span class="bit-cell">0</span><span class="bit-cell">0</span>
+              <span class="bit-cell">1</span><span class="bit-cell">0</span><span class="bit-cell">0</span><span class="bit-cell">1</span>
+            </div>
+            <span class="step-sub" id="twosStep1Sub">8-bit format: +9 = 00001001</span>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="twos-step-box">
+            <div class="step-badge" data-i18n="twos_s2_title">ধাপ ২: বিটগুলো উল্টে ১'স কমপ্লিমেন্ট করা (Invert all bits)</div>
+            <div class="bit-blocks inverted" id="step2Bits">
+              <span class="bit-cell">1</span><span class="bit-cell">1</span><span class="bit-cell">1</span><span class="bit-cell">1</span>
+              <span class="bit-cell">0</span><span class="bit-cell">1</span><span class="bit-cell">1</span><span class="bit-cell">0</span>
+            </div>
+            <span class="step-sub">1's Complement = 11110110</span>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="twos-step-box highlight-step">
+            <div class="step-badge" data-i18n="twos_s3_title">ধাপ ৩: ১ যোগ করে ২'স কমপ্লিমেন্ট লাভ (+1)</div>
+            <div class="bit-blocks result" id="step3Bits">
+              <span class="bit-cell msb-sign">1</span><span class="bit-cell">1</span><span class="bit-cell">1</span><span class="bit-cell">1</span>
+              <span class="bit-cell">0</span><span class="bit-cell">1</span><span class="bit-cell">1</span><span class="bit-cell">1</span>
+            </div>
+            <span class="step-sub" id="twosStep3Sub"><strong>2's Complement of -9 = 11110111</strong></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: ASCII & Character Encoding -->
+    <section id="ascii-explorer" class="content-section">
+      <div class="section-header">
+        <div class="section-tag" data-i18n="sec3_tag">মডিউল ৩ • স্লাইড ১১ ও ২১</div>
+        <h2 data-i18n="sec3_title">ASCII কোডিং ও ক্যারেক্টার এক্সপ্লোরার (Character Encoding)</h2>
+        <p class="section-desc" data-i18n="sec3_desc">
+          কম্পিউটার কীভাবে কিবোর্ডের অক্ষরকে বাইনারিতে চেনে এবং পরীক্ষার বহুল জিজ্ঞাসিত প্রশ্নগুলোর সমাধান।
+        </p>
+      </div>
+
+      <div class="interactive-lab-card" id="ascii-lab">
+        <div class="lab-header">
+          <div>
+            <span class="badge-status highlight-indigo" data-i18n="ascii_badge">লাইভ ASCII ডিকোডার</span>
+            <h3 data-i18n="ascii_title">🔤 ক্যারেক্টার টু বাইনারি লাইভ লুকআপ</h3>
+            <p data-i18n="ascii_desc">একটি অক্ষর লিখুন অথবা নিচের বাটনে ক্লিক করে এর ডেসিমেল ও ৭-বিট/৮-বিট কোড দেখুন:</p>
+          </div>
+          <div class="ascii-input-wrapper">
+            <label for="charInput" data-i18n="ascii_label">অক্ষর:</label>
+            <input type="text" id="charInput" maxlength="1" value="B">
+          </div>
+        </div>
+
+        <div class="ascii-result-cards">
+          <div class="ascii-card">
+            <span class="a-label">Character</span>
+            <strong class="a-val" id="dispChar">B</strong>
+          </div>
+          <div class="ascii-card">
+            <span class="a-label">Decimal Value</span>
+            <strong class="a-val" id="dispDec">66</strong>
+          </div>
+          <div class="ascii-card">
+            <span class="a-label">7-bit Binary (ASCII)</span>
+            <strong class="a-val" id="dispBin7">1000010</strong>
+          </div>
+          <div class="ascii-card">
+            <span class="a-label">8-bit Binary</span>
+            <strong class="a-val" id="dispBin8">01000010</strong>
+          </div>
+        </div>
+
+        <!-- Solved Exam Question (Slide 11) -->
+        <div class="exam-problem-box">
+          <div class="ep-header">
+            <span class="ep-badge" data-i18n="ep_badge">পরীক্ষার প্রশ্ন সমাধান (Slide 11, Question 2)</span>
+            <h4>"If the decimal value of 'B' is 66, find the decimal and binary values of 'G' and 'I'?"</h4>
+          </div>
+          <div class="ep-solution-grid">
+            <div class="sol-item" data-i18n="sol_g">
+              <strong>অক্ষর 'G':</strong><br>
+              'B'-এর পর 'G' হলো ৫ম অক্ষর (C, D, E, F, G ➔ +5)।<br>
+              Decimal = <code>66 + 5 = 71</code><br>
+              Binary = <code>01000111</code>
+            </div>
+            <div class="sol-item" data-i18n="sol_i">
+              <strong>অক্ষর 'I':</strong><br>
+              'B'-এর পর 'I' হলো ৭ম অক্ষর (H, I ➔ +7)।<br>
+              Decimal = <code>66 + 7 = 73</code><br>
+              Binary = <code>01001001</code>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: Decomposed Full Adder & Ripple Carry -->
+    <section id="adders-lab" class="content-section">
+      <div class="section-header">
+        <div class="section-tag" data-i18n="sec4_tag">মডিউল ৪ • স্লাইড ১২ থেকে ১৮</div>
+        <h2 data-i18n="sec4_title">ডিকম্পোজড ফুল অ্যাডার ও রিপল ক্যারি (Decomposed Full Adder)</h2>
+        <p class="section-desc" data-i18n="sec4_desc">
+          কীভাবে ২টি হাফ অ্যাডার এবং ১টি অর গেট (2 HA + 1 OR) জুড়ে একটি পূর্ণাঙ্গ ফুল অ্যাডার গঠিত হয়!
+        </p>
+      </div>
+
+      <!-- Decomposed Full Adder Architecture (Slide 17) -->
+      <div class="interactive-lab-card" id="decomposed-adder-lab">
+        <div class="lab-header">
+          <div>
+            <span class="badge-status highlight-cyan" data-i18n="decomp_badge">স্লাইড ১৭ এর সুপারহিট ডায়াগ্রাম</span>
+            <h3 data-i18n="decomp_title">🧱 ২টি হাফ অ্যাডার দিয়ে ফুল অ্যাডার তৈরি (2 HA + 1 OR Gate)</h3>
+            <p data-i18n="decomp_desc">
+              $X_i$, $Y_i$ এবং $C_i$ ইনপুট পরিবর্তন করে দেখো কীভাবে প্রথম হাফ অ্যাডার আংশিক যোগ করে এবং দ্বিতীয় হাফ অ্যাডার ও OR গেট চূড়ান্ত Sum ($S_i$) ও Carry ($C_{i+1}$) তৈরি করে!
+            </p>
+          </div>
+        </div>
+
+        <div class="decomposed-circuit-wrapper">
+          <div class="decomp-row">
+            <!-- HA 1 -->
+            <div class="ha-block ha-1" id="ha1Block">
+              <span class="ha-title">Half Adder 1</span>
+              <div class="ha-signals">
+                <span>Inputs: xᵢ, yᵢ</span>
+                <span class="ha-out">Sum s₁ = xᵢ ⊕ yᵢ</span>
+                <span class="ha-out">Carry c₁ = xᵢ · yᵢ</span>
+              </div>
+            </div>
+
+            <div class="decomp-arrow">➔ s₁</div>
+
+            <!-- HA 2 -->
+            <div class="ha-block ha-2" id="ha2Block">
+              <span class="ha-title">Half Adder 2</span>
+              <div class="ha-signals">
+                <span>Inputs: s₁, cᵢ</span>
+                <span class="ha-out highlight-sum">Final Sum Sᵢ = s₁ ⊕ cᵢ</span>
+                <span class="ha-out">Carry c₂ = s₁ · cᵢ</span>
+              </div>
+            </div>
+
+            <div class="decomp-arrow">➔ c₁, c₂</div>
+
+            <!-- OR Gate -->
+            <div class="or-block" id="orBlock">
+              <span class="ha-title">OR Gate</span>
+              <div class="ha-signals">
+                <span>Inputs: c₁, c₂</span>
+                <span class="ha-out highlight-carry">Final Carry Cᵢ₊₁ = c₁ + c₂</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ripple Carry Adder Delay Formula (Slide 18) -->
+        <div class="ripple-delay-banner">
+          <span class="banner-icon">⏱️</span>
+          <div>
+            <strong data-i18n="ripple_delay_title">রিপল ক্যারি অ্যাডার ও সময়ের বিলম্ব (Slide 18):</strong><br>
+            <span data-i18n="ripple_delay_body">একটি n-বিট রিপল ক্যারি অ্যাডারে প্রথম বিটের ক্যারি পরবর্তী বিটে গড়াতে গড়াতে যায় (Ripples through stages)। তাই ফাইনাল ক্যারি পেতে <code>(n - 1) × Δt</code> এবং সম্পূর্ণ যোগফল পেতে <code>n × Δt</code> সময় বিলম্ব ঘটে।</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: Universal Gates -->
+    <section id="universal-gates" class="content-section">
+      <div class="section-header">
+        <div class="section-tag" data-i18n="sec5_tag">মডিউল ৫ • স্লাইড ২২ ও ২৩</div>
+        <h2 data-i18n="sec5_title">ইউনিভার্সাল গেট ও লজিক বাস্তবায়ন (Universal Gates)</h2>
+        <p class="section-desc" data-i18n="sec5_desc">
+          কেন NAND এবং NOR-কে ইউনিভার্সাল গেট বলা হয়? যে কোনো ডিজিটাল সার্কিট শুধুমাত্র NAND গেট দিয়ে কীভাবে বানানো যায় তা দেখে নাও।
+        </p>
+      </div>
+
+      <div class="universal-gates-grid">
+        <div class="univ-card">
+          <div class="u-icon">⚡</div>
+          <h3>Functionally Complete Sets</h3>
+          <p data-i18n="func_complete_desc">যে গেটগুলোর সাহায্যে পৃথিবীর যেকোনো বুলিয়ান ফাংশন প্রকাশ করা যায়, তাদের Functionally Complete Set বলে:</p>
+          <ul class="u-list">
+            <li><code>{ +, *, ' }</code> ➔ OR, AND, NOT</li>
+            <li><code>{ +, ' }</code> ➔ OR, NOT</li>
+            <li><code>{ *, ' }</code> ➔ AND, NOT</li>
+          </ul>
+        </div>
+
+        <div class="univ-card featured-card">
+          <div class="u-icon">🏆</div>
+          <h3>Universal Gate: NAND & NOR</h3>
+          <p data-i18n="univ_gate_desc">NAND এবং NOR একাই যথেষ্ট! শুধুমাত্র NAND গেট জুড়েই NOT, AND এবং OR গেট তৈরি করা যায়:</p>
+          <div class="nand-transforms">
+            <div class="n-trans"><strong>NOT A:</strong> <code>A NAND A</code></div>
+            <div class="n-trans"><strong>A AND B:</strong> <code>(A NAND B) NAND (A NAND B)</code></div>
+            <div class="n-trans"><strong>A OR B:</strong> <code>(A NAND A) NAND (B NAND B)</code></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: Exam Quiz & Mastery Zone -->
+    <section id="quiz-zone" class="content-section">
+      <div class="section-header">
+        <div class="section-tag" data-i18n="sec6_tag">পরীক্ষা প্রস্তুতি • কুইজ জোন</div>
+        <h2 data-i18n="sec6_title">লেকচার ৪ এর স্ব-মূল্যায়ন টেস্ট (Lecture 4 Self Quiz)</h2>
+        <p class="section-desc" data-i18n="sec6_desc">
+          লেকচার ৪ এর বাইনারি রূপান্তর, ২'স কমপ্লিমেন্ট, আসকি কোড এবং ফুল অ্যাডার সম্পর্কে নিজের জ্ঞান যাচাই করে নাও!
+        </p>
+      </div>
+
+      <div class="quiz-container-card">
+        <div class="quiz-progress-bar">
+          <div class="progress-fill" id="quizProgressFill" style="width: 20%;"></div>
+        </div>
+
+        <div class="quiz-card-content" id="quizCardContent">
+          <div class="quiz-question-header">
+            <span class="question-number" id="questionNumberBadge">Question 1 / 5</span>
+            <span class="score-badge"><span data-i18n="quiz_score_prefix">স্কোর:</span> <strong id="scoreBadge">0</strong> / 5</span>
+          </div>
+
+          <h3 class="quiz-question-text" id="quizQuestionText"></h3>
+          <div class="quiz-options-list" id="quizOptionsList"></div>
+
+          <div class="quiz-explanation-box" id="quizExplanationBox">
+            <div class="exp-title" id="expTitle">Explanation:</div>
+            <div class="exp-body" id="expBody"></div>
+          </div>
+        </div>
+
+        <div class="quiz-footer">
+          <button id="nextQuestionBtn" class="action-btn" disabled data-i18n="btn_next_q">পরবর্তী প্রশ্ন ➡️</button>
+        </div>
+      </div>
+
+      <!-- Quick Summary Card for Exam Night -->
+      <div class="exam-cheat-sheet">
+        <div class="cheat-header">
+          <span class="icon">⚡</span>
+          <h3 data-i18n="cheat_title">লেকচার ৪ এর ১০ মিনিটের কুইক রিভিশন সারাংশ (Exam Night Sheet)</h3>
+        </div>
+        <div class="cheat-grid">
+          <div class="cheat-item" data-i18n="cheat_l4_1">
+            <strong>2ⁿ Codes:</strong> n-বিট দিয়ে ২ⁿটি ভিন্ন কোড সম্ভব • ৭-বিট দিয়ে ১২৮টি (ASCII), ৮-বিট দিয়ে ২৫৬টি।
+          </div>
+          <div class="cheat-item" data-i18n="cheat_l4_2">
+            <strong>2's Complement:</strong> ঋণাত্মক বাইনারি বের করার নিয়ম = Positive binary ➔ Invert bits (1's comp) ➔ Add 1। উদাহরণ: -9 = 11110111।
+          </div>
+          <div class="cheat-item" data-i18n="cheat_l4_3">
+            <strong>Decomposed Full Adder:</strong> ১টি Full Adder তৈরি করতে ২টি Half Adder এবং ১টি OR গেট (2 HA + 1 OR) লাগে।
+          </div>
+          <div class="cheat-item" data-i18n="cheat_l4_4">
+            <strong>ASCII Calculation:</strong> 'B' = 66 হলে 'G' = 71 (01000111) এবং 'I' = 73 (01001001)।
+          </div>
+          <div class="cheat-item" data-i18n="cheat_l4_5">
+            <strong>Octal to Hex:</strong> Octal (175)₈ = Binary (001 111 101)₂ = Hex (7D)₁₆।
+          </div>
+          <div class="cheat-item" data-i18n="cheat_l4_6">
+            <strong>Universal Gates:</strong> NAND এবং NOR হলো ইউনিভার্সাল গেট কারণ এদের দিয়ে যেকোনো লজিক গেট তৈরি সম্ভব।
+          </div>
+        </div>
+      </div>
+
+      <!-- EXAM CORNER: SOLVED MATH & HIGH-YIELD BLUEPRINTS -->
+      <div class="exam-vault-container" id="examVaultL4">
+        <div class="vault-header">
+          <span class="vault-badge" data-i18n="vault_badge">🎯 EXAM MASTER VAULT • DIU CSE</span>
+          <h3 data-i18n="l4_math_title">পরীক্ষার গাণিতিক সমস্যা ও মডেল সমাধান (Exam Math & Model Answers)</h3>
+          <p data-i18n="l4_math_sub">২'স কমপ্লিমেন্ট যোগের মাধ্যমে বিয়োগ, ASCII কোড গাণিতিক বিস্তার এবং ডিকম্পোজড ফুল অ্যাডার:</p>
+        </div>
+
+        <div class="math-problems-grid">
+          <!-- Problem 1: 2's Complement Subtraction -->
+          <div class="math-card">
+            <div class="problem-tag" data-i18n="l4_p1_tag">Math Problem 1 • Bloom's Level 3 (Apply)</div>
+            <h4 data-i18n="l4_p1_title">২'স কমপ্লিমেন্ট যোগের মাধ্যমে বিয়োগ ($7 - 4 = +3$)</h4>
+            <div class="problem-statement" data-i18n="l4_p1_statement">
+              <strong>প্রশ্ন:</strong> ৮-বিট সাইনড বাইনারি রেজিস্টার ব্যবহার করে ২'স কমপ্লিমেন্ট যোগের মাধ্যমে $7 - 4$ এর মান নির্ণয় করো। কেরি বিটের কী হবে এবং ওভারফ্লো ঘটেছে কি না ব্যাখ্যা করো।
+            </div>
+            <div class="problem-solution">
+              <div class="step-line" data-i18n="l4_p1_s1"><strong>ধাপ ১:</strong> $+7$ এর ৮-বিট বাইনারি = <code>00000111</code></div>
+              <div class="step-line" data-i18n="l4_p1_s2"><strong>ধাপ ২:</strong> $+4$ এর ৮-বিট বাইনারি = <code>00000100</code></div>
+              <div class="step-line" data-i18n="l4_p1_s3"><strong>ধাপ ৩:</strong> $-4$ নির্ণয় (২'স কমপ্লিমেন্ট):</div>
+              <div class="step-line" data-i18n="l4_p1_s4">↳ ১'স কমপ্লিমেন্ট (বিট উল্টে): <code>11111011</code></div>
+              <div class="step-line" data-i18n="l4_p1_s5">↳ ১ যোগ করে: <code>11111011 + 1 = 11111100</code> ($-4_{10}$)</div>
+              <div class="step-line" data-i18n="l4_p1_s6"><strong>ধাপ ৪:</strong> যোগফল নির্ণয় ($+7 + (-4)$):</div>
+              <div class="step-line"><code>&nbsp;&nbsp;00000111&nbsp;&nbsp;(+7)</code></div>
+              <div class="step-line"><code>+ 11111100&nbsp;&nbsp;(-4)</code></div>
+              <div class="step-line"><code>──────────</code></div>
+              <div class="step-line"><code>(1)00000011&nbsp;&nbsp;(+3)</code></div>
+              <div class="step-line" data-i18n="l4_p1_s7"><strong>ধাপ ৫: এন্ড-অ্যারাউন্ড ক্যারি (End-around Carry):</strong> ৯ম বিটের ক্যারি <code>1</code> টিকে ২'স কমপ্লিমেন্ট পদ্ধতিতে <strong>বাতিল (Discarded)</strong> করা হয়।</div>
+              <div class="solution-highlight" data-i18n="l4_p1_res">
+                ✅ <strong>ফলাফল:</strong> অবশিষ্ট ৮-বিট = <code>00000011</code> ($+3_{10}$)। বিপরীত সাইনের সংখ্যা যোগ করায় ওভারফ্লো ঘটার সম্ভাবনা নেই (No Overflow)।
+              </div>
+            </div>
+          </div>
+
+          <!-- Problem 2: ASCII Character Arithmetic -->
+          <div class="math-card">
+            <div class="problem-tag" data-i18n="l4_p2_tag">Math Problem 2 • Bloom's Level 3 (Apply)</div>
+            <h4 data-i18n="l4_p2_title">ASCII কোডের ভিত্তিতে অফসেট ও ক্যারেক্টার বিট ম্যাথমেটিক্স</h4>
+            <div class="problem-statement" data-i18n="l4_p2_statement">
+              <strong>প্রশ্ন:</strong> পরীক্ষায় দেওয়া আছে ASCII টেবিলে অক্ষর <code>'B'</code> এর মান ডেসিমেল <code>66</code> ($01000010_2$)। কোনো টেবিল না দেখে অফসেট হিসাব করে <code>'G'</code> এবং <code>'I'</code>-এর ৭-বিট বাইনারি ও হেক্সাডেসিমেল কোড বের করো। ছোট হাতের <code>'b'</code>-এর মান কত এবং বড় ও ছোট হাতের অক্ষরের বিট রিলেশনশিপ কী?
+            </div>
+            <div class="problem-solution">
+              <div class="step-line" data-i18n="l4_p2_s1"><strong>(ক) 'G' এর কোড নির্ণয়:</strong> ↳ বর্ণমালার দূরত্ব: $'G' - 'B' = 7 - 2 = 5$ ধাপ ➔ ডেসিমেল = $66 + 5 = 71_{10}$ ➔ ৭-বিট বাইনারি: <code>1000111</code> (৮-বিট: <code>01000111</code>, হেক্স: <code>47H</code>)।</div>
+              <div class="step-line" data-i18n="l4_p2_s2"><strong>(খ) 'I' এর কোড নির্ণয়:</strong> ↳ বর্ণমালার দূরত্ব: $'I' - 'B' = 9 - 2 = 7$ ধাপ ➔ ডেসিমেল = $66 + 7 = 73_{10}$ ➔ ৭-বিট বাইনারি: <code>1001001</code> (৮-বিট: <code>01001001</code>, হেক্স: <code>49H</code>)।</div>
+              <div class="step-line" data-i18n="l4_p2_s3"><strong>(গ) ছোট হাতের 'b' ও বিট রিলেশন:</strong> ↳ $'b' = 'B' + 32 = 66 + 32 = 98_{10} = 01100010_2 = 62\text{H}$।</div>
+              <div class="solution-highlight" data-i18n="l4_p2_res">
+                ✅ <strong>Exam Secret:</strong> বড় হাতের অক্ষরকে ছোট হাতে রূপান্তর করতে শুধু <strong>বিট ৫ (Bit 5)</strong>-কে <code>0</code> থেকে <code>1</code> করতে হয় ($+32$)!
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- High-Yield Exam Diagram Blueprint -->
+        <div class="diagram-blueprint-card">
+          <div class="blueprint-header">
+            <span class="icon">📐</span>
+            <h4 data-i18n="l4_bp_title">পরীক্ষার খাতায় আঁকার জন্য ১০০% পারফেক্ট ডায়াগ্রাম: Decomposed Full Adder & Ripple Carry</h4>
+          </div>
+          <div class="blueprint-content">
+            <div class="ascii-diagram-box" data-i18n="l4_bp_ascii">
+[ ডায়াগ্রাম ১: ২ টি Half Adder ও ১ টি OR গেট দিয়ে Full Adder (Slide 17) ]
+
+            ┌──────────────┐
+  Xi ───────┤              ├─── Si' (Xi⊕Yi) ───┬──────────────┐
+            │ Half Adder 1 │                   │ Half Adder 2 ├──────► SUM (Si = Si'⊕Ci)
+  Yi ───────┤  (XOR + AND) ├─── Ci' ──┐  Ci ───┤  (XOR + AND) │
+            └──────────────┘          │        └──────┬───────┘
+                                      │               │ Ci'' (Si'·Ci)
+                                      └───►┌─────┐◄───┘
+                                           │ OR  ├───────────────────► CARRY (Ci+1 = Ci'+Ci'')
+                                           └─────┘
+
+─────────────────────────────────────────────────────────────────────────────
+[ ডায়াগ্রাম ২: ৪-বিট রিপল ক্যারি অ্যাডার ক্যাসকেডিং ও প্রপাগেশন বিলম্ব (Slide 18) ]
+
+          A3 B3              A2 B2              A1 B1              A0 B0
+           │  │               │  │               │  │               │  │
+           ▼  ▼               ▼  ▼               ▼  ▼               ▼  ▼
+        ┌────────┐ C3      ┌────────┐ C2      ┌────────┐ C1      ┌────────┐
+C4 ◄────┤ FA 3   │◄────────┤ FA 2   │◄────────┤ FA 1   │◄────────┤ FA 0   │◄──── C0 (Initial Carry)
+        └───┬────┘         └───┬────┘         └───┬────┘         └───┬────┘
+            │                  │                  │                  │
+            ▼ S3               ▼ S2               ▼ S1               ▼ S0
+       [Ready at 4Δt]     [Ready at 3Δt]     [Ready at 2Δt]     [Ready at 1Δt]
+            </div>
+            <p class="diagram-tip" data-i18n="l4_bp_tip">
+              💡 <strong>Exam Marking Key:</strong> রিপল ক্যারি অ্যাডারে প্রথম স্টেজ (FA0) থেকে শেষ স্টেজ (FA3) পর্যন্ত ক্যারি ছড়িয়ে পড়ার সমীকরণ $T_{carry} = (n - 1) \times \Delta t$ এবং মোট যোগফল সম্পন্ন হওয়ার সময় $T_{sum} = n \times \Delta t$ উল্লেখ করতে ভুলবে না!
+            </p>
+          </div>
+        </div>
+
+        <!-- Fascinating Engineering Facts -->
+        <div class="fun-fact-card">
+          <div class="fun-fact-header">
+            <span class="fun-fact-badge" data-i18n="l4_fact_badge">রোমাঞ্চকর অজানা তথ্য • Did You Know?</span>
+            <span class="fun-fact-title" data-i18n="l4_fact_title">গাড়ির ওডোমিটার (Odometer) আর ২'স কমপ্লিমেন্টের অদ্ভুত মিল!</span>
+          </div>
+          <div class="fun-fact-body" data-i18n="l4_fact_body">
+            কম্পিউটারে কেন বিয়োগের জন্য আলাদা কোনো সার্কিট থাকে না? উত্তর লুকিয়ে আছে যান্ত্রিক গাড়ির মাইলেজ মিটারে (Odometer)! একটি গাড়ির মিটারে যখন <code>000000</code> কিমি থাকে, গাড়ি যদি ১ কিমি পেছনে যায় তবে মিটার উল্টো ঘুরে হয়ে যায় <code>999999</code>! 
+            ঠিক একই ঘটনা ঘটে ৮-বিটের বাইনারিতে: <code>00000000</code> থেকে ১ বিয়োগ করলে মান দাঁড়িয়ে যায় <code>11111111</code> (যা সাইনড সিস্টেমে -১)। জন ভন নিউম্যান ও কম্পিউটার আর্কিটেক্টরা উপলব্ধি করেন যে এই সার্কুলার রোলওভারকে কাজে লাগালে <strong>শুধু যোগের সার্কিট দিয়েই পৃথিবীর যেকোনো বিয়োগের কাজ নিখুঁতভাবে সম্পন্ন করা সম্ভব</strong>—যা প্রসেসরের লক্ষ লক্ষ ট্রানজিস্টর বাঁচিয়ে দিয়েছিল!
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-container">
+      <p data-i18n="footer_title">কম্পিউটার আর্কিটেকচার অ্যান্ড অর্গানাইজেশন (CAO) — লেকচার ৪ মাস্টারক্লাস</p>
+      <p class="sub-credit" data-i18n="footer_sub">ডিজাইন করা হয়েছে স্পষ্টতা, গভীর বোধগম্যতা ও পরীক্ষার পূর্ণ প্রস্তুতির জন্য।</p>
+    </div>
+  </footer>
+
+  <script src="../shared-gamification.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

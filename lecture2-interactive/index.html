@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAO Lecture 2: Evolution of Computers - Interactive Masterclass</title>
+  <meta name="description" content="Computer Architecture and Organization (CAO) Lecture 2: Evolution of Computers - Interactive visual learning platform covering Mechanical Era, 5 Generations, IAS Computer, and IBM System/360.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Hind+Siliguri:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../shared-gamification.css">
+</head>
+<body>
+  <!-- Ambient Background Glows -->
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
+  <div class="glow-orb orb-3"></div>
+
+  <!-- Navigation Bar -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="brand">
+        <a href="../index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 0.75rem;">
+          <span class="brand-badge">CAO L-02</span>
+          <div class="brand-title">
+            <span class="main-title">Evolution of Computers</span>
+            <span class="sub-title" data-i18n="nav_brand_sub">DIU CSE • John P. Hayes</span>
+          </div>
+        </a>
+      </div>
+      <nav class="nav-links" id="navLinks">
+        <a href="#mechanical-era" class="nav-link" data-i18n="nav_mech">Mechanical Era</a>
+        <a href="#generations-portal" class="nav-link" data-i18n="nav_gen">5 Generations</a>
+        <a href="#ias-architecture" class="nav-link" data-i18n="nav_ias">IAS Computer (40-bit)</a>
+        <a href="#ibm-system360" class="nav-link" data-i18n="nav_ibm">IBM System/360</a>
+        <a href="#vlsi-categories" class="nav-link" data-i18n="nav_vlsi">VLSI & Categories</a>
+        <a href="#quiz-zone" class="nav-link" data-i18n="nav_quiz">Exam Quiz</a>
+      </nav>
+      <div class="nav-actions">
+        <!-- Language Switcher Toggle -->
+        <div class="lang-switch-group" id="langSwitchGroup">
+          <button id="langBnBtn" class="lang-btn active" data-lang="bn">বাংলা</button>
+          <button id="langEnBtn" class="lang-btn" data-lang="en">English</button>
+        </div>
+
+        <button id="soundToggleBtn" class="action-btn" title="Toggle Sound FX">
+          <span class="icon">🔊</span>
+        </button>
+
+        <!-- Lecture Switcher Dropdown (Replaces static L-01, L-03, etc.) -->
+        <div class="lecture-dropdown" id="lectureDropdown">
+          <button class="action-btn dropdown-toggle" id="lectureDropdownBtn" type="button" aria-haspopup="true" aria-expanded="false" title="Switch Lecture">
+            <span class="icon">📚</span>
+            <span class="dropdown-label">Lectures</span>
+            <span class="dropdown-arrow">▾</span>
+          </button>
+          <div class="dropdown-menu" id="lectureDropdownMenu">
+            <a href="../index.html" class="dropdown-item">
+              <span class="dropdown-badge b-portal">🏠 Portal</span>
+              <span class="dropdown-item-title">Course Overview & Home</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="../lecture1-interactive/index.html" class="dropdown-item">
+              <span class="dropdown-badge b-l1">L-01</span>
+              <span class="dropdown-item-title">Intro & Architecture</span>
+            </a>
+            <a href="../lecture2-interactive/index.html" class="dropdown-item current-lecture">
+              <span class="dropdown-badge b-l2">L-02</span>
+              <span class="dropdown-item-title">Evolution of Computers</span>
+              <span class="current-dot"></span>
+            </a>
+            <a href="../lecture3-interactive/index.html" class="dropdown-item">
+              <span class="dropdown-badge b-l3">L-03</span>
+              <span class="dropdown-item-title">Design Methodology</span>
+            </a>
+            <a href="../lecture4-interactive/index.html" class="dropdown-item">
+              <span class="dropdown-badge b-l4">L-04</span>
+              <span class="dropdown-item-title">Data Representation</span>
+            </a>
+            <a href="../lecture5-interactive/index.html" class="dropdown-item">
+              <span class="dropdown-badge b-l5">L-05</span>
+              <span class="dropdown-item-title">Processor Basics</span>
+            </a>
+          </div>
+        </div>
+
+        <a href="#quiz-zone" class="action-btn primary-btn quiz-nav-btn">
+          <span data-i18n="nav_take_test">টেস্ট দাও</span>
+        </a>
+
+        <!-- Mobile Hamburger Toggle Button -->
+        <button class="nav-toggle-btn" id="navToggleBtn" type="button" aria-label="Toggle Navigation Menu" aria-expanded="false">
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-badge">
+        <span class="badge-dot"></span> <span data-i18n="hero_badge">লেকচার ২ এর সম্পূর্ণ ইন্টারেক্টিভ গাইড</span>
+      </div>
+      <h1 class="hero-title" data-i18n="hero_title">
+        কম্পিউটারের বিবর্তন (Evolution of Computers)<br>
+        <span class="gradient-text">প্যাসকেলাইন ও ব্যাবেজ থেকে আধুনিক ভিএলএসআই</span>
+      </h1>
+      <p class="hero-subtitle" data-i18n="hero_subtitle">
+        যান্ত্রিক চাকা আর গিয়ারের গতি সীমাবদ্ধতা থেকে কীভাবে ইলেকট্রনের আলোর গতিতে পৌঁছাল কম্পিউটার? 
+        আইএএস (IAS) মেশিনের ৪০-বিট আর্কিটেকচার এবং আইবিএম সিস্টেম/৩৬০-এর যুগান্তকারী বিপ্লব দেখে নাও লাইভ সিমুলেটরে!
+      </p>
+
+      <div class="hero-stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">⚙️</div>
+          <div class="stat-data">
+            <span class="stat-number">Mechanical Era</span>
+            <span class="stat-label" data-i18n="stat_mech">প্যাসকেল ও চার্লস ব্যাবেজ</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">💡</div>
+          <div class="stat-data">
+            <span class="stat-number">18,000+ Tubes</span>
+            <span class="stat-label" data-i18n="stat_eniac">ENIAC ও ১ম প্রজন্ম (30 টন)</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">💾</div>
+          <div class="stat-data">
+            <span class="stat-number">40-Bit Word</span>
+            <span class="stat-label" data-i18n="stat_ias">ভন নিউম্যানের IAS কম্পিউটার</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🏢</div>
+          <div class="stat-data">
+            <span class="stat-number">IBM System/360</span>
+            <span class="stat-label" data-i18n="stat_ibm">সফটওয়্যার কমপ্যাটিবিলিটি</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: Mechanical Era (Pascal & Babbage) -->
+    <section id="mechanical-era" class="content-section">
+      <div class="section-header">
+        <div class="section-tag" data-i18n="sec1_tag">মডিউল ১ • স্লাইড ২, ৩ ও ৪</div>
+        <h2 data-i18n="sec1_title">যান্ত্রিক কম্পিউটারের যুগ (The Mechanical Computer Era)</h2>
+        <p class="section-desc" data-i18n="sec1_desc">
+          ষোড়শ শতাব্দী থেকে শুরু করে চার্লস ব্যাবেজের অ্যানালিটিক্যাল ইঞ্জিন পর্যন্ত যান্ত্রিক গণনার ইতিহাস।
+        </p>
+      </div>
+
+      <div class="history-cards-grid">
+        <!-- Pascaline -->
+        <div class="history-card">
+          <div class="card-badge" data-i18n="pascal_era">১৬২৩ - ১৬৬২</div>
+          <h3 data-i18n="pascal_title">Blaise Pascal ও Pascaline</h3>
+          <p data-i18n="pascal_desc">
+            ফরাসি দার্শনিক ব্লেইজ প্যাসকেল প্রথম সফল মেকানিক্যাল ক্যালকুলেটর আবিষ্কার করেন যা গিয়ারের সাহায্যে সরাসরি দশমিক সংখ্যার <strong>যোগ ও বিয়োগ (Addition & Subtraction)</strong> করতে পারত।
+          </p>
+          <div class="highlight-pill" data-i18n="pascal_pill">⚙️ গিয়ার ও চাকার সাহায্যে গণনা</div>
+        </div>
+
+        <!-- Babbage Difference Engine -->
+        <div class="history-card">
+          <div class="card-badge" data-i18n="diff_era">১৯শ শতাব্দী</div>
+          <h3 data-i18n="diff_title">Babbage's Difference Engine</h3>
+          <p data-i18n="diff_engine_desc">
+            চার্লস ব্যাবেজ মানুষের কোনো হস্তক্ষেপ ছাড়াই স্বয়ংক্রিয়ভাবে গাণিতিক টেবিল হিসাব ও প্রিন্ট করার জন্য এটি ডিজাইন করেন। তবে এটি শুধুমাত্র একটি গাণিতিক কাজ করত: <strong>শুধুমাত্র যোগ (Addition)</strong>!
+          </p>
+          <div class="highlight-pill highlight-amber" data-i18n="diff_pill">➕ শুধুমাত্র যোগ দিয়ে টেবিল তৈরি</div>
+        </div>
+
+        <!-- Babbage Analytical Engine -->
+        <div class="history-card featured-card">
+          <div class="card-badge badge-glow" data-i18n="analytical_badge">প্রথম সাধারণ কম্পিউটার</div>
+          <h3 data-i18n="analytical_title">Babbage's Analytical Engine</h3>
+          <p data-i18n="analytical_engine_desc">
+            ডিফারেন্স ইঞ্জিন চাহিদা পূরণ করতে না পারায় ব্যাবেজ প্রথম <strong>General Purpose Programmable Computer</strong> ডিজাইন করেন। এতে আধুনিক কম্পিউটারের প্রায় সব মূল উপাদান উপস্থিত ছিল!
+          </p>
+          <div class="highlight-pill highlight-cyan" data-i18n="analytical_pill">🏆 First General-Purpose Programmable Computer</div>
+        </div>
+      </div>
+
+      <!-- Babbage's Analytical Engine Architecture Interactive Model (Slide 4) -->
+      <div class="interactive-lab-card">
+        <div class="lab-header">
+          <div>
+            <span class="badge-status highlight-indigo" data-i18n="babbage_lab_badge">স্লাইড ৪ এর মূল আর্কিটেকচার</span>
+            <h3 data-i18n="babbage_lab_title">🏛️ ব্যাবেজের অ্যানালিটিক্যাল ইঞ্জিনের কাঠামো (Structure of Analytical Engine)</h3>
+            <p data-i18n="babbage_lab_desc">
+              ব্লকগুলোতে মাউস হোভার বা ক্লিক করে দেখো কীভাবে ১৮০০ শতকেই আধুনিক মেমরি ও প্রসেসরের ধারণা দিয়েছিলেন ব্যাবেজ!
+            </p>
+          </div>
+        </div>
+
+        <div class="babbage-architecture-diagram">
+          <div class="babbage-top-row">
+            <div class="babbage-block block-mill" id="blockMill">
+              <span class="b-icon">⚙️</span>
+              <h4>The Mill (ALU)</h4>
+              <p data-i18n="babbage_mill_desc">Arithmetic Logic Unit: যেখানে মূল গাণিতিক হিসাব সম্পন্ন হতো।</p>
+            </div>
+
+            <div class="babbage-bus data-bus">
+              <span class="bus-text" data-i18n="bus_data">Data Flow</span>
+              <span class="bus-arrows">⇄</span>
+            </div>
+
+            <div class="babbage-block block-store" id="blockStore">
+              <span class="b-icon">📚</span>
+              <h4>The Store (Memory)</h4>
+              <p data-i18n="babbage_store_desc">Main Memory: যেখানে ভ্যারিয়েবল ও সংখ্যাগুলো সাজিয়ে রাখা হতো।</p>
+            </div>
+
+            <div class="babbage-bus io-bus">
+              <span class="bus-text" data-i18n="bus_io">I/O Link</span>
+              <span class="bus-arrows">➔</span>
+            </div>
+
+            <div class="babbage-block block-io" id="blockIO">
+              <span class="b-icon">🖨️</span>
+              <h4>I/O Equipment</h4>
+              <p data-i18n="babbage_io_desc">Printer এবং Card Punch (পাঞ্চ কার্ডের মাধ্যমে ইনপুট-আউটপুট)।</p>
+            </div>
+          </div>
+
+          <div class="babbage-instruction-flow">
+            <div class="instruction-arrow">⬆️ Instruction Signals ⬆️</div>
+          </div>
+
+          <div class="babbage-pcu-block" id="blockPCU">
+            <div class="pcu-header">
+              <span class="b-icon">🧠</span>
+              <h4>Program Control Unit</h4>
+            </div>
+            <div class="pcu-cards-wrapper">
+              <div class="punch-card operation-card">
+                <span class="card-icon">🗂️</span>
+                <strong>Operation Cards</strong>
+                <span data-i18n="pcu_op_card">কোন অপারেশন (+, -, *, /) করতে হবে তা নির্দেশ করে</span>
+              </div>
+              <div class="punch-card variable-card">
+                <span class="card-icon">🏷️</span>
+                <strong>Variable Cards</strong>
+                <span data-i18n="pcu_var_card">কোন মেমরি লোকেশন (Store) থেকে মান নিতে হবে তা নির্দেশ করে</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mechanical vs Electronic Comparison (Slide 5) -->
+      <div class="duel-box-wide">
+        <div class="duel-column mech-col">
+          <div class="duel-col-header">
+            <span class="duel-col-icon">⏳</span>
+            <h4 data-i18n="mech_drawback_title">যান্ত্রিক কম্পিউটারের ২টি মারাত্মক ত্রুটি (Drawbacks)</h4>
+          </div>
+          <ul>
+            <li data-i18n="mech_drawback1"><strong>গতির সীমাবদ্ধতা (Inertia of moving parts):</strong> মেকানিক্যাল গিয়ার, লেভার ও চাকার জড়তা বা ওজনের কারণে এদের গতি বাড়ানো অসম্ভব ছিল।</li>
+            <li data-i18n="mech_drawback2"><strong>অনির্ভরযোগ্যতা (Mechanical Unreliability):</strong> গিয়ার ক্ষয় হয়ে যাওয়া বা মেকানিক্যালি ডিজিটাল তথ্য প্রেরণে বারবার ভুল হতো।</li>
+          </ul>
+        </div>
+
+        <div class="duel-column elec-col">
+          <div class="duel-col-header">
+            <span class="duel-col-icon">⚡</span>
+            <h4 data-i18n="elec_adv_title">ইলেকট্রনিক কম্পিউটারের যুগান্তকারী সুবিধা</h4>
+          </div>
+          <ul>
+            <li data-i18n="elec_adv1"><strong>ইলেকট্রন চলে আলোর গতিতে:</strong> এখানে কোনো নড়াচড়া করা গিয়ার নেই! চলমান উপাদান হলো ইলেকট্রন, যা প্রায় আলোর গতিতে ($300,000 \text{ km/s}$) ছোটে!</li>
+            <li data-i18n="elec_adv2"><strong>ভ্যাকুয়াম টিউব ও সিলিকন:</strong> মেকানিক্যাল ডিভাইসের চেয়ে হাজার গুণ গতিতে ডেটা সিগন্যাল প্রসেস ও স্টোর করতে সক্ষম।</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: The 5 Computer Generations -->
+    <section id="generations-portal" class="content-section">
+      <div class="section-header">
+        <div class="section-tag" data-i18n="sec2_tag">মডিউল ২ • স্লাইড ৬</div>
+        <h2 data-i18n="sec2_title">কম্পিউটারের ৫টি প্রজন্ম (The 5 Computer Generations)</h2>
+        <p class="section-desc" data-i18n="sec2_desc">
+          নিচের টাইমলাইন বাটনগুলোতে ক্লিক করে প্রতিটি প্রজন্মের মূল হার্ডওয়্যার টেকনোলজি ও বৈপ্লবিক পরিবর্তনগুলো এক্সপ্লোর করো!
+        </p>
+      </div>
+
+      <!-- Interactive Generation Selector Tabs -->
+      <div class="generations-nav-tabs" id="genTabsNav">
+        <button class="gen-tab active" data-gen="1">
+          <span class="gen-title">1st Gen</span>
+          <span class="gen-tech">Vacuum Tubes</span>
+          <span class="gen-years">1944–1958</span>
+        </button>
+        <button class="gen-tab" data-gen="2">
+          <span class="gen-title">2nd Gen</span>
+          <span class="gen-tech">Transistor</span>
+          <span class="gen-years">1959–1963</span>
+        </button>
+        <button class="gen-tab" data-gen="3">
+          <span class="gen-title">3rd Gen</span>
+          <span class="gen-tech">Integrated Circuit</span>
+          <span class="gen-years">1964–1970</span>
+        </button>
+        <button class="gen-tab" data-gen="4">
+          <span class="gen-title">4th Gen</span>
+          <span class="gen-tech">VLSI Microprocessor</span>
+          <span class="gen-years">1971–Now</span>
+        </button>
+        <button class="gen-tab" data-gen="5">
+          <span class="gen-title">5th Gen</span>
+          <span class="gen-tech">Artificial Intel (AI)</span>
+          <span class="gen-years">Present & Beyond</span>
+        </button>
+      </div>
+
+      <!-- Dynamic Generation Content Panel -->
+      <div class="interactive-lab-card" id="genDisplayCard">
+        <div class="gen-card-inner" id="genCardInner">
+          <!-- Populated by JavaScript dynamically -->
+        </div>
+      </div>
+
+      <!-- First Generation Hardware Spotlight: ENIAC (Slide 7) -->
+      <div class="spotlight-card eniac-spotlight">
+        <div class="spotlight-header">
+          <span class="badge-status highlight-orange" data-i18n="eniac_badge">প্রথম ইলেকট্রনিক সুপারস্টার</span>
+          <h3>ENIAC (Electronic Numerical Integrator and Calculator)</h3>
+        </div>
+        <div class="spotlight-body">
+          <div class="eniac-specs-grid">
+            <div class="spec-box">
+              <span class="spec-label" data-i18n="eniac_maker">নির্মাতা</span>
+              <span class="spec-val">John Mauchly & Presper Eckert</span>
+              <span class="spec-sub">Univ of Pennsylvania (1943–1946)</span>
+            </div>
+            <div class="spec-box">
+              <span class="spec-label" data-i18n="eniac_purpose">উদ্দেশ্য</span>
+              <span class="spec-val">U.S. Army Ballistics</span>
+              <span class="spec-sub" data-i18n="eniac_purpose_sub">স্বয়ংক্রিয়ভাবে গোলন্দাজ বাহিনীর গণিতের ছক তৈরি</span>
+            </div>
+            <div class="spec-box">
+              <span class="spec-label" data-i18n="eniac_weight">ওজন ও টিউব</span>
+              <span class="spec-val">30 Tons • 18,000+ Tubes</span>
+              <span class="spec-sub" data-i18n="eniac_weight_sub">বিশাল রুম জুড়ে স্থাপন করা হয়েছিল</span>
+            </div>
+            <div class="spec-box highlight-green-box">
+              <span class="spec-label" data-i18n="eniac_speed">গতি তুলনা</span>
+              <span class="spec-val">3 ms vs 3 sec</span>
+              <span class="spec-sub" data-i18n="eniac_speed_sub">Harvard Mark I চেয়ে ১,০০০ গুণ দ্রুত!</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: The IAS Computer Architecture (40-Bit Word) -->
+    <section id="ias-architecture" class="content-section">
+      <div class="section-header">
+        <div class="section-tag" data-i18n="sec3_tag">মডিউল ৩ • স্লাইড ১০, ১১ ও ১২</div>
+        <h2 data-i18n="sec3_title">The IAS Computer: ভন নিউম্যানের ৪০-বিট আর্কিটেকচার</h2>
+        <p class="section-desc" data-i18n="sec3_desc">
+          ১৯৪৬ সালে প্রিন্সটনে জন ভন নিউম্যান (John von Neumann) তৈরি করেন বিখ্যাত IAS কম্পিউটার। এটি আধুনিক সব কম্পিউটারের আদি পিতা!
+        </p>
+      </div>
+
+      <!-- Interactive 40-Bit Word Inspector (Slide 10 & 11) -->
+      <div class="interactive-lab-card" id="ias-word-lab">
+        <div class="lab-header">
+          <div>
+            <span class="badge-status highlight-cyan" data-i18n="ias_badge">সবচেয়ে জনপ্রিয় পরীক্ষার প্রশ্ন • স্লাইড ১১</span>
+            <h3 data-i18n="ias_lab_title">🔬 IAS কম্পিউটারের ৪০-বিট ওয়ার্ড এক্সপ্লোরার (40-bit Word Structure)</h3>
+            <p data-i18n="ias_lab_desc">
+              আইএএস মেমরির প্রতিটি সেল একটি ৪০-বিট ওয়ার্ড ধারণ করতে পারত। সুইচ করে দেখো সংখ্যা (Number Word) এবং নির্দেশ (Instruction Word) কীভাবে সাজানো হতো!
+            </p>
+          </div>
+          <div class="toggle-group">
+            <button id="btnWordNumber" class="toggle-btn active" data-i18n="btn_word_num">🔢 Number Word (সংখ্যা)</button>
+            <button id="btnWordInstruction" class="toggle-btn" data-i18n="btn_word_inst">📜 Instruction Word (নির্দেশ)</button>
+          </div>
+        </div>
+
+        <!-- Visual 40-Bit Word Visualization -->
+        <div class="word-visualizer-box">
+          <div class="word-total-badge">
+            <span class="bit-count">Total: 40 Bits</span>
+          </div>
+
+          <!-- Number Word View -->
+          <div id="numberWordView" class="word-representation active">
+            <div class="bit-strip number-strip">
+              <div class="bit-segment sign-bit">
+                <span class="bit-index">Bit 0</span>
+                <span class="seg-title" data-i18n="sign_bit_title">Sign Bit (চিহ্ন)</span>
+                <span class="seg-sub">0 = +, 1 = -</span>
+              </div>
+              <div class="bit-segment value-bits">
+                <span class="bit-index" data-i18n="bits_val_idx">Bits 1 – 39 (৩৯ বিট)</span>
+                <span class="seg-title" data-i18n="bits_val_title">Numerical Value (বাইনারি মান)</span>
+                <span class="seg-sub">Signed binary fraction between -1 and +1</span>
+              </div>
+            </div>
+            <div class="word-explanation-banner" data-i18n="number_word_banner">
+              💡 <strong>উদাহরণ (Slide 10):</strong> 
+              <code>01101000000 0000000000 0000000000 0000000000 = +0.8125</code><br>
+              প্রথম বিট <code>0</code> মানে ধনাত্মক (+), আর <code>1</code> হলে ঋণাত্মক (-)।
+            </div>
+          </div>
+
+          <!-- Instruction Word View -->
+          <div id="instructionWordView" class="word-representation">
+            <div class="bit-strip instruction-strip">
+              <!-- Left Instruction -->
+              <div class="instruction-half left-inst">
+                <div class="half-label" data-i18n="left_inst_label">Left Instruction (২০ বিট)</div>
+                <div class="sub-segments">
+                  <div class="seg-opcode">
+                    <span class="bit-index">0 – 7 (8 bits)</span>
+                    <strong class="seg-title">Opcode</strong>
+                    <span class="seg-sub" data-i18n="opcode_desc">কী কাজ (ADD, SUB)</span>
+                  </div>
+                  <div class="seg-address">
+                    <span class="bit-index">8 – 19 (12 bits)</span>
+                    <strong class="seg-title">Address</strong>
+                    <span class="seg-sub" data-i18n="addr_desc">মেমরি লোকেশন (0 to 999)</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Right Instruction -->
+              <div class="instruction-half right-inst">
+                <div class="half-label" data-i18n="right_inst_label">Right Instruction (২০ বিট)</div>
+                <div class="sub-segments">
+                  <div class="seg-opcode">
+                    <span class="bit-index">20 – 27 (8 bits)</span>
+                    <strong class="seg-title">Opcode</strong>
+                    <span class="seg-sub" data-i18n="opcode_desc">কী কাজ (ADD, SUB)</span>
+                  </div>
+                  <div class="seg-address">
+                    <span class="bit-index">28 – 39 (12 bits)</span>
+                    <strong class="seg-title">Address</strong>
+                    <span class="seg-sub" data-i18n="addr_desc">মেমরি লোকেশন (0 to 999)</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="word-explanation-banner highlight-cyan-banner" data-i18n="inst_word_banner">
+              ⚡ <strong>জাদুটি লক্ষ্য করো:</strong> একটি ৪০-বিট মেমরি লোকেশনে সরাসরি <strong>২টি পূর্ণাঙ্গ ২০-বিট নির্দেশ</strong> (Left ও Right) জমা রাখা যায়!
+            </div>
+          </div>
+        </div>
+
+        <!-- Limitations of First Generation / IAS (Slide 13) -->
+        <div class="ias-limitations-box">
+          <h4 data-i18n="ias_limits_title">⚠️ ১ম প্রজন্ম ও IAS কম্পিউটারের সীমাবদ্ধতা (Exam Favorite):</h4>
+          <div class="limits-grid">
+            <div class="limit-item" data-i18n="limit_1">
+              ❌ <strong>কোনো Index Register ছিল না:</strong> যার কারণে মেমরি অ্যাড্রেস পরিবর্তন করা ভীষণ কঠিন ছিল।
+            </div>
+            <div class="limit-item" data-i18n="limit_2">
+              ❌ <strong>খুব অল্প রেজিস্টার ও নো ক্যাশ:</strong> CPU রেজিস্টারের সংখ্যা ছিল নগণ্য এবং কোনো Cache Memory ছিল না।
+            </div>
+            <div class="limit-item" data-i18n="limit_3">
+              ❌ <strong>টেক্সট প্রসেসিং ছিল অসম্ভব ধীর:</strong> ইন্সট্রাকশন সেট শুধুমাত্র সংখ্যা গণনার জন্য তৈরি ছিল, কোনো লেখা বা টেক্সট সহজে প্রসেস করা যেত না।
+            </div>
+            <div class="limit-item" data-i18n="limit_4">
+              ❌ <strong>I/O ছিল অবহেলিত:</strong> ইনপুট-আউটপুট নির্দেশাবলীকে অপ্রধান মনে করা হতো।
+            </div>
+          </div>
+        </div>
+        <!-- Mini-Game: IAS Codebreaker Challenge -->
+        <div class="minigame-card" id="iasCrackerGame">
+          <div class="minigame-header">
+            <div class="minigame-badge" data-i18n="ias_game_badge">📜 Mini-Game • IAS Codebreaker</div>
+            <div class="minigame-score"><span data-i18n="ias_game_score_label">Cracked:</span> <span id="iasScore">0</span> / 3</div>
+          </div>
+          <h3 style="color:#f8fafc; margin-bottom:8px;" data-i18n="ias_game_title">প্রিন্সটন আইএএস কোডব্রেকার (Princeton IAS Codebreaker)</h3>
+          <p style="color:#cbd5e1; font-size:0.92rem; margin-bottom:16px;" data-i18n="ias_game_desc">
+            ১৯৫২ সালের জন ভন নিউম্যানের IAS কম্পিউটার কীভাবে মেমরি থেকে ইন্সট্রাকশন পড়ত? নিচে একটি আসল ২০-বিট আইএএস নির্দেশ দেওয়া হয়েছে। 
+            সঠিক অপারেশনটি ডিকোড করতে পারলে তুমি অর্জন করবে <strong>IAS Codebreaker</strong> ব্যাজ এবং ১০০ এক্সপি!
+          </p>
+
+          <div class="ias-cracker-display">
+            <div class="ias-code-box">
+              <span class="code-seg opcode-seg" id="iasDisplayOpcode">Opcode: 00000001 (01H)</span>
+              <span class="code-seg addr-seg" id="iasDisplayAddr">Address: 000000101000 (028H)</span>
+            </div>
+            <div class="ias-mission-text" id="iasMissionPrompt" data-i18n="ias_mission_prompt">
+              এই ইন্সট্রাকশনটি রান করলে IAS কম্পিউটারের ভেতরে কী ঘটবে?
+            </div>
+            <div class="ias-options-grid" id="iasOptionsGrid">
+              <!-- Dynamically populated options -->
+            </div>
+            <div class="ias-feedback" id="iasFeedback"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: 2nd Generation & Languages -->
+    <section id="second-generation" class="content-section">
+      <div class="section-header">
+        <div class="section-tag" data-i18n="sec4_tag">মডিউল ৪ • স্লাইড ১৪, ১৫ ও ১৬</div>
+        <h2 data-i18n="sec4_title">২য় প্রজন্ম: ট্রানজিস্টর ও হাই-লেভেল ল্যাঙ্গুয়েজ</h2>
+        <p class="section-desc" data-i18n="sec4_desc">
+          ভ্যাকুয়াম টিউব বিলুপ্ত হয়ে ট্রানজিস্টরের আগমন এবং প্রোগ্রামিং ভাষার প্রথম বিপ্লব।
+        </p>
+      </div>
+
+      <div class="gen2-grid">
+        <div class="gen2-card">
+          <div class="g2-icon">🔌</div>
+          <h3 data-i18n="g2_transistor_title">ট্রানজিস্টর ও ম্যাগনেটিক ডিস্ক</h3>
+          <p data-i18n="g2_transistor_desc">
+            ট্রানজিস্টর ভ্যাকুয়াম টিউবের চেয়ে আকারে ছোট, অনেক কম বিদ্যুৎ টানে, সস্তা এবং দ্রুতগতির ইলেকট্রনিক সুইচ। সেকেন্ডারি মেমরি হিসেবে এলো চৌম্বকীয় ডিস্ক।
+          </p>
+          <div class="tech-badge">Index Registers Added!</div>
+        </div>
+
+        <div class="gen2-card">
+          <div class="g2-icon">📜</div>
+          <h3>FORTRAN (1954–1957)</h3>
+          <p data-i18n="g2_fortran_desc">
+            <strong>FORmula TRANslation:</strong> জন ব্যাকাস (John Backus)-এর নেতৃত্বে IBM-এর তৈরি প্রথম সফল হাই-লেভেল ভাষা। এটি শুধুমাত্র বৈজ্ঞানিক ও গাণিতিক হিসাবের জন্য ব্যবহৃত হতো।
+          </p>
+          <div class="tech-badge highlight-blue">Scientific / Numerical</div>
+        </div>
+
+        <div class="gen2-card">
+          <div class="g2-icon">💼</div>
+          <h3>COBOL (1959)</h3>
+          <p data-i18n="g2_cobol_desc">
+            <strong>Common Business Oriented Language:</strong> ইউএস ডিফেন্স ডিপার্টমেন্টের পৃষ্ঠপোষকতায় তৈরি প্রথম ব্যবসায়িক প্রোগ্রামিং ভাষা। এটি সংখ্যা ও টেক্সট উভয় নিয়ে কাজ করতে পারত।
+          </p>
+          <div class="tech-badge highlight-green">Business & Textual</div>
+        </div>
+
+        <div class="gen2-card">
+          <div class="g2-icon">🔄</div>
+          <h3 data-i18n="g2_batch_title">ব্যাচ প্রসেসিং ও ব্যাচ মনিটর</h3>
+          <p data-i18n="g2_batch_desc">
+            <strong>Batch Processing:</strong> অনেকগুলো কাজ ম্যাগনেটিক টেপে জমা রেখে মেমরিতে থাকা স্থায়ী <em>Batch Monitor</em> প্রোগ্রামের মাধ্যমে একনাগাড়ে রান করা হতো। এটিই আজকের Operating System (OS)-এর পূর্বপুরুষ!
+          </p>
+          <div class="tech-badge highlight-amber">Precursor to Modern OS</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: 3rd Generation & IBM System/360 -->
+    <section id="ibm-system360" class="content-section">
+      <div class="section-header">
+        <div class="section-tag" data-i18n="sec5_tag">মডিউল ৫ • স্লাইড ১৭ - ২১</div>
+        <h2 data-i18n="sec5_title">৩য় প্রজন্ম ও IBM System/360 এর মহাবিপ্লব</h2>
+        <p class="section-desc" data-i18n="sec5_desc">
+          ইন্টিগ্রেটেড সার্কিট (IC) এবং আইবিএম ৩৬০-এর মাধ্যমে কম্পিউটিংয়ে এক অমর ইতিহাসের সূচনা।
+        </p>
+      </div>
+
+      <div class="interactive-lab-card" id="ibm-lab">
+        <div class="lab-header">
+          <div>
+            <span class="badge-status highlight-indigo" data-i18n="ibm_badge">বিপ্লবী ধারণা • স্লাইড ১৮</span>
+            <h3 data-i18n="ibm_title">🖥️ Software Compatibility (সফটওয়্যার কমপ্যাটিবিলিটি)</h3>
+            <p data-i18n="ibm_desc">
+              আইবিএম ৩৬০ সিরিজের প্রতিটি মডেলের আর্কিটেকচার একই রাখা হয়েছিল। ছোট মডেলের জন্য লেখা কোড বড় মডেলেও অবিকল চলত!
+            </p>
+          </div>
+          <button id="btnRunCompatDemo" class="action-btn" data-i18n="btn_compat_run">▶ রান টেস্ট করো</button>
+        </div>
+
+        <!-- Interactive Compatibility Showcase -->
+        <div class="compat-demo-box">
+          <div class="program-source-card">
+            <span class="card-tag">Single Binary Program</span>
+            <code>PAYROLL.BIN (IBM System/360 Code)</code>
+          </div>
+
+          <div class="compat-arrows-flow">
+            <span class="flow-line"></span>
+            <span class="flow-tag" data-i18n="compat_flow_tag">একই সফটওয়্যার কোনো পরিবর্তন ছাড়াই রান হচ্ছে!</span>
+          </div>
+
+          <div class="models-grid">
+            <div class="model-item" id="model30">
+              <span class="model-badge">Model 30</span>
+              <span class="model-speed" data-i18n="m30_desc">ছোট মডেল • মডারেট স্পিড</span>
+              <div class="model-status" id="statM30">READY</div>
+            </div>
+            <div class="model-item" id="model50">
+              <span class="model-badge">Model 50</span>
+              <span class="model-speed" data-i18n="m50_desc">মাঝারি মডেল • দ্বিগুণ স্পিড</span>
+              <div class="model-status" id="statM50">READY</div>
+            </div>
+            <div class="model-item" id="model75">
+              <span class="model-badge">Model 75</span>
+              <span class="model-speed" data-i18n="m75_desc">মেইনফ্রেম জায়ান্ট • বিদ্যুত্ গতি</span>
+              <div class="model-status" id="statM75">READY</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5 Historic Innovations of IBM System/360 (Slide 20 & 21) -->
+        <div class="ibm-innovations-grid">
+          <div class="inno-card">
+            <span class="inno-num">1</span>
+            <h4 data-i18n="inno_1_title">8-Bit Byte স্ট্যান্ডার্ড</h4>
+            <p data-i18n="inno_1_desc">৮ বিট মিলে ১ বাইট—ডাটা স্টোরেজ ও ট্রান্সমিশনের এই ক্ষুদ্রতম একক আইবিএম ৩৬০-ই বিশ্বজুড়ে প্রতিষ্ঠা করে।</p>
+          </div>
+          <div class="inno-card">
+            <span class="inno-num">2</span>
+            <h4 data-i18n="inno_2_title">General-Register Organization</h4>
+            <p data-i18n="inno_2_desc">১৬টি অভিন্ন ৩২-বিট জেনারেল-পারপাস রেজিস্টার (16 × 32-bit registers) রাখা হয়েছিল।</p>
+          </div>
+          <div class="inno-card">
+            <span class="inno-num">3</span>
+            <h4 data-i18n="inno_3_title">পৃথক ৪টি ALU</h4>
+            <p data-i18n="inno_3_desc">Fixed-point ALU, Floating-point ALU, এবং Decimal ALU আলাদা আলাদা বসানো হয়েছিল।</p>
+          </div>
+          <div class="inno-card">
+            <span class="inno-num">4</span>
+            <h4 data-i18n="inno_4_title">Supervisor vs User State</h4>
+            <p data-i18n="inno_4_desc">সিপিইউ-এর দুটি অবস্থা ছিল: অপারেটিং সিস্টেমের জন্য Supervisor State এবং অ্যাপ্লিকেশনের জন্য User State।</p>
+          </div>
+          <div class="inno-card">
+            <span class="inno-num">5</span>
+            <h4 data-i18n="inno_5_title">Program Status Word (PSW)</h4>
+            <p data-i18n="inno_5_desc">সিপিইউ-এর ব্যতিক্রমী অবস্থা ও এরর ট্র্যাক করার জন্য তৈরি হলো আধুনিক Status Register (SR)।</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: 4th Generation VLSI & Categories -->
+    <section id="vlsi-categories" class="content-section">
+      <div class="section-header">
+        <div class="section-tag" data-i18n="sec6_tag">মডিউল ৬ • স্লাইড ২২, ২৩, ২৪ ও ২৫</div>
+        <h2 data-i18n="sec6_title">৪র্থ প্রজন্ম: VLSI ও কম্পিউটারের শ্রেণিবিভাগ</h2>
+        <p class="section-desc" data-i18n="sec6_desc">
+          একটি সিঙ্গেল সিলিকন চিপে লাখ লাখ ট্রানজিস্টর বসিয়ে তৈরি হলো মাইক্রোপ্রসেসর ও আধুনিক কম্পিউটার।
+        </p>
+      </div>
+
+      <!-- IC Density Meter (Slide 23) -->
+      <div class="interactive-lab-card" id="density-lab">
+        <h3 data-i18n="density_title">📊 আইসি ডেনসিটি স্কেল (IC Density Scale):</h3>
+        <p class="section-desc" data-i18n="density_desc">একটি চিপের ভেতর কতগুলো ট্রানজিস্টর থাকতে পারে তার ওপর ভিত্তি করে ক্লাসিফিকেশন:</p>
+
+        <div class="density-bar-container">
+          <div class="density-step ssi">
+            <div class="d-badge">SSI (1961)</div>
+            <strong class="d-count">&lt; 100</strong>
+            <span>Small-Scale Integration</span>
+          </div>
+          <div class="density-step msi">
+            <div class="d-badge">MSI</div>
+            <strong class="d-count">Hundreds</strong>
+            <span>Medium-Scale Integration</span>
+          </div>
+          <div class="density-step lsi">
+            <div class="d-badge">LSI</div>
+            <strong class="d-count">Thousands</strong>
+            <span>Large-Scale Integration</span>
+          </div>
+          <div class="density-step vlsi">
+            <div class="d-badge">VLSI</div>
+            <strong class="d-count">Millions / Billions</strong>
+            <span>Very Large Scale Integration</span>
+          </div>
+        </div>
+
+        <div class="densest-chips-banner">
+          <div>
+            <strong data-i18n="dense_chips_head">সবচেয়ে ঘন দুটি চিপ (The 2 Densest Chips - Slide 24):</strong><br>
+            <span data-i18n="dense_chips_body">১. <strong>DRAM</strong> (Dynamic RAM - মূল মেমরির ভিত্তি) এবং ২. <strong>Single-chip CPU / Microprocessor</strong>।</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4 Categories of Computers (Slide 25) -->
+      <div class="categories-grid">
+        <div class="category-card">
+          <span class="cat-icon">💻</span>
+          <h3>Microcomputers</h3>
+          <p data-i18n="cat_micro">ব্যক্তিগত পিসি, ল্যাপটপ, ট্যাবলেট ও স্মার্টফোন। সিঙ্গেল চিপ মাইক্রোপ্রসেসরে চালিত।</p>
+        </div>
+        <div class="category-card">
+          <span class="cat-icon">🖥️</span>
+          <h3>Minicomputers</h3>
+          <p data-i18n="cat_mini">মাঝারি আকারের ব্যবসায় প্রতিষ্ঠান ও ল্যাবরেটরিতে নেটওয়ার্ক কন্ট্রোলের জন্য ব্যবহৃত।</p>
+        </div>
+        <div class="category-card">
+          <span class="cat-icon">🏢</span>
+          <h3>Mainframe Computers</h3>
+          <p data-i18n="cat_main">ব্যাংক, এয়ারলাইন্স বুকিং ও বড় ডেটাবেজের হাজার হাজার ইউজারের নির্ভরযোগ্য সার্ভার (যেমন IBM 360)।</p>
+        </div>
+        <div class="category-card">
+          <span class="cat-icon">🚀</span>
+          <h3>Supercomputers</h3>
+          <p data-i18n="cat_super">মহাকাশ গবেষণা, পারমাণবিক সিমুলেশন ও আবহাওয়া পূর্বাভাসের জন্য পৃথিবীর সবচেয়ে শক্তিশালী কম্পিউটার।</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: Exam Quiz & Mastery Zone -->
+    <section id="quiz-zone" class="content-section">
+      <div class="section-header">
+        <div class="section-tag" data-i18n="sec7_tag">পরীক্ষা প্রস্তুতি • কুইজ জোন</div>
+        <h2 data-i18n="sec7_title">লেকচার ২ এর স্ব-মূল্যায়ন টেস্ট (Lecture 2 Self Quiz)</h2>
+        <p class="section-desc" data-i18n="sec7_desc">
+          লেকচার ২ এর মূল বিষয়গুলো কতটা রপ্ত করতে পারলে তা এখনই এই ৫টি গুরুত্বপূর্ণ প্রশ্নের উত্তর দিয়ে যাচাই করে নাও!
+        </p>
+      </div>
+
+      <div class="quiz-container-card">
+        <div class="quiz-progress-bar">
+          <div class="progress-fill" id="quizProgressFill" style="width: 20%;"></div>
+        </div>
+
+        <div class="quiz-card-content" id="quizCardContent">
+          <div class="quiz-question-header">
+            <span class="question-number" id="questionNumberBadge">Question 1 / 5</span>
+            <span class="score-badge"><span data-i18n="quiz_score_prefix">স্কোর:</span> <strong id="scoreBadge">0</strong> / 5</span>
+          </div>
+
+          <h3 class="quiz-question-text" id="quizQuestionText"></h3>
+          <div class="quiz-options-list" id="quizOptionsList"></div>
+
+          <div class="quiz-explanation-box" id="quizExplanationBox">
+            <div class="exp-title" id="expTitle">Explanation:</div>
+            <div class="exp-body" id="expBody"></div>
+          </div>
+        </div>
+
+        <div class="quiz-footer">
+          <button id="nextQuestionBtn" class="action-btn" disabled data-i18n="btn_next_q">পরবর্তী প্রশ্ন ➡️</button>
+        </div>
+      </div>
+
+      <!-- Quick Summary Card for Exam Night -->
+      <div class="exam-cheat-sheet">
+        <div class="cheat-header">
+          <span class="icon">⚡</span>
+          <h3 data-i18n="cheat_title">লেকচার ২ এর ১০ মিনিটের কুইক রিভিশন সারাংশ (Exam Night Sheet)</h3>
+        </div>
+        <div class="cheat-grid">
+          <div class="cheat-item" data-i18n="cheat_l2_1">
+            <strong>Babbage Analytical Engine:</strong> ১ম জেনারেল-পারপাস কম্পিউটার • The Mill (ALU), The Store (Memory), Operation & Variable Punched Cards।
+          </div>
+          <div class="cheat-item" data-i18n="cheat_l2_2">
+            <strong>ENIAC (1946):</strong> Mauchly & Eckert • ১৮,০০০ ভ্যাকুয়াম টিউব • ৩০ টন • Harvard Mark I-এর ৩ সেকেন্ডের গুণ এটি ৩ মিলিসেকেন্ডে করত!
+          </div>
+          <div class="cheat-item" data-i18n="cheat_l2_3">
+            <strong>IAS Computer (40-bit word):</strong> ১টি ৪০-বিট সংখ্যা (১ সাইন বিট + ৩৯ বিট মান) অথবা ২টি ২০-বিট নির্দেশ (৮-বিট অপকোড + ১২-বিট অ্যাড্রেস)।
+          </div>
+          <div class="cheat-item" data-i18n="cheat_l2_4">
+            <strong>IBM System/360:</strong> সফটওয়্যার কমপ্যাটিবিলিটি • ৮-বিট বাইট স্ট্যান্ডার্ড • ১৬টি ৩২-বিট জেনারেল রেজিস্টার • Supervisor vs User State।
+          </div>
+          <div class="cheat-item" data-i18n="cheat_l2_5">
+            <strong>5 Generations:</strong> ১ম (ভ্যাকুয়াম টিউব) ➔ ২য় (ট্রানজিস্টর + FORTRAN/COBOL) ➔ ৩য় (IC + IBM 360) ➔ ৪র্থ (VLSI + মাইক্রোপ্রসেসর) ➔ ৫ম (AI)।
+          </div>
+          <div class="cheat-item" data-i18n="cheat_l2_6">
+            <strong>Densest Chips:</strong> DRAM এবং Single-chip CPU / Microprocessor।
+          </div>
+        </div>
+      </div>
+
+      <!-- EXAM CORNER: SOLVED MATH & HIGH-YIELD BLUEPRINTS -->
+      <div class="exam-vault-container" id="examVaultL2">
+        <div class="vault-header">
+          <span class="vault-badge" data-i18n="vault_badge">🎯 EXAM MASTER VAULT • DIU CSE</span>
+          <h3 data-i18n="l2_math_title">পরীক্ষার গাণিতিক সমস্যা ও মডেল সমাধান (Exam Math & Model Answers)</h3>
+          <p data-i18n="l2_math_sub">প্রিন্সটন IAS ৪০-বিট মেশিন কোড ডিকোডিং, অ্যাড্রেস স্পেস হিসাব এবং রেজিস্টার ডায়াগ্রাম:</p>
+        </div>
+
+        <div class="math-problems-grid">
+          <!-- Problem 1: IAS Machine Code Decoding -->
+          <div class="math-card">
+            <div class="problem-tag" data-i18n="l2_p1_tag">Math Problem 1 • Bloom's Level 3 (Apply)</div>
+            <h4 data-i18n="l2_p1_title">Princeton IAS ৪০-বিট হেক্সাডেসিমেল ওয়ার্ড ডিকোডিং</h4>
+            <div class="problem-statement" data-i18n="l2_p1_statement">
+              <strong>প্রশ্ন:</strong> IAS কম্পিউটারের মেমরি ১০০-এ <code>0102821042H</code> ওয়ার্ডটি জমা আছে। এটি একটি ইন্সট্রাকশন ওয়ার্ড হলে Left ও Right নির্দেশদ্বয়ের Opcode এবং Address আলাদা করে দেখাও এবং এদের কাজ ব্যাখ্যা করো।
+            </div>
+            <div class="problem-solution">
+              <div class="step-line" data-i18n="l2_p1_s1">IAS-এ প্রতিটি ওয়ার্ড = ৪০ বিট = ১০টি হেক্স ডিজিট।</div>
+              <div class="step-line" data-i18n="l2_p1_s2"><strong>Left Instruction (প্রথম ৫ ডিজিট = ২০ বিট):</strong> <code>01028H</code></div>
+              <div class="step-line" data-i18n="l2_p1_s3">↳ Opcode = <code>01H</code> (৮ বিট), Address = <code>028H</code> (১২ বিট = $40_{10}$)</div>
+              <div class="step-line" data-i18n="l2_p1_s4">↳ অর্থ: মেমরি ৪০-এর মান Accumulator-এ লোড করো: <code>AC := M[40]</code></div>
+              <div class="step-line" data-i18n="l2_p1_s5"><strong>Right Instruction (শেষ ৫ ডিজিট = ২০ বিট):</strong> <code>21042H</code></div>
+              <div class="step-line" data-i18n="l2_p1_s6">↳ Opcode = <code>21H</code> (৮ বিট), Address = <code>042H</code> (১২ বিট = $66_{10}$)</div>
+              <div class="step-line" data-i18n="l2_p1_s7">↳ অর্থ: Accumulator-এর মান মেমরি ৬৬-তে রাখো: <code>M[66] := AC</code></div>
+              <div class="solution-highlight" data-i18n="l2_p1_res">
+                ✅ <strong>সারাংশ:</strong> এক ওয়ার্ডে ২টি নির্দেশ: মেমরি ৪০ থেকে এনে হিসাব শেষে ফলাফল মেমরি ৬৬-তে সংরক্ষণ!
+              </div>
+            </div>
+          </div>
+
+          <!-- Problem 2: IAS Maximum Addressable Space -->
+          <div class="math-card">
+            <div class="problem-tag" data-i18n="l2_p2_tag">Math Problem 2 • Bloom's Level 3 (Apply)</div>
+            <h4 data-i18n="l2_p2_title">IAS কম্পিউটারের সর্বোচ্চ মেমরি ধারণক্ষমতা</h4>
+            <div class="problem-statement" data-i18n="l2_p2_statement">
+              <strong>প্রশ্ন:</strong> IAS কম্পিউটারের নির্দেশে অ্যাড্রেসের জন্য ১২ বিট বরাদ্দ। এই আর্কিটেকচারে সর্বোচ্চ কত ওয়ার্ড ও কত কিলোবাইট মেমরি অ্যাড্রেস করা সম্ভব?
+            </div>
+            <div class="problem-solution">
+              <div class="step-line" data-i18n="l2_p2_s1">বরাদ্দকৃত অ্যাড্রেস বিট = ১২ বিট।</div>
+              <div class="step-line" data-i18n="l2_p2_s2">সর্বোচ্চ ওয়ার্ড সংখ্যা = $2^{12} = 4096$ ওয়ার্ড।</div>
+              <div class="step-line" data-i18n="l2_p2_s3">প্রতিটি ওয়ার্ড = ৪০ বিট = ৫ বাইট ($40/8 = 5$ bytes)।</div>
+              <div class="step-line" data-i18n="l2_p2_s4">মোট মেমরি সাইজ = $4096 \times 5\text{ Bytes} = 20,480\text{ Bytes} = 20\text{ KB}$।</div>
+              <div class="solution-highlight" data-i18n="l2_p2_res">
+                ✅ <strong>ফলাফল:</strong> সর্বোচ্চ ৪,০৯৬ ওয়ার্ড বা ২০ কিলোবাইট (বাস্তবে IAS-এ ছিল ১,০২৪ ওয়ার্ড বা ৫ KB)।
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- High-Yield Exam Diagram Blueprint -->
+        <div class="diagram-blueprint-card">
+          <div class="blueprint-header">
+            <span class="icon">📐</span>
+            <h4 data-i18n="l2_bp_title">পরীক্ষার খাতায় আঁকার জন্য ১০০% পারফেক্ট ডায়াগ্রাম: Princeton IAS CPU Structure</h4>
+          </div>
+          <div class="blueprint-content">
+            <div class="ascii-diagram-box">
+┌────────────────────────────────────────────────────────┐
+│                   MAIN MEMORY (M)                      │
+│            [ 1,024 Words of 40 Bits each ]             │
+└───────────────▲────────────────────────▲───────────────┘
+                │ Address Bus            │ 40-Bit Data Bus
+┌───────────────┴───────────────┐ ┌──────┴───────────────┐
+│ Memory Address Register (MAR) │ │Memory Buffer Reg(MBR)│
+└───────────────▲───────────────┘ └──────┬───────┬───────┘
+                │                        │       │
+    ┌───────────┴──────────┐   ┌─────────┘       │ 40-bit
+    │Program Counter (PC)  │   │ 20-bit (Right)  │ Data
+    └──────────────────────┘   ▼                 ▼
+                ┌─────────────────────┐   ┌──────────────┐
+                │Instruction Buffer   │   │ Accumulator  │
+                │Register (IBR - 20b) │   │  (AC - 40b)  │
+                └──────────┬──────────┘   └──────▲───────┘
+                           │ 20-bit Left         │
+                           ▼                     │
+                ┌─────────────────────┐   ┌──────┴───────┐
+                │Instruction Register │   │ Multiplier-  │
+                │     (IR - 8b)       │   │Quotient (MQ) │
+                └─────────────────────┘   └──────────────┘
+            </div>
+            <p class="diagram-tip" data-i18n="l2_bp_tip">
+              💡 <strong>Exam Secret:</strong> IAS মেমরি থেকে ৪০-বিট ওয়ার্ড একবারে রিড করে। Left নির্দেশটি সরাসরি IR-এ চলে যায় এক্সিকিউশনের জন্য, আর Right নির্দেশটি সাময়িকভাবে IBR (Instruction Buffer Register)-এ অপেক্ষা করে!
+            </p>
+          </div>
+        </div>
+
+        <!-- Fascinating Engineering Facts -->
+        <div class="fun-fact-card">
+          <div class="fun-fact-header">
+            <span class="fun-fact-badge" data-i18n="l2_fact_badge">রোমাঞ্চকর অজানা তথ্য • Did You Know?</span>
+            <span class="fun-fact-title" data-i18n="l2_fact_title">কম্পিউটার 'বাগ' (Bug)-এর আসল জন্মকথা!</span>
+          </div>
+          <div class="fun-fact-body" data-i18n="l2_fact_body">
+            ১৯৪৭ সালের ৯ সেপ্টেম্বর হার্ভার্ড মার্ক ২ কম্পিউটারে কাজ করার সময় হঠাৎ হিসাব ভুল হতে থাকে। কিংবদন্তি নারী কম্পিউটার বিজ্ঞানী <strong>গ্রেস হপার (Grace Hopper)</strong> সার্কিট খুলে পরীক্ষা করতে গিয়ে রিলে নম্বর ৭০-এর ভেতর আটকে থাকা একটি আসল <strong>মৃত পোকা বা পতঙ্গ (Moth)</strong> খুঁজে পান! 
+            তিনি সেই পোকাটি চিমটা দিয়ে বের করে লগবুকে আঠা দিয়ে লাগিয়ে লিখেছিলেন: <em>"First actual case of bug being found"</em>। সেখান থেকেই কম্পিউটারের কোডে ত্রুটিকে 'Bug' এবং তা সমাধান করাকে 'Debugging' বলা শুরু হয়!
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-container">
+      <p data-i18n="footer_title">কম্পিউটার আর্কিটেকচার অ্যান্ড অর্গানাইজেশন (CAO) — লেকচার ২ মাস্টারক্লাস</p>
+      <p class="sub-credit" data-i18n="footer_sub">ডিজাইন করা হয়েছে স্পষ্টতা, গভীর বোধগম্যতা ও পরীক্ষার পূর্ণ প্রস্তুতির জন্য।</p>
+    </div>
+  </footer>
+
+  <script src="../shared-gamification.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

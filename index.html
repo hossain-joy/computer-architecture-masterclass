@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Computer Architecture & Organization (CAO) — Master Portal</title>
+  <meta name="description" content="Computer Architecture and Organization (CAO) Complete Interactive Course Suite for Daffodil International University (DIU) CSE students.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Hind+Siliguri:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="shared-gamification.css">
+  <style>
+    :root {
+      --bg-dark: #0a0f1d;
+      --card-bg: rgba(15, 23, 42, 0.85);
+      --border-subtle: rgba(255, 255, 255, 0.1);
+      --accent-cyan: #38bdf8;
+      --accent-amber: #f59e0b;
+      --accent-emerald: #10b981;
+      --accent-purple: #c084fc;
+      --text-muted: #94a3b8;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      background-color: var(--bg-dark);
+      color: #f8fafc;
+      font-family: 'Outfit', 'Hind Siliguri', sans-serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+    .ambient-glow {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(120px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .glow-1 { top: -100px; left: -100px; width: 500px; height: 500px; background: rgba(56, 189, 248, 0.15); }
+    .glow-2 { bottom: -100px; right: -100px; width: 600px; height: 600px; background: rgba(192, 132, 252, 0.12); }
+    .glow-3 { top: 40%; left: 30%; width: 450px; height: 450px; background: rgba(245, 158, 11, 0.08); }
+
+    .portal-nav {
+      position: sticky;
+      top: 0;
+      background: rgba(10, 15, 29, 0.85);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+      z-index: 1000;
+      padding: 14px 24px;
+    }
+    .nav-inner {
+      width: 100%;
+      max-width: 1560px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 clamp(0.5rem, 1.5vw, 1.5rem);
+    }
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .portal-badge {
+      background: linear-gradient(135deg, #0284c7, #38bdf8);
+      color: #fff;
+      font-weight: 800;
+      font-size: 0.8rem;
+      padding: 4px 10px;
+      border-radius: 8px;
+      letter-spacing: 0.5px;
+    }
+    .portal-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+    }
+    .portal-title span {
+      display: block;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+    .nav-controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .lang-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .lang-btn.active {
+      background: #38bdf8;
+      color: #020617;
+      border-color: #38bdf8;
+      font-weight: 700;
+    }
+
+    .main-container {
+      width: 100%;
+      max-width: 1480px;
+      margin: 0 auto;
+      padding: 40px clamp(1rem, 2.5vw, 2.5rem) 80px;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-box {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    .hero-top-tag {
+      display: inline-block;
+      background: rgba(56, 189, 248, 0.12);
+      border: 1px solid rgba(56, 189, 248, 0.35);
+      color: #38bdf8;
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 6px 16px;
+      border-radius: 30px;
+      margin-bottom: 16px;
+      letter-spacing: 0.6px;
+    }
+    .hero-headline {
+      font-size: 2.5rem;
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 16px;
+      color: #fff;
+    }
+    .hero-headline .gradient-text {
+      background: linear-gradient(135deg, #38bdf8, #818cf8, #c084fc);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .hero-sub {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 760px;
+      margin: 0 auto;
+    }
+
+    /* Course Lectures Grid */
+    .lectures-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 24px;
+      margin-bottom: 50px;
+    }
+    .lecture-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 26px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                  box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                  border-color 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+    }
+    .lecture-card:hover {
+      transform: translateY(-6px) scale(1.01);
+      border-color: var(--accent-cyan);
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6), 0 0 30px rgba(56, 189, 248, 0.2);
+    }
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+    .lec-badge {
+      font-size: 0.75rem;
+      font-weight: 800;
+      font-family: 'Fira Code', monospace;
+      padding: 4px 10px;
+      border-radius: 6px;
+      text-transform: uppercase;
+    }
+    .b-l1 { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.3); }
+    .b-l2 { background: rgba(245, 158, 11, 0.15); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.3); }
+    .b-l3 { background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3); }
+    .b-l4 { background: rgba(192, 132, 252, 0.15); color: #c084fc; border: 1px solid rgba(192, 132, 252, 0.3); }
+    .b-l5 { background: rgba(244, 63, 94, 0.15); color: #fb7185; border: 1px solid rgba(244, 63, 94, 0.3); }
+
+    .lec-num {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: rgba(255, 255, 255, 0.12);
+      font-family: 'Fira Code', monospace;
+    }
+    .card-title {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .card-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 16px;
+      flex-grow: 1;
+    }
+    .card-topics {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+    .topic-pill {
+      font-size: 0.75rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 3px 8px;
+      border-radius: 12px;
+      color: #cbd5e1;
+    }
+    .card-vault-tag {
+      background: rgba(245, 158, 11, 0.1);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      color: #fcd34d;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 8px 12px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    .start-btn {
+      background: linear-gradient(135deg, #0284c7, #38bdf8);
+      color: #020617;
+      font-weight: 700;
+      font-size: 0.92rem;
+      padding: 10px 16px;
+      border-radius: 10px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 0 4px 14px rgba(56, 189, 248, 0.3);
+    }
+
+    .footer-box {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 30px;
+    }
+
+    /* Mobile & Tablet Responsiveness */
+    @media (max-width: 860px) {
+      .portal-nav {
+        padding: 10px 16px;
+      }
+      .nav-inner {
+        padding: 0;
+      }
+      .main-container {
+        padding: 24px 16px 60px;
+      }
+      .hero-box {
+        margin-bottom: 35px;
+      }
+      .hero-headline {
+        font-size: clamp(1.6rem, 5vw, 2.2rem);
+      }
+      .hero-sub {
+        font-size: 0.95rem;
+      }
+      .lectures-grid {
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 16px;
+        margin-bottom: 35px;
+      }
+      .lecture-card {
+        padding: 20px 18px;
+        border-radius: 16px;
+      }
+    }
+
+    @media (max-width: 540px) {
+      .portal-nav {
+        padding: 8px 12px;
+      }
+      .brand-group {
+        gap: 8px;
+      }
+      .portal-badge {
+        font-size: 0.72rem;
+        padding: 3px 8px;
+      }
+      .portal-title {
+        font-size: 0.92rem;
+        line-height: 1.25;
+      }
+      .portal-title span {
+        font-size: 0.7rem;
+      }
+      .lang-switch-group {
+        display: flex;
+        gap: 4px;
+      }
+      .lang-btn {
+        padding: 4px 10px;
+        font-size: 0.76rem;
+      }
+      .main-container {
+        padding: 18px 12px 60px;
+      }
+      .hero-top-tag {
+        font-size: 0.76rem;
+        padding: 4px 12px;
+        margin-bottom: 12px;
+      }
+      .hero-headline {
+        font-size: 1.5rem;
+        line-height: 1.3;
+        margin-bottom: 12px;
+      }
+      .hero-sub {
+        font-size: 0.88rem;
+        line-height: 1.6;
+      }
+      .lectures-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+      }
+      .lecture-card {
+        padding: 18px 14px;
+      }
+      .card-title {
+        font-size: 1.15rem;
+      }
+      .card-desc {
+        font-size: 0.84rem;
+      }
+      .card-vault-tag {
+        font-size: 0.74rem;
+        padding: 6px 10px;
+      }
+      .start-btn {
+        padding: 9px 14px;
+        font-size: 0.88rem;
+        min-height: 44px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+  <div class="ambient-glow glow-3"></div>
+
+  <header class="portal-nav">
+    <div class="nav-inner">
+      <div class="brand-group">
+        <span class="portal-badge">CAO SUITE</span>
+        <div class="portal-title">
+          Computer Architecture & Organization
+          <span>Daffodil International University (DIU CSE)</span>
+        </div>
+      </div>
+      <div class="nav-controls">
+        <div class="lang-switch-group">
+          <button id="langBnBtn" class="lang-btn active">বাংলা</button>
+          <button id="langEnBtn" class="lang-btn">English</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-container">
+    <div class="hero-box">
+      <span class="hero-top-tag" data-i18n="portal_tag">🚀 DIU CSE • জন পি. হেইজ পূর্ণাঙ্গ সিলেবাস</span>
+      <h1 class="hero-headline" data-i18n="portal_title">
+        কম্পিউটার আর্কিটেকচার অ্যান্ড অর্গানাইজেশন<br>
+        <span class="gradient-text">ইন্টারেক্টিভ মাস্টারক্লাস ও এক্সাম হাব</span>
+      </h1>
+      <p class="hero-sub" data-i18n="portal_sub">
+        মুখস্থ করার যুগ শেষ! লাইভ লজিক গেট ক্যালকুলেটর, সোরোবান অ্যাবাকাস, পাইপলাইনিং সিমুলেটর এবং প্রতিটি লেকচারের গাণিতিক সমস্যা ও মডেল ব্লুপ্রিন্ট সহ ৫টি লেকচারই এখন তোমার হাতের মুঠোয়।
+      </p>
+    </div>
+
+    <div class="lectures-grid">
+      <!-- Lecture 1 -->
+      <a href="lecture1-interactive/index.html" class="lecture-card">
+        <div class="card-top">
+          <span class="lec-badge b-l1">LECTURE 01</span>
+          <span class="lec-num">01</span>
+        </div>
+        <h3 class="card-title" data-i18n="p_l1_title">Computing & Computers</h3>
+        <p class="card-desc" data-i18n="p_l1_desc">
+          আর্কিটেকচার বনাম অর্গানাইজেশন, সোরোবান অ্যাবাকাস, স্লাইড রুল, এবং মানুষের মস্তিষ্ক বনাম কম্পিউটারের গাণিতিক ক্ষমতার ডুয়েল।
+        </p>
+        <div class="card-vault-tag" data-i18n="p_l1_vault">
+          🎯 <strong>Exam Vault:</strong> Clock Period ($T=1/f$), Human vs CPU Math & 4 Key Elements Blueprint
+        </div>
+        <ul class="card-topics">
+          <li class="topic-pill" data-i18n="p_l1_t1">Architecture vs Org</li>
+          <li class="topic-pill" data-i18n="p_l1_t2">Soroban Abacus</li>
+          <li class="topic-pill" data-i18n="p_l1_t3">Slide Rule (1972)</li>
+          <li class="topic-pill" data-i18n="p_l1_t4">Speed Duel</li>
+        </ul>
+        <div class="start-btn" data-i18n="p_l1_btn">লেকচার ১ শুরু করো ➡️</div>
+      </a>
+
+      <!-- Lecture 2 -->
+      <a href="lecture2-interactive/index.html" class="lecture-card">
+        <div class="card-top">
+          <span class="lec-badge b-l2">LECTURE 02</span>
+          <span class="lec-num">02</span>
+        </div>
+        <h3 class="card-title" data-i18n="p_l2_title">Evolution of Computers</h3>
+        <p class="card-desc" data-i18n="p_l2_desc">
+          প্যাসকেল ও ব্যাবেজের মেকানিক্যাল গিয়ার থেকে শুরু করে ENIAC, ৪০-বিট প্রিন্সটন IAS কম্পিউটার এবং IBM System/360 এর মহাবিপ্লব।
+        </p>
+        <div class="card-vault-tag" data-i18n="p_l2_vault">
+          🎯 <strong>Exam Vault:</strong> IAS 40-Bit Codebreaker, 20 KB Addressable Space & IAS Register Dataflow
+        </div>
+        <ul class="card-topics">
+          <li class="topic-pill" data-i18n="p_l2_t1">Babbage Mill & Store</li>
+          <li class="topic-pill" data-i18n="p_l2_t2">Princeton IAS 40-Bit</li>
+          <li class="topic-pill" data-i18n="p_l2_t3">IBM 360 Compatibility</li>
+          <li class="topic-pill" data-i18n="p_l2_t4">5 Generations</li>
+        </ul>
+        <div class="start-btn" data-i18n="p_l2_btn">লেকচার ২ শুরু করো ➡️</div>
+      </a>
+
+      <!-- Lecture 3 -->
+      <a href="lecture3-interactive/index.html" class="lecture-card">
+        <div class="card-top">
+          <span class="lec-badge b-l3">LECTURE 03</span>
+          <span class="lec-num">03</span>
+        </div>
+        <h3 class="card-title" data-i18n="p_l3_title">Design Methodology</h3>
+        <p class="card-desc" data-i18n="p_l3_desc">
+          ডিজাইন প্রক্রিয়া (Analysis vs Synthesis), জন পি. হেইজের ৩টি ডিজাইন লেভেল, ফুল অ্যাডার সার্কিট, ক্যাশ মেমরি এবং ৪ প্রকারের ইন্টারাপ্ট।
+        </p>
+        <div class="card-vault-tag" data-i18n="p_l3_vault">
+          🎯 <strong>Exam Vault:</strong> Cache AMAT Calculation, Full Adder Critical Path & I-Unit/E-Unit Blueprint
+        </div>
+        <ul class="card-topics">
+          <li class="topic-pill" data-i18n="p_l3_t1">3 Design Levels</li>
+          <li class="topic-pill" data-i18n="p_l3_t2">Full Adder Simulator</li>
+          <li class="topic-pill" data-i18n="p_l3_t3">Cache Race Track</li>
+          <li class="topic-pill" data-i18n="p_l3_t4">4 Interrupt Classes</li>
+        </ul>
+        <div class="start-btn" data-i18n="p_l3_btn">লেকচার ৩ শুরু করো ➡️</div>
+      </a>
+
+      <!-- Lecture 4 -->
+      <a href="lecture4-interactive/index.html" class="lecture-card">
+        <div class="card-top">
+          <span class="lec-badge b-l4">LECTURE 04</span>
+          <span class="lec-num">04</span>
+        </div>
+        <h3 class="card-title" data-i18n="p_l4_title">Data Representation</h3>
+        <p class="card-desc" data-i18n="p_l4_desc">
+          সংখ্যা পদ্ধতির রূপান্তর, ২'স কমপ্লিমেন্ট অ্যালগরিদম, ASCII ক্যারেক্টার লুকআপ, ২ HA + ১ OR দিয়ে ডিকম্পোজড ফুল অ্যাডার ও রিপল ক্যারি।
+        </p>
+        <div class="card-vault-tag" data-i18n="p_l4_vault">
+          🎯 <strong>Exam Vault:</strong> 2's Complement Subtraction ($7-4=+3$), ASCII Bit Math & Ripple Carry Delay
+        </div>
+        <ul class="card-topics">
+          <li class="topic-pill" data-i18n="p_l4_t1">Base Converter</li>
+          <li class="topic-pill" data-i18n="p_l4_t2">2's Complement Ninja</li>
+          <li class="topic-pill" data-i18n="p_l4_t3">ASCII Live Decoder</li>
+          <li class="topic-pill" data-i18n="p_l4_t4">Universal NAND Gates</li>
+        </ul>
+        <div class="start-btn" data-i18n="p_l4_btn">লেকচার ৪ শুরু করো ➡️</div>
+      </a>
+
+      <!-- Lecture 5 -->
+      <a href="lecture5-interactive/index.html" class="lecture-card">
+        <div class="card-top">
+          <span class="lec-badge b-l5">LECTURE 05</span>
+          <span class="lec-num">05</span>
+        </div>
+        <h3 class="card-title" data-i18n="p_l5_title">Processor Basics</h3>
+        <p class="card-desc" data-i18n="p_l5_desc">
+          Big-Endian বনাম Little-Endian মেমরি বিন্যাস, ২-স্টেজ ইনস্ট্রাকশন পাইপলাইনিং, ৬টি অ্যাড্রেসিং মোড এবং ফিক্সড বনাম ভ্যারিয়েবল নির্দেশ।
+        </p>
+        <div class="card-vault-tag" data-i18n="p_l5_vault">
+          🎯 <strong>Exam Vault:</strong> Pipelining Speedup ($S_k$), Big/Little Endian 10-Mark Layout & 0/1/2/3 Operands
+        </div>
+        <ul class="card-topics">
+          <li class="topic-pill" data-i18n="p_l5_t1">Big vs Little Endian</li>
+          <li class="topic-pill" data-i18n="p_l5_t2">0, 1, 2, 3 Operands</li>
+          <li class="topic-pill" data-i18n="p_l5_t3">Pipeline Simulator</li>
+          <li class="topic-pill" data-i18n="p_l5_t4">Hazard Buster Game</li>
+        </ul>
+        <div class="start-btn" data-i18n="p_l5_btn">লেকচার ৫ শুরু করো ➡️</div>
+      </a>
+    </div>
+
+    <footer class="footer-box">
+      <p data-i18n="p_footer">Computer Architecture & Organization (CAO) — Daffodil International University (DIU CSE)</p>
+      <p style="margin-top: 4px; font-size: 0.8rem; color: #64748b;" data-i18n="p_footer_sub">Based on John P. Hayes Textbook • Engineered for Intuitive Understanding & Exam Excellence</p>
+    </footer>
+  </main>
+
+  <script src="shared-gamification.js"></script>
+  <script>
+    const portalTranslations = {
+      bn: {
+        portal_tag: "🚀 DIU CSE • জন পি. হেইজ পূর্ণাঙ্গ সিলেবাস",
+        portal_title: 'কম্পিউটার আর্কিটেকচার অ্যান্ড অর্গানাইজেশন<br><span class="gradient-text">ইন্টারেক্টিভ মাস্টারক্লাস ও এক্সাম হাব</span>',
+        portal_sub: "মুখস্থ করার যুগ শেষ! লাইভ লজিক গেট ক্যালকুলেটর, সোরোবান অ্যাবাকাস, পাইপলাইনিং সিমুলেটর এবং প্রতিটি লেকচারের গাণিতিক সমস্যা ও মডেল ব্লুপ্রিন্ট সহ ৫টি লেকচারই এখন তোমার হাতের মুঠোয়।",
+        
+        p_l1_title: "Computing & Computers",
+        p_l1_desc: "আর্কিটেকচার বনাম অর্গানাইজেশন, সোরোবান অ্যাবাকাস, স্লাইড রুল, এবং মানুষের মস্তিষ্ক বনাম কম্পিউটারের গাণিতিক ক্ষমতার ডুয়েল।",
+        p_l1_vault: "🎯 <strong>এক্সাম ভল্ট:</strong> ক্লক পিরিয়ড ($T=1/f$), মানব বনাম সিপিইউ হিসাব ও ৪টি প্রধান উপাদানের ব্লুপ্রিন্ট",
+        p_l1_t1: "আর্কিটেকচার বনাম অর্গানাইজেশন",
+        p_l1_t2: "সোরোবান অ্যাবাকাস",
+        p_l1_t3: "স্লাইড রুল (১৯৭২)",
+        p_l1_t4: "স্পিড ডুয়েল",
+        p_l1_btn: "লেকচার ১ শুরু করো ➡️",
+
+        p_l2_title: "Evolution of Computers",
+        p_l2_desc: "প্যাসকেল ও ব্যাবেজের মেকানিক্যাল গিয়ার থেকে শুরু করে ENIAC, ৪০-বিট প্রিন্সটন IAS কম্পিউটার এবং IBM System/360 এর মহাবিপ্লব।",
+        p_l2_vault: "🎯 <strong>এক্সাম ভল্ট:</strong> IAS ৪০-বিট কোডব্রেকার, ২০ KB মেমরি স্পেস ও IAS রেজিস্টার ডেটাফ্লো",
+        p_l2_t1: "ব্যাবেজের মিল ও স্টোর",
+        p_l2_t2: "প্রিন্সটন IAS ৪০-বিট",
+        p_l2_t3: "IBM ৩৬০ সামঞ্জস্যতা",
+        p_l2_t4: "৫টি প্রজন্ম",
+        p_l2_btn: "লেকচার ২ শুরু করো ➡️",
+
+        p_l3_title: "Design Methodology",
+        p_l3_desc: "ডিজাইন প্রক্রিয়া (Analysis vs Synthesis), জন পি. হেইজের ৩টি ডিজাইন লেভেল, ফুল অ্যাডার সার্কিট, ক্যাশ মেমরি এবং ৪ প্রকারের ইন্টারাপ্ট।",
+        p_l3_vault: "🎯 <strong>এক্সাম ভল্ট:</strong> ক্যাশ AMAT হিসাব, ফুল অ্যাডার ক্রিটিক্যাল পাথ ও I-Unit / E-Unit ব্লুপ্রিন্ট",
+        p_l3_t1: "৩টি ডিজাইন লেভেল",
+        p_l3_t2: "ফুল অ্যাডার সিমুলেটর",
+        p_l3_t3: "ক্যাশ রেস ট্র্যাক",
+        p_l3_t4: "৪ প্রকারের ইন্টারাপ্ট",
+        p_l3_btn: "লেকচার ৩ শুরু করো ➡️",
+
+        p_l4_title: "Data Representation",
+        p_l4_desc: "সংখ্যা পদ্ধতির রূপান্তর, ২'স কমপ্লিমেন্ট অ্যালগরিদম, ASCII ক্যারেক্টার লুকআপ, ২ HA + ১ OR দিয়ে ডিকম্পোজড ফুল অ্যাডার ও রিপল ক্যারি।",
+        p_l4_vault: "🎯 <strong>এক্সাম ভল্ট:</strong> ২'স কমপ্লিমেন্ট বিয়োগ ($7-4=+3$), ASCII বিট হিসাব ও রিপল ক্যারি ডিলে",
+        p_l4_t1: "বেস কনভার্টার",
+        p_l4_t2: "২'স কমপ্লিমেন্ট নিনজা",
+        p_l4_t3: "ASCII লাইভ ডিকোডার",
+        p_l4_t4: "ইউনিভার্সাল NAND গেট",
+        p_l4_btn: "লেকচার ৪ শুরু করো ➡️",
+
+        p_l5_title: "Processor Basics",
+        p_l5_desc: "Big-Endian বনাম Little-Endian মেমরি বিন্যাস, ২-স্টেজ ইনস্ট্রাকশন পাইপলাইনিং, ৬টি অ্যাড্রেসিং মোড এবং ফিক্সড বনাম ভ্যারিয়েবল নির্দেশ।",
+        p_l5_vault: "🎯 <strong>এক্সাম ভল্ট:</strong> পাইপলাইনিং স্পিডআপ ($S_k$), বিগ ও লিটল এন্ডিয়ান মেমরি লেআউট এবং ০/১/২/৩ অপারেন্ড",
+        p_l5_t1: "Big বনাম Little Endian",
+        p_l5_t2: "০, ১, ২, ৩ অপারেন্ড",
+        p_l5_t3: "পাইপলাইন সিমুলেটর",
+        p_l5_t4: "হ্যাজার্ড বাস্টার গেম",
+        p_l5_btn: "লেকচার ৫ শুরু করো ➡️",
+
+        p_footer: "কম্পিউটার আর্কিটেকচার অ্যান্ড অর্গানাইজেশন (CAO) — ড্যাফোডিল ইন্টারন্যাশনাল ইউনিভার্সিটি (DIU CSE)",
+        p_footer_sub: "জন পি. হেইজের পাঠ্যপুস্তকের ভিত্তিতে প্রস্তুতকৃত • স্পষ্ট বোধগম্যতা ও পরীক্ষায় সাফল্যের জন্য নিবেদিত"
+      },
+      en: {
+        portal_tag: "🚀 DIU CSE • John P. Hayes Comprehensive Syllabus",
+        portal_title: 'Computer Architecture & Organization<br><span class="gradient-text">Interactive Masterclass & Exam Hub</span>',
+        portal_sub: "Stop memorizing dry slides! Real-time logic gate calculators, Soroban Abacus, instruction pipeline timelines, and step-by-step solved math with blueprints for all 5 lectures.",
+
+        p_l1_title: "Computing & Computers",
+        p_l1_desc: "Architecture vs Organization, Soroban Abacus, logarithmic Slide Rule, and the Human Brain vs CPU Speed Duel.",
+        p_l1_vault: "🎯 <strong>Exam Vault:</strong> Clock Period ($T=1/f$), Human vs CPU Math & 4 Key Elements Blueprint",
+        p_l1_t1: "Architecture vs Org",
+        p_l1_t2: "Soroban Abacus",
+        p_l1_t3: "Slide Rule (1972)",
+        p_l1_t4: "Speed Duel",
+        p_l1_btn: "Start Lecture 1 ➡️",
+
+        p_l2_title: "Evolution of Computers",
+        p_l2_desc: "From Pascal and Babbage mechanical gears to ENIAC, the 40-bit Princeton IAS architecture, and IBM System/360 software compatibility.",
+        p_l2_vault: "🎯 <strong>Exam Vault:</strong> IAS 40-Bit Codebreaker, 20 KB Addressable Space & IAS Register Dataflow",
+        p_l2_t1: "Babbage Mill & Store",
+        p_l2_t2: "Princeton IAS 40-Bit",
+        p_l2_t3: "IBM 360 Compatibility",
+        p_l2_t4: "5 Generations",
+        p_l2_btn: "Start Lecture 2 ➡️",
+
+        p_l3_title: "Design Methodology",
+        p_l3_desc: "Analysis vs Synthesis, the 3 Design Levels (Gate, RTL, Processor), Full Adder gates, Cache AMAT, and the 4 interrupt classes.",
+        p_l3_vault: "🎯 <strong>Exam Vault:</strong> Cache AMAT Calculation, Full Adder Critical Path & I-Unit/E-Unit Blueprint",
+        p_l3_t1: "3 Design Levels",
+        p_l3_t2: "Full Adder Simulator",
+        p_l3_t3: "Cache Race Track",
+        p_l3_t4: "4 Interrupt Classes",
+        p_l3_btn: "Start Lecture 3 ➡️",
+
+        p_l4_title: "Data Representation",
+        p_l4_desc: "Number base conversions, 2's Complement Ninja, ASCII character math, and Decomposed Full Adder ripple carry propagation.",
+        p_l4_vault: "🎯 <strong>Exam Vault:</strong> 2's Complement Subtraction ($7-4=+3$), ASCII Bit Math & Ripple Carry Delay",
+        p_l4_t1: "Base Converter",
+        p_l4_t2: "2's Complement Ninja",
+        p_l4_t3: "ASCII Live Decoder",
+        p_l4_t4: "Universal NAND Gates",
+        p_l4_btn: "Start Lecture 4 ➡️",
+
+        p_l5_title: "Processor Basics",
+        p_l5_desc: "Big-Endian vs Little-Endian byte mapping, 2-stage pipelining speedup, 6 addressing modes, and fixed vs variable formats.",
+        p_l5_vault: "🎯 <strong>Exam Vault:</strong> Pipelining Speedup ($S_k$), Big/Little Endian 10-Mark Layout & 0/1/2/3 Operands",
+        p_l5_t1: "Big vs Little Endian",
+        p_l5_t2: "0, 1, 2, 3 Operands",
+        p_l5_t3: "Pipeline Simulator",
+        p_l5_t4: "Hazard Buster Game",
+        p_l5_btn: "Start Lecture 5 ➡️",
+
+        p_footer: "Computer Architecture & Organization (CAO) — Daffodil International University (DIU CSE)",
+        p_footer_sub: "Based on John P. Hayes Textbook • Engineered for Intuitive Understanding & Exam Excellence"
+      }
+    };
+
+    let pLang = localStorage.getItem('cao_lang') || 'bn';
+
+    function setPortalLang(lang) {
+      pLang = lang;
+      localStorage.setItem('cao_lang', lang);
+      document.documentElement.lang = lang;
+
+      const bnBtn = document.getElementById('langBnBtn');
+      const enBtn = document.getElementById('langEnBtn');
+      if (bnBtn && enBtn) {
+        if (lang === 'bn') {
+          bnBtn.classList.add('active');
+          enBtn.classList.remove('active');
+        } else {
+          enBtn.classList.add('active');
+          bnBtn.classList.remove('active');
+        }
+      }
+
+      const dict = portalTranslations[lang];
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const k = el.getAttribute('data-i18n');
+        if (dict[k]) el.innerHTML = dict[k];
+      });
+
+      window.dispatchEvent(new CustomEvent('caoLanguageChanged'));
+    }
+
+    document.getElementById('langBnBtn').addEventListener('click', () => setPortalLang('bn'));
+    document.getElementById('langEnBtn').addEventListener('click', () => setPortalLang('en'));
+
+    setPortalLang(pLang);
+  </script>
+</body>
+</html>

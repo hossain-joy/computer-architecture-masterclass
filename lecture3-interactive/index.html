@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAO Lecture 3: Design Methodology - Interactive Masterclass</title>
+  <meta name="description" content="Computer Architecture and Organization (CAO) Lecture 3: Design Methodology - Interactive visual platform covering Gate, Register (RTL), and Processor Levels, Full Adders, Cache, System Bus, and Interrupts.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Hind+Siliguri:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../shared-gamification.css">
+</head>
+<body>
+  <!-- Ambient Background Glows -->
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
+  <div class="glow-orb orb-3"></div>
+
+  <!-- Navigation Bar -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="brand">
+        <a href="../index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 0.75rem;">
+          <span class="brand-badge">CAO L-03</span>
+          <div class="brand-title">
+            <span class="main-title">Design Methodology</span>
+            <span class="sub-title" data-i18n="nav_brand_sub">DIU CSE • John P. Hayes</span>
+          </div>
+        </a>
+      </div>
+      <nav class="nav-links" id="navLinks">
+        <a href="#system-design" class="nav-link" data-i18n="nav_design_process">Design Process</a>
+        <a href="#design-levels" class="nav-link" data-i18n="nav_levels">3 Design Levels</a>
+        <a href="#gate-level" class="nav-link" data-i18n="nav_gate">Gate Level & Adder</a>
+        <a href="#register-level" class="nav-link" data-i18n="nav_rtl">Register Level (RTL)</a>
+        <a href="#processor-cache" class="nav-link" data-i18n="nav_proc">Processor & Cache</a>
+        <a href="#bus-interrupts" class="nav-link" data-i18n="nav_bus">Bus & Interrupts</a>
+        <a href="#quiz-zone" class="nav-link" data-i18n="nav_quiz">Exam Quiz</a>
+      </nav>
+      <div class="nav-actions">
+        <!-- Language Switcher Toggle -->
+        <div class="lang-switch-group" id="langSwitchGroup">
+          <button id="langBnBtn" class="lang-btn active" data-lang="bn">বাংলা</button>
+          <button id="langEnBtn" class="lang-btn" data-lang="en">English</button>
+        </div>
+
+        <button id="soundToggleBtn" class="action-btn" title="Toggle Sound FX">
+          <span class="icon">🔊</span>
+        </button>
+
+        <!-- Lecture Switcher Dropdown (Replaces static L-01, L-02, etc.) -->
+        <div class="lecture-dropdown" id="lectureDropdown">
+          <button class="action-btn dropdown-toggle" id="lectureDropdownBtn" type="button" aria-haspopup="true" aria-expanded="false" title="Switch Lecture">
+            <span class="icon">📚</span>
+            <span class="dropdown-label">Lectures</span>
+            <span class="dropdown-arrow">▾</span>
+          </button>
+          <div class="dropdown-menu" id="lectureDropdownMenu">
+            <a href="../index.html" class="dropdown-item">
+              <span class="dropdown-badge b-portal">🏠 Portal</span>
+              <span class="dropdown-item-title">Course Overview & Home</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="../lecture1-interactive/index.html" class="dropdown-item">
+              <span class="dropdown-badge b-l1">L-01</span>
+              <span class="dropdown-item-title">Intro & Architecture</span>
+            </a>
+            <a href="../lecture2-interactive/index.html" class="dropdown-item">
+              <span class="dropdown-badge b-l2">L-02</span>
+              <span class="dropdown-item-title">Evolution of Computers</span>
+            </a>
+            <a href="../lecture3-interactive/index.html" class="dropdown-item current-lecture">
+              <span class="dropdown-badge b-l3">L-03</span>
+              <span class="dropdown-item-title">Design Methodology</span>
+              <span class="current-dot"></span>
+            </a>
+            <a href="../lecture4-interactive/index.html" class="dropdown-item">
+              <span class="dropdown-badge b-l4">L-04</span>
+              <span class="dropdown-item-title">Data Representation</span>
+            </a>
+            <a href="../lecture5-interactive/index.html" class="dropdown-item">
+              <span class="dropdown-badge b-l5">L-05</span>
+              <span class="dropdown-item-title">Processor Basics</span>
+            </a>
+          </div>
+        </div>
+
+        <a href="#quiz-zone" class="action-btn primary-btn quiz-nav-btn">
+          <span data-i18n="nav_take_test">টেস্ট দাও</span>
+        </a>
+
+        <!-- Mobile Hamburger Toggle Button -->
+        <button class="nav-toggle-btn" id="navToggleBtn" type="button" aria-label="Toggle Navigation Menu" aria-expanded="false">
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-badge">
+        <span class="badge-dot"></span> <span data-i18n="hero_badge">লেকচার ৩ এর সম্পূর্ণ ইন্টারেক্টিভ গাইড</span>
+      </div>
+      <h1 class="hero-title" data-i18n="hero_title">
+        কম্পিউটার ডিজাইন মেথডোলজি (Design Methodology)<br>
+        <span class="gradient-text">গেট লেভেল, আরটিএল ও প্রসেসর লেভেলের স্থাপত্য</span>
+      </h1>
+      <p class="hero-subtitle" data-i18n="hero_subtitle">
+        লজিক গেটের বিট থেকে শুরু করে ফুল অ্যাডার, ফ্লিপ-ফ্লপ, রেজিস্টার ও ক্যাশ মেমরির হাই-স্পিড ডেটা ফ্লো—
+        একটি কম্পিউটার কীভাবে ধাপে ধাপে ডিজাইন করা হয় তা শিখে নাও রিয়েল-টাইম ইন্টারেক্টিভ সিমুলেটরে!
+      </p>
+
+      <div style="display: flex; justify-content: center; margin: 18px 0 24px; gap: 14px; flex-wrap: wrap;">
+        <a href="lecture3_bangla_animated_lecture.mp4" target="_blank" class="action-btn" style="background: linear-gradient(135deg, #10b981, #059669); color: #fff; font-weight: 700; padding: 12px 24px; border-radius: 30px; box-shadow: 0 4px 20px rgba(16, 185, 129, 0.45); display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-size: 1rem; border: 1px solid rgba(255,255,255,0.2);">
+          <span style="font-size: 1.25rem;">🎙️</span> <span data-i18n="btn_watch_bangla_video">বাংলা ভয়েসওভার অ্যানিমেটেড ক্লাস (1080p Bangla Video)</span>
+        </a>
+        <a href="lecture3_walkthrough.mp4" target="_blank" class="action-btn" style="background: linear-gradient(135deg, #f59e0b, #ef4444); color: #fff; font-weight: 700; padding: 12px 24px; border-radius: 30px; box-shadow: 0 4px 20px rgba(245, 158, 11, 0.4); display: inline-flex; align-items: center; gap: 10px; text-decoration: none; font-size: 1rem; border: 1px solid rgba(255,255,255,0.2);">
+          <span style="font-size: 1.25rem;">🎬</span> <span data-i18n="btn_watch_video">ইন্টারঅ্যাক্টিভ ওয়াকথ্রু (Walkthrough Video)</span>
+        </a>
+      </div>
+
+      <div class="hero-stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">🔄</div>
+          <div class="stat-data">
+            <span class="stat-number">Analysis vs Synthesis</span>
+            <span class="stat-label" data-i18n="stat_process">সিস্টেম ডিজাইন প্রক্রিয়া</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🎛️</div>
+          <div class="stat-data">
+            <span class="stat-number">Gate • RTL • Processor</span>
+            <span class="stat-label" data-i18n="stat_levels">৩টি মূল ডিজাইন লেভেল</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">⚡</div>
+          <div class="stat-data">
+            <span class="stat-number">Full Adder & Flip-Flops</span>
+            <span class="stat-label" data-i18n="stat_comb_seq">কম্বিনেশনাল ও সিকোয়েন্সিয়াল</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🚀</div>
+          <div class="stat-data">
+            <span class="stat-number">Cache & System Bus</span>
+            <span class="stat-label" data-i18n="stat_cache">ক্যাশ মেমরি ও ইন্টারাপ্টস</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: System Design & Process -->
+    <section id="system-design" class="content-section">
+      <div class="section-header">
+        <div class="section-tag" data-i18n="sec1_tag">মডিউল ১ • স্লাইড ২ থেকে ৯</div>
+        <h2 data-i18n="sec1_title">সিস্টেম ডিজাইন ও প্রক্রিয়া (System Design Process)</h2>
+        <p class="section-desc" data-i18n="sec1_desc">
+          কম্পিউটার হলো একাধিক কম্পোনেন্টের সমন্বয়ে গঠিত একটি সিস্টেম। নিচের ল্যাবে Analysis বনাম Synthesis-এর পার্থক্য দেখে নাও।
+        </p>
+      </div>
+
+      <!-- Analysis vs Synthesis Duel Cards -->
+      <div class="duel-box-wide">
+        <div class="duel-column analysis-col">
+          <div class="duel-col-header">
+            <span class="duel-col-icon">🔍</span>
+            <h4 data-i18n="analysis_title">Analysis (বিশ্লেষণ)</h4>
+          </div>
+          <p data-i18n="analysis_def">
+            একটি সিস্টেমের <strong>গঠন বা সার্কিট (Structure)</strong> জানা আছে, সেখান থেকে তার <strong>কাজ বা আচরণ (Behavior/Function)</strong> নির্ণয় করার প্রক্রিয়াকে Analysis বলা হয়।
+          </p>
+          <div class="math-formula-pill">Structure ➔ Behavior</div>
+        </div>
+
+        <div class="duel-column synthesis-col">
+          <div class="duel-col-header">
+            <span class="duel-col-icon">🛠️</span>
+            <h4 data-i18n="synthesis_title">Synthesis বা Design (সংশ্লেষণ)</h4>
+          </div>
+          <p data-i18n="synthesis_def">
+            চাহিদামতো <strong>আচরণ বা কাজ (Desired Behavior)</strong> দেওয়া আছে, তা বাস্তবায়নের জন্য প্রয়োজনীয় <strong>সার্কিট বা কাঠামো (Structure)</strong> তৈরি করার প্রক্রিয়াকে Synthesis বলে।
+          </p>
+          <div class="math-formula-pill highlight-cyan-pill">Behavior ➔ Structure</div>
+        </div>
+      </div>
+
+      <!-- Iterative Design Flowchart Simulator (Slide 9) -->
+      <div class="interactive-lab-card" id="iterative-lab">
+        <div class="lab-header">
+          <div>
+            <span class="badge-status highlight-indigo" data-i18n="iter_badge">ইন্টারেক্টিভ ফ্লোচার্ট • স্লাইড ৯</span>
+            <h3 data-i18n="iter_title">🔄 আইটারেটিভ ডিজাইন প্রক্রিয়া (Iterative Design Process)</h3>
+            <p data-i18n="iter_desc">
+              ইঞ্জিনিয়াররা কীভাবে খরচ (Cost) ও পারফরম্যান্স (Performance) বিবেচনা করে ধাপে ধাপে কম্পিউটার ডিজাইন করেন তা সিমুলেট করে দেখো!
+            </p>
+          </div>
+          <button id="btnRunDesignCycle" class="action-btn" data-i18n="btn_run_design">▶ ডিজাইন চক্র টেস্ট করো</button>
+        </div>
+
+        <div class="flowchart-steps-grid">
+          <div class="fc-step" id="fcStep1">
+            <span class="fc-num">1</span>
+            <strong>Construct Initial Design</strong>
+            <span data-i18n="fc_step1">প্রাথমিক সার্কিট ডিজাইন তৈরি</span>
+          </div>
+          <div class="fc-arrow">➔</div>
+          <div class="fc-step" id="fcStep2">
+            <span class="fc-num">2</span>
+            <strong>Evaluate Cost & Performance</strong>
+            <span data-i18n="fc_step2">খরচ ও গতির মূল্যায়ন</span>
+          </div>
+          <div class="fc-arrow">➔</div>
+          <div class="fc-step" id="fcStep3">
+            <span class="fc-num">3</span>
+            <strong>Goals Met?</strong>
+            <span data-i18n="fc_step3">লক্ষ্য পূরণ হয়েছে কি?</span>
+          </div>
+          <div class="fc-arrow">➔</div>
+          <div class="fc-step success-step" id="fcStep4">
+            <span class="fc-num">4</span>
+            <strong>Final Production</strong>
+            <span data-i18n="fc_step4">চূড়ান্ত অনুমোদন (End)</span>
+          </div>
+        </div>
+        <div class="feedback-loop-note" id="fcLoopNote" data-i18n="fc_loop_default">
+          💡 যদি গোল পূরণ না হয়, তাহলে ডিজাইন পরিবর্তন (Modify design) করে আবার ধাপে ২-এ ফিরে যাওয়া হয়!
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: The 3 Design Levels (Slide 11 Table) -->
+    <section id="design-levels" class="content-section">
+      <div class="section-header">
+        <div class="section-tag" data-i18n="sec2_tag">মডিউল ২ • স্লাইড ১০ ও ১১</div>
+        <h2 data-i18n="sec2_title">কম্পিউটার ডিজাইনের ৩টি স্তর (The 3 Design Levels)</h2>
+        <p class="section-desc" data-i18n="sec2_desc">
+          জন পি. হেইজের এই ৩ স্তরের টেবিলটি পরীক্ষার জন্য সবচেয়ে গুরুত্বপূর্ণ ৩/৫ মার্কের প্রশ্ন!
+        </p>
+      </div>
+
+      <!-- 3 Design Levels Table Card -->
+      <div class="table-container-card">
+        <div class="table-header-title">
+          <h3 data-i18n="levels_table_title">📋 ৩টি ডিজাইন লেভেলের সম্পূর্ণ তুলনামূলক চার্ট (Slide 11)</h3>
+          <p data-i18n="levels_table_sub">গেট লেভেল থেকে শুরু করে পুরো সিস্টেম লেভেল পর্যন্ত সমস্ত প্যারামিটার:</p>
+        </div>
+
+        <div class="responsive-table-wrapper">
+          <table class="styled-table levels-table">
+            <thead>
+              <tr>
+                <th style="width: 15%;" data-i18n="th_level">Design Level</th>
+                <th style="width: 30%;" data-i18n="th_components">মূল উপাদান (Components)</th>
+                <th style="width: 15%;" data-i18n="th_density">IC Density</th>
+                <th style="width: 20%;" data-i18n="th_info_units">তথ্যের একক (Information Units)</th>
+                <th style="width: 20%;" data-i18n="th_time_units">সময়ের স্কেল (Time Units)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="level-row gate-row">
+                <td>
+                  <span class="level-badge badge-gate">Gate Level</span>
+                  <span class="sub-label">(Logic Level)</span>
+                </td>
+                <td data-i18n="gate_comp">Logic gates (AND, OR, NOT, XOR), Flip-Flops</td>
+                <td><span class="tech-pill">SSI</span></td>
+                <td><strong class="unit-highlight" data-i18n="gate_info">Bits (0 ও 1)</strong></td>
+                <td><code>10⁻¹² to 10⁻⁹ s</code><br><span class="time-sub">(Picoseconds to Nanoseconds)</span></td>
+              </tr>
+
+              <tr class="level-row reg-row">
+                <td>
+                  <span class="level-badge badge-reg">Register Level</span>
+                  <span class="sub-label">(RTL)</span>
+                </td>
+                <td data-i18n="reg_comp">Registers, Counters, Multiplexers, Decoders, Adders, ALUs</td>
+                <td><span class="tech-pill">MSI</span></td>
+                <td><strong class="unit-highlight" data-i18n="reg_info">Words / Vectors</strong></td>
+                <td><code>10⁻⁹ to 10⁻⁶ s</code><br><span class="time-sub">(Nanoseconds to Microseconds)</span></td>
+              </tr>
+
+              <tr class="level-row proc-row">
+                <td>
+                  <span class="level-badge badge-proc">Processor Level</span>
+                  <span class="sub-label">(System Level)</span>
+                </td>
+                <td data-i18n="proc_comp">CPUs, Main Memory, Cache, I/O Devices, System Buses</td>
+                <td><span class="tech-pill">VLSI</span></td>
+                <td><strong class="unit-highlight" data-i18n="proc_info">Blocks of Words</strong></td>
+                <td><code>10⁻³ to 10³ s</code><br><span class="time-sub">(Milliseconds to Seconds)</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: The Gate Level & Full Adder -->
+    <section id="gate-level" class="content-section">
+      <div class="section-header">
+        <div class="section-tag" data-i18n="sec3_tag">মডিউল ৩ • স্লাইড ১২ থেকে ১৯</div>
+        <h2 data-i18n="sec3_title">The Gate Level: লজিক গেট, ফুল অ্যাডার ও ফ্লিপ-ফ্লপ</h2>
+        <p class="section-desc" data-i18n="sec3_desc">
+          কম্বিনেশনাল লজিক (স্মৃতিহীন) বনাম সিকোয়েন্সিয়াল লজিক (১-বিট মেমরি ফ্লিপ-ফ্লপ)।
+        </p>
+      </div>
+
+      <!-- Interactive Full Adder Simulator (Slides 14 - 16) -->
+      <div class="interactive-lab-card" id="full-adder-lab">
+        <div class="lab-header">
+          <div>
+            <span class="badge-status highlight-cyan" data-i18n="fa_badge">লাইভ বাইনারি ক্যালকুলেটর • স্লাইড ১৫</span>
+            <h3 data-i18n="fa_title">🧮 ফুল অ্যাডার লাইভ সিমুলেটর (Interactive Full Adder)</h3>
+            <p data-i18n="fa_desc">
+              $A$, $B$ এবং $C_{in}$ ইনপুটগুলোতে ক্লিক করে টগল করো! দেখো কীভাবে Sum ($S$) এবং Carry Out ($C_0$) পরিবর্তিত হচ্ছে:
+            </p>
+          </div>
+          <div class="adder-equation-box">
+            <span class="eq-label">Formula:</span>
+            <code>c₀s₀ = x₀ + y₀ + c₋₁</code>
+          </div>
+        </div>
+
+        <div class="adder-interactive-container">
+          <div class="adder-inputs-col">
+            <div class="input-toggle-btn" id="btnInputA" data-val="0">
+              <span class="btn-var">Input A (x₀)</span>
+              <strong class="btn-bit" id="bitValA">0</strong>
+            </div>
+            <div class="input-toggle-btn" id="btnInputB" data-val="0">
+              <span class="btn-var">Input B (y₀)</span>
+              <strong class="btn-bit" id="bitValB">0</strong>
+            </div>
+            <div class="input-toggle-btn" id="btnInputCin" data-val="0">
+              <span class="btn-var">Carry In (c₋₁)</span>
+              <strong class="btn-bit" id="bitValCin">0</strong>
+            </div>
+          </div>
+
+          <div class="adder-visual-chip">
+            <div class="chip-inner">
+              <span class="chip-title">1-Bit Full Adder</span>
+              <div class="circuit-wiring">
+                <span class="wire-label">Sum = A ⊕ B ⊕ Cin</span>
+                <span class="wire-label">Cout = AB + Cin(A ⊕ B)</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="adder-outputs-col">
+            <div class="output-display-box" id="sumBox">
+              <span class="out-label">SUM (s₀)</span>
+              <span class="out-val" id="outSum">0</span>
+            </div>
+            <div class="output-display-box" id="carryBox">
+              <span class="out-label">CARRY (c₀)</span>
+              <span class="out-val" id="outCarry">0</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="truth-table-peek">
+          <span class="peek-title" data-i18n="sop_pos_title">📌 SOP ও POS সমীকরণ (স্লাইড ১৬):</span>
+          <div class="sop-pos-grid">
+            <div class="formula-card">
+              <strong>Sum-of-Products (SOP):</strong>
+              <code>s₀ = x̄ȳc + x̄ȳc + xȳc̄ + xyz</code>
+            </div>
+            <div class="formula-card">
+              <strong>Product-of-Sums (POS):</strong>
+              <code>c₀ = (x₀ + c₋₁)(x₀ + y₀)(y₀ + c₋₁)</code>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Combinational vs Sequential Comparison (Slide 12 & 17, 19) -->
+      <div class="duel-box-wide">
+        <div class="duel-column">
+          <div class="duel-col-header">
+            <span class="duel-col-icon">⚡</span>
+            <h4 data-i18n="comb_title">Combinational Logic (কম্বিনেশনাল লজিক)</h4>
+          </div>
+          <p data-i18n="comb_desc">
+            এদের <strong>কোনো মেমরি বা স্মৃতিশক্তি নেই</strong> (Memoryless)। বর্তমান আউটপুট শুধুমাত্র বর্তমান ইনপুটের ওপর নির্ভর করে।<br>
+            <strong>উপাদান:</strong> AND, OR, NOT, XOR গেটস, Full Adders।
+          </p>
+        </div>
+
+        <div class="duel-column highlight-border-col">
+          <div class="duel-col-header">
+            <span class="duel-col-icon">💾</span>
+            <h4 data-i18n="seq_title">Sequential Logic (সিকোয়েন্সিয়াল লজিক)</h4>
+          </div>
+          <p data-i18n="seq_desc">
+            কম্বিনেশনাল লজিকের সাথে <strong>১-বিট মেমরি উপাদান (Flip-Flops)</strong> যুক্ত করলে তা সিকোয়েন্সিয়াল সার্কিট হয়। এর আউটপুট বর্তমান ইনপুট এবং <em>অতীত অবস্থার (Past state)</em> ওপর নির্ভর করে।
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: Register Level (RTL) -->
+    <section id="register-level" class="content-section">
+      <div class="section-header">
+        <div class="section-tag" data-i18n="sec4_tag">মডিউল ৪ • স্লাইড ২০ ও ২১</div>
+        <h2 data-i18n="sec4_title">The Register Level (RTL): ওয়ার্ড ও কম্পোনেন্টস</h2>
+        <p class="section-desc" data-i18n="sec4_desc">
+          রেজিস্টার লেভেলে বিটগুলোকে গ্রুপ করে **ওয়ার্ড (Words বা Vectors)** হিসেবে প্রসেস ও ট্রান্সফার করা হয়।
+        </p>
+      </div>
+
+      <div class="rtl-components-grid">
+        <div class="rtl-card">
+          <div class="rtl-header">
+            <span class="badge-status">Combinational</span>
+            <h3>Multiplexer (MUX)</h3>
+          </div>
+          <p data-i18n="mux_desc"><strong>Data Routing:</strong> একাধিক ইনপুট লাইন থেকে একটি নির্দিষ্ট ডেটা লাইন সিলেক্ট করে আউটপুটে পাঠানোর সুইচ।</p>
+        </div>
+
+        <div class="rtl-card">
+          <div class="rtl-header">
+            <span class="badge-status">Combinational</span>
+            <h3>Decoder & Encoder</h3>
+          </div>
+          <p data-i18n="decoder_desc"><strong>Code Checking & Conversion:</strong> বাইনারি কোডকে ডিকোড করে নির্দিষ্ট মেমরি লোকেশন বা ফাংশন সক্রিয় করা।</p>
+        </div>
+
+        <div class="rtl-card">
+          <div class="rtl-header">
+            <span class="badge-status highlight-cyan">Sequential</span>
+            <h3>Parallel & Shift Registers</h3>
+          </div>
+          <p data-i18n="shift_reg_desc"><strong>Information Storage & Conversion:</strong> ডেটা ওয়ার্ড সাময়িকভাবে ধারণ করা এবং সিরিয়াল থেকে প্যারালাল রূপান্তর করা।</p>
+        </div>
+
+        <div class="rtl-card">
+          <div class="rtl-header">
+            <span class="badge-status highlight-cyan">Sequential</span>
+            <h3>Counters & PLDs</h3>
+          </div>
+          <p data-i18n="counter_desc"><strong>Control & Timing Signal:</strong> ক্লক পালসের ধারাবাহিকতা গুনে কন্ট্রোল সিগন্যাল তৈরি ও প্রোগ্রাম কাউন্টার (PC) বাড়ানো।</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: The Processor Level & Cache Memory -->
+    <section id="processor-cache" class="content-section">
+      <div class="section-header">
+        <div class="section-tag" data-i18n="sec5_tag">মডিউল ৫ • স্লাইড ২২ থেকে ২৮</div>
+        <h2 data-i18n="sec5_title">The Processor Level: CPU ও ক্যাশ মেমরি (Cache)</h2>
+        <p class="section-desc" data-i18n="sec5_desc">
+          প্রসেসরের অভ্যন্তরীণ আর্কিটেকচার (I-Unit ও E-Unit) এবং মেমরি হায়ারার্কিতে ক্যাশ মেমরির ভূমিকা।
+        </p>
+      </div>
+
+      <!-- CPU Internal Organization (Slide 23) -->
+      <div class="interactive-lab-card" id="cpu-org-lab">
+        <div class="lab-header">
+          <div>
+            <span class="badge-status highlight-indigo" data-i18n="cpu_arch_badge">স্লাইড ২৩ এর মূল ডায়াগ্রাম</span>
+            <h3 data-i18n="cpu_arch_title">🏛️ CPU-এর অভ্যন্তরীণ গঠন: I-Unit বনাম Datapath E-Unit</h3>
+            <p data-i18n="cpu_arch_desc">সিপিইউ দুটি প্রধান ভাগে বিভক্ত: কন্ট্রোল পার্ট (I-Unit) এবং এক্সিকিউশন পার্ট (Datapath E-Unit)।</p>
+          </div>
+        </div>
+
+        <div class="cpu-split-view">
+          <div class="cpu-box i-unit-box">
+            <div class="box-tag">Program Control Unit (I - Unit)</div>
+            <h4 data-i18n="i_unit_title">ইনস্ট্রাকশন কন্ট্রোল পার্ট</h4>
+            <ul class="unit-features">
+              <li data-i18n="i_unit_pc"><strong>Program Counter (PC):</strong> পরবর্তী নির্দেশের মেমরি অ্যাড্রেস রাখে।</li>
+              <li data-i18n="i_unit_ir"><strong>Instruction Register (IR):</strong> মেমরি থেকে আনা নির্দেশ জমা রাখে।</li>
+              <li data-i18n="i_unit_id"><strong>Instruction Decoder:</strong> নির্দেশ অপকোড ডিকোড করে কন্ট্রোল সিগন্যাল তৈরি করে।</li>
+              <li data-i18n="i_unit_ag"><strong>Address Generation:</strong> মেমরির অ্যাড্রেস জেনারেট করে।</li>
+            </ul>
+            <div class="formal-op-pill"><code>IR := M(PC);</code></div>
+          </div>
+
+          <div class="cpu-box e-unit-box">
+            <div class="box-tag highlight-green">Datapath (E - Unit)</div>
+            <h4 data-i18n="e_unit_title">এক্সিকিউশন ও ডেটা প্রসেসিং পার্ট</h4>
+            <ul class="unit-features">
+              <li data-i18n="e_unit_alu"><strong>Arithmetic Logic Unit (ALU):</strong> মূল যোগ, বিয়োগ, লজিক্যাল অপারেশন সম্পন্ন করে।</li>
+              <li data-i18n="e_unit_rf"><strong>Register File:</strong> মধ্যবর্তী ডেটা ও অপারেন্ড সংরক্ষণের দ্রুতগতির রেজিস্টার গ্রুপ।</li>
+              <li data-i18n="e_unit_store">কন্ট্রোল সিগন্যাল পাওয়ার সাথে সাথে ডেটা প্রসেস করে ফলাফল স্টোর করে।</li>
+            </ul>
+            <div class="formal-op-pill highlight-green-pill"><code>Execute & Store Result</code></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Interactive Cache Hit vs Miss Simulator (Slide 28) -->
+      <div class="interactive-lab-card" id="cache-lab">
+        <div class="lab-header">
+          <div>
+            <span class="badge-status highlight-cyan" data-i18n="cache_badge">লাইভ মেমরি সিমুলেশন • স্লাইড ২৮</span>
+            <h3 data-i18n="cache_title">⚡ ক্যাশ মেমরি সিমুলেটর (Cache Hit vs. Cache Miss)</h3>
+            <p data-i18n="cache_desc">
+              প্রসেসর যখনই কোনো মেমরি ওয়ার্ড পড়তে চায়, প্রথমে ক্যাশে চেক করে। নিচে 'Cache Hit' ও 'Cache Miss' বাটন ক্লিক করে পার্থক্য দেখো!
+            </p>
+          </div>
+          <div class="cache-actions">
+            <button id="btnCacheHit" class="action-btn" data-i18n="btn_cache_hit">🎯 Cache Hit সিমুলেট করো</button>
+            <button id="btnCacheMiss" class="action-btn secondary-btn" data-i18n="btn_cache_miss">🔍 Cache Miss সিমুলেট করো</button>
+          </div>
+        </div>
+
+        <div class="cache-hierarchy-visual">
+          <div class="mem-level cpu-level" id="nodeCPU">
+            <span class="node-icon">🧠</span>
+            <span class="node-name">CPU Processor</span>
+            <span class="node-sub">Needs Word at Addr 0x4A</span>
+          </div>
+
+          <div class="transfer-channel channel-cache" id="chanCache">
+            <span class="chan-label" id="labelCacheChan">Word Transfer (1 ns)</span>
+            <span class="chan-arrow">↕️</span>
+          </div>
+
+          <div class="mem-level cache-level" id="nodeCache">
+            <span class="node-icon">⚡</span>
+            <span class="node-name">Cache Memory</span>
+            <span class="node-sub">Small, Ultra-fast (L1/L2)</span>
+          </div>
+
+          <div class="transfer-channel channel-main" id="chanMain">
+            <span class="chan-label" id="labelMainChan">Block Transfer (50 ns)</span>
+            <span class="chan-arrow">↕️</span>
+          </div>
+
+          <div class="mem-level main-level" id="nodeMain">
+            <span class="node-icon">🗄️</span>
+            <span class="node-name">Main Memory (M)</span>
+            <span class="node-sub">Larger, Slower DRAM</span>
+          </div>
+        </div>
+
+        <div class="cache-status-narrator" id="cacheNarrator" data-i18n="cache_narrator_default">
+          💡 'Cache Hit' অথবা 'Cache Miss' বাটনে ক্লিক করে ডেটা চলাচলের অ্যানিমেশন পর্যবেক্ষণ করো।
+        </div>
+      </div>
+
+      <!-- Mini-Game: Memory Hierarchy Speed Race -->
+      <div class="minigame-card" id="memRaceGame">
+        <div class="minigame-header">
+          <div class="minigame-badge" data-i18n="race_badge">🏎️ Mini-Game • Latency Drag Race</div>
+          <div class="minigame-score"><span data-i18n="race_status_label">Level:</span> <span id="raceStatus">Ready</span></div>
+        </div>
+        <h3 style="color:#f8fafc; margin-bottom:8px;" data-i18n="race_title">মেমরি হায়ারার্কি স্পিড রেস (Memory Latency Drag Race)</h3>
+        <p style="color:#cbd5e1; font-size:0.92rem; margin-bottom:16px;" data-i18n="race_desc">
+          রেজিস্টার (0.5 ns), ক্যাশ (1 ns), র‍্যাম (100 ns) এবং এসএসডি (10,000,000 ns)-এর মধ্যে বাস্তব সময়ের গতির তুলনা! 
+          সিপিইউর ডেটা খুঁজতে কত সময় লাগে তা দেখতে নিচে যেকোনো মেমরি লেভেল সিলেক্ট করো।
+        </p>
+
+        <div class="race-track-container">
+          <div class="race-lane" id="laneRegister">
+            <div class="lane-header">
+              <span class="lane-name" data-i18n="race_lane_reg">CPU Register</span>
+              <span class="lane-time">0.5 ns (Light speed)</span>
+            </div>
+            <div class="track-bar"><div class="runner-dot" id="dotReg">⚡</div></div>
+          </div>
+
+          <div class="race-lane" id="laneCache">
+            <div class="lane-header">
+              <span class="lane-name" data-i18n="race_lane_cache">L1 / L2 Cache (SRAM)</span>
+              <span class="lane-time">1.0 ns (Instant)</span>
+            </div>
+            <div class="track-bar"><div class="runner-dot" id="dotCache">🚀</div></div>
+          </div>
+
+          <div class="race-lane" id="laneDram">
+            <div class="lane-header">
+              <span class="lane-name" data-i18n="race_lane_dram">Main Memory (DRAM)</span>
+              <span class="lane-time">100 ns (~100x slower)</span>
+            </div>
+            <div class="track-bar"><div class="runner-dot" id="dotDram">🚗</div></div>
+          </div>
+
+          <div class="race-lane" id="laneDisk">
+            <div class="lane-header">
+              <span class="lane-name" data-i18n="race_lane_disk">NVMe SSD / Disk</span>
+              <span class="lane-time">10,000,000 ns (10,000x slower)</span>
+            </div>
+            <div class="track-bar"><div class="runner-dot" id="dotDisk">🐢</div></div>
+          </div>
+
+          <div class="race-action-row" style="margin-top: 18px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+            <button id="btnRaceStart" class="action-btn primary-btn" data-i18n="btn_race_start">🏁 Start Speed Race!</button>
+          </div>
+
+          <div class="race-insight-box" id="raceInsight" style="margin-top: 15px; text-align: center; font-size: 0.95rem; font-weight: 600; color: #38bdf8; min-height: 24px;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: System Bus & Interrupts -->
+    <section id="bus-interrupts" class="content-section">
+      <div class="section-header">
+        <div class="section-tag" data-i18n="sec6_tag">মডিউল ৬ • স্লাইড ২৯ থেকে ৩২</div>
+        <h2 data-i18n="sec6_title">সিস্টেম বাস ও ইন্টারাপ্টস (System Bus & Interrupts)</h2>
+        <p class="section-desc" data-i18n="sec6_desc">
+          কম্পিউটারের অভ্যন্তরীণ ৩টি বাস লাইন এবং ৪ প্রকার জরুরি ইন্টারাপ্ট সিগন্যাল।
+        </p>
+      </div>
+
+      <!-- System Bus Highway (Slide 30 & 31) -->
+      <div class="interactive-lab-card" id="bus-lab">
+        <h3 data-i18n="bus_title">🚌 সিস্টেম বাসের ৩টি প্রধান ভাগ (The 3 System Bus Types)</h3>
+        <p class="section-desc" data-i18n="bus_desc">বাসের প্রস্থ (Bus Width) হলো সমান্তরাল তারের সংখ্যা:</p>
+
+        <div class="bus-lines-stack">
+          <div class="bus-bar control-bus-bar">
+            <div class="bar-title">CONTROL BUS</div>
+            <div class="bar-desc" data-i18n="cbus_desc">কন্ট্রোল ও টাইমিং সিগন্যাল বহন করে (Read, Write, Clock, Interrupt)</div>
+          </div>
+          <div class="bus-bar address-bus-bar">
+            <div class="bar-title">ADDRESS BUS</div>
+            <div class="bar-desc" data-i18n="abus_desc">নির্দিষ্ট মেমরি সেল বা I/O ডিভাইসের ঠিকানা নির্দেশ করে (একমুখী - Unidirectional)</div>
+          </div>
+          <div class="bus-bar data-bus-bar">
+            <div class="bar-title">DATA BUS</div>
+            <div class="bar-desc" data-i18n="dbus_desc">আসল ডেটা এবং নির্দেশাবলী আদান-প্রদান করে (দ্বিমুখী - Bidirectional)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- The 4 Types of Interrupts Interactive Lab (Slide 32) -->
+      <div class="interactive-lab-card" id="interrupts-lab">
+        <div class="lab-header">
+          <div>
+            <span class="badge-status highlight-orange" data-i18n="int_badge">স্লাইড ৩২ এর মূল কনসেপ্ট</span>
+            <h3 data-i18n="int_title">🚨 ইন্টারাপ্ট কী ও এর ৪টি প্রকার (The 4 Types of Interrupts)</h3>
+            <p data-i18n="int_desc">
+              ইন্টারাপ্ট হলো সিপিইউ-এর মনোযোগ আকর্ষণের জন্য কোনো ডিভাইস বা প্রোগ্রাম থেকে পাঠানো জরুরি সিগন্যাল। নিচে ক্লিক করে ইন্টারাপ্ট ট্রিগার করো:
+            </p>
+          </div>
+        </div>
+
+        <div class="interrupts-grid">
+          <div class="int-card" id="intCardProgram">
+            <div class="int-icon">⚠️</div>
+            <h4>1. Program Interrupt</h4>
+            <p data-i18n="int_prog_desc">ভাগ করতে গিয়ে শূন্য দিয়ে ভাগ করা (Divide by zero), অ্যারিথমেটিক ওভারফ্লো বা অবৈধ অপকোড এক্সিকিউট করার চেষ্টা।</p>
+            <button class="mini-btn int-trigger" data-type="Program" data-i18n="btn_trig_div0">ট্রিগার করো (Div by 0)</button>
+          </div>
+
+          <div class="int-card" id="intCardTimer">
+            <div class="int-icon">⏱️</div>
+            <h4>2. Timer Interrupt</h4>
+            <p data-i18n="int_timer_desc">অপারেটিং সিস্টেমের প্রি-এম্পটিভ টাইম-স্লাইসিংয়ের জন্য হার্ডওয়্যার টাইমার নির্দিষ্ট সময় পর পর সিপিইউ-কে ইন্টারাপ্ট করে।</p>
+            <button class="mini-btn int-trigger" data-type="Timer" data-i18n="btn_trig_timer">ট্রিগার করো (Timer Tick)</button>
+          </div>
+
+          <div class="int-card" id="intCardIO">
+            <div class="int-icon">⌨️</div>
+            <h4>3. Input / Output Interrupt</h4>
+            <p data-i18n="int_io_desc">কীবোর্ডের বাটন চাপলে, মাউস নড়াচড়া করলে বা প্রিন্টারে প্রিন্ট শেষ হলে I/O কন্ট্রোলার থেকে সিগন্যাল আসে।</p>
+            <button class="mini-btn int-trigger" data-type="IO" data-i18n="btn_trig_key">ট্রিগার করো (Key Pressed)</button>
+          </div>
+
+          <div class="int-card" id="intCardHW">
+            <div class="int-icon">🔥</div>
+            <h4>4. Hardware Failure Interrupt</h4>
+            <p data-i18n="int_hw_desc">বিদ্যুৎ চলে যাওয়া (Power loss), পাওয়ার সাপ্লাই ফেইলিউর বা মেমরির প্যারিটি এরর দেখা দিলে জরুরি ইন্টারাপ্ট ঘটে।</p>
+            <button class="mini-btn int-trigger" data-type="Hardware" data-i18n="btn_trig_power">ট্রিগার করো (Power Glitch)</button>
+          </div>
+        </div>
+
+        <div class="interrupt-log-box" id="intLogBox">
+          <span class="log-title" data-i18n="isr_log_title">সিপিইউ রেসপন্স মনিটর:</span>
+          <span class="log-text" id="intLogText" data-i18n="isr_log_default">সিপিইউ স্বাভাবিক নির্দেশ রান করছে... কোনো ইন্টারাপ্ট পেন্ডিং নেই।</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 7: Exam Quiz & Mastery Zone -->
+    <section id="quiz-zone" class="content-section">
+      <div class="section-header">
+        <div class="section-tag" data-i18n="sec7_tag">পরীক্ষা প্রস্তুতি • কুইজ জোন</div>
+        <h2 data-i18n="sec7_title">লেকচার ৩ এর স্ব-মূল্যায়ন টেস্ট (Lecture 3 Self Quiz)</h2>
+        <p class="section-desc" data-i18n="sec7_desc">
+          লেকচার ৩ এর ডিজাইন মেথডোলজি, ফুল অ্যাডার, ক্যাশ মেমরি ও ইন্টারাপ্ট সম্পর্কে নিজের দক্ষতা যাচাই করে নাও!
+        </p>
+      </div>
+
+      <div class="quiz-container-card">
+        <div class="quiz-progress-bar">
+          <div class="progress-fill" id="quizProgressFill" style="width: 20%;"></div>
+        </div>
+
+        <div class="quiz-card-content" id="quizCardContent">
+          <div class="quiz-question-header">
+            <span class="question-number" id="questionNumberBadge">Question 1 / 5</span>
+            <span class="score-badge"><span data-i18n="quiz_score_prefix">স্কোর:</span> <strong id="scoreBadge">0</strong> / 5</span>
+          </div>
+
+          <h3 class="quiz-question-text" id="quizQuestionText"></h3>
+          <div class="quiz-options-list" id="quizOptionsList"></div>
+
+          <div class="quiz-explanation-box" id="quizExplanationBox">
+            <div class="exp-title" id="expTitle">Explanation:</div>
+            <div class="exp-body" id="expBody"></div>
+          </div>
+        </div>
+
+        <div class="quiz-footer">
+          <button id="nextQuestionBtn" class="action-btn" disabled data-i18n="btn_next_q">পরবর্তী প্রশ্ন ➡️</button>
+        </div>
+      </div>
+
+      <!-- Quick Summary Card for Exam Night -->
+      <div class="exam-cheat-sheet">
+        <div class="cheat-header">
+          <span class="icon">⚡</span>
+          <h3 data-i18n="cheat_title">লেকচার ৩ এর ১০ মিনিটের কুইক রিভিশন সারাংশ (Exam Night Sheet)</h3>
+        </div>
+        <div class="cheat-grid">
+          <div class="cheat-item" data-i18n="cheat_l3_1">
+            <strong>Analysis vs Synthesis:</strong> Structure ➔ Behavior = Analysis; Behavior ➔ Structure = Synthesis (Design)।
+          </div>
+          <div class="cheat-item" data-i18n="cheat_l3_2">
+            <strong>3 Design Levels:</strong> Gate Level (Gates/Flip-flops, Bits, ps/ns) • Register Level (RTL, Words, ns/µs) • Processor Level (CPU/Memory/Bus, Blocks, ms/s)।
+          </div>
+          <div class="cheat-item" data-i18n="cheat_l3_3">
+            <strong>Full Adder:</strong> $c_0 s_0 = x_0 + y_0 + c_{-1}$ • Sum = $x \oplus y \oplus c_{-1}$ • Carry = $xy + xc_{-1} + yc_{-1}$।
+          </div>
+          <div class="cheat-item" data-i18n="cheat_l3_4">
+            <strong>Combinational vs Sequential:</strong> কম্বিনেশনালে কোনো মেমরি নেই; সিকোয়েন্সিয়ালে Flip-Flop থাকে তাই আউটপুট বর্তমান ইনপুট + পূর্ববর্তী অবস্থার ওপর নির্ভরশীল।
+          </div>
+          <div class="cheat-item" data-i18n="cheat_l3_5">
+            <strong>Cache Memory:</strong> সিপিইউ ও মেইন মেমরির মাঝে দ্রুতগতির বাফার • Hit হলে Word Transfer, Miss হলে Block Transfer।
+          </div>
+          <div class="cheat-item" data-i18n="cheat_l3_6">
+            <strong>4 Types of Interrupts:</strong> Program, Timer, I/O, এবং Hardware Failure।
+          </div>
+        </div>
+      </div>
+
+      <!-- EXAM CORNER: SOLVED MATH & HIGH-YIELD BLUEPRINTS -->
+      <div class="exam-vault-container" id="examVaultL3">
+        <div class="vault-header">
+          <span class="vault-badge" data-i18n="vault_badge">🎯 EXAM MASTER VAULT • DIU CSE</span>
+          <h3 data-i18n="l3_math_title">পরীক্ষার গাণিতিক সমস্যা ও মডেল সমাধান (Exam Math & Model Answers)</h3>
+          <p data-i18n="l3_math_sub">ক্যাশ মেমরি অ্যাক্সেস টাইম (AMAT), ফুল অ্যাডার প্রপাগেশন ডিলে ও আই-ইউনিট বনাম ই-ইউনিট আর্কিটেকচার:</p>
+        </div>
+
+        <div class="math-problems-grid">
+          <!-- Problem 1: AMAT Calculation -->
+          <div class="math-card">
+            <div class="problem-tag" data-i18n="l3_p1_tag">Math Problem 1 • Bloom's Level 3 (Apply)</div>
+            <h4 data-i18n="l3_p1_title">Average Memory Access Time (AMAT) ও ক্যাশ হিট রেটের প্রভাব</h4>
+            <div class="problem-statement" data-i18n="l3_p1_statement">
+              <strong>প্রশ্ন:</strong> একটি প্রসেসরের L1 ক্যাশ মেমরির অ্যাক্সেস টাইম $T_c = 1.5\text{ ns}$ এবং মেইন মেমরি অ্যাক্সেস টাইম (Miss Penalty) $T_m = 60\text{ ns}$।
+              <br>(ক) ক্যাশ হিট রেট $H = 96\%$ ($0.96$) হলে গড় মেমরি অ্যাক্সেস টাইম ($T_{avg}$) কত?
+              <br>(খ) হিট রেট কমে $H = 85\%$ ($0.85$) হলে $T_{avg}$ কত এবং মেমরি কত শতাংশ স্লো হবে?
+            </div>
+            <div class="problem-solution">
+              <div class="step-line" data-i18n="l3_p1_s1"><strong>সূত্র:</strong> $T_{avg} = T_c + (1 - H) \times T_m$</div>
+              <div class="step-line" data-i18n="l3_p1_s2"><strong>(ক) $H = 96\%$ ($0.96$) এর জন্য:</strong></div>
+              <div class="step-line" data-i18n="l3_p1_s3">Miss Rate = $1 - 0.96 = 0.04$</div>
+              <div class="step-line" data-i18n="l3_p1_s4">$T_{avg} = 1.5\text{ ns} + (0.04 \times 60\text{ ns}) = 1.5 + 2.4 = 3.9\text{ ns}$</div>
+              <div class="step-line" data-i18n="l3_p1_s5"><strong>(খ) $H = 85\%$ ($0.85$) এর জন্য:</strong></div>
+              <div class="step-line" data-i18n="l3_p1_s6">Miss Rate = $1 - 0.85 = 0.15$</div>
+              <div class="step-line" data-i18n="l3_p1_s7">$T_{avg} = 1.5\text{ ns} + (0.15 \times 60\text{ ns}) = 1.5 + 9.0 = 10.5\text{ ns}$</div>
+              <div class="step-line" data-i18n="l3_p1_s8"><strong>গতির অবনতি:</strong> $\frac{10.5 - 3.9}{3.9} \times 100\% = 169.2\%$</div>
+              <div class="solution-highlight" data-i18n="l3_p1_res">
+                ✅ <strong>পরীক্ষার টেক-অ্যাওয়ে:</strong> মাত্র ১১% হিট রেট কমে গেলে মেমরি প্রায় ২.৭ গুণ ধীরগতির হয়ে যায়! পরীক্ষায় সূত্র ও একক (ns) স্পষ্ট করে লিখবে।
+              </div>
+            </div>
+          </div>
+
+          <!-- Problem 2: Full Adder Critical Path & Delay -->
+          <div class="math-card">
+            <div class="problem-tag" data-i18n="l3_p2_tag">Math Problem 2 • Bloom's Level 4 (Analyze)</div>
+            <h4 data-i18n="l3_p2_title">ফুল অ্যাডার সার্কিটের ক্রিটিকাল পাথ ও প্রপাগেশন ডিলে নির্ণয়</h4>
+            <div class="problem-statement" data-i18n="l3_p2_statement">
+              <strong>প্রশ্ন:</strong> ২টি হাফ-অ্যাডার ও ১টি OR গেট দিয়ে গঠিত ১-বিট ফুল অ্যাডারে XOR গেটের ডিলে $4\text{ ns}$, AND গেটের ডিলে $3\text{ ns}$ এবং OR গেটের ডিলে $2\text{ ns}$। Sum ($S$) এবং Carry-out ($C_{out}$)-এর সর্বোচ্চ প্রপাগেশন ডিলে কত?
+            </div>
+            <div class="problem-solution">
+              <div class="step-line" data-i18n="l3_p2_s1"><strong>Sum লজিক:</strong> $S = A \oplus B \oplus C_{in}$ (শ্রেণিবদ্ধ ২টি XOR গেট)</div>
+              <div class="step-line" data-i18n="l3_p2_s2">↳ $t_{delay}(Sum) = t_{XOR1} + t_{XOR2} = 4\text{ ns} + 4\text{ ns} = 8\text{ ns}$</div>
+              <div class="step-line" data-i18n="l3_p2_s3"><strong>Carry-out লজিক:</strong> $C_{out} = (A \cdot B) + ((A \oplus B) \cdot C_{in})$</div>
+              <div class="step-line" data-i18n="l3_p2_s4">↳ পাথ ১ (HA1): $t_{AND1} + t_{OR} = 3\text{ ns} + 2\text{ ns} = 5\text{ ns}$</div>
+              <div class="step-line" data-i18n="l3_p2_s5">↳ পাথ ২ (HA2 ক্রিটিকাল পাথ): $t_{XOR1} + t_{AND2} + t_{OR} = 4 + 3 + 2 = 9\text{ ns}$</div>
+              <div class="solution-highlight" data-i18n="l3_p2_res">
+                ✅ <strong>ফলাফল:</strong> Sum ডিলে = $8\text{ ns}$; সর্বোচ্চ ক্রিটিকাল পাথ ডিলে ($C_{out}$) = <strong>9 ns</strong>।
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- High-Yield Exam Diagram Blueprint -->
+        <div class="diagram-blueprint-card">
+          <div class="blueprint-header">
+            <span class="icon">📐</span>
+            <h4 data-i18n="l3_bp_title">পরীক্ষার খাতায় আঁকার জন্য ১০০% পারফেক্ট ডায়াগ্রাম: Full Adder Gate-Level & I-Unit/E-Unit</h4>
+          </div>
+          <div class="blueprint-content">
+            <div class="ascii-diagram-box" data-i18n="l3_bp_ascii">
+[ ডায়াগ্রাম ১: ২টি Half Adder ও ১টি OR গেট দিয়ে 1-Bit Full Adder ]
+
+            ┌──────────────┐
+  A ────────┤              ├─── S1 (A⊕B) ──────┬──────────────┐
+            │ Half Adder 1 │                   │ Half Adder 2 ├──────► SUM (S = S1⊕Cin)
+  B ────────┤  (XOR + AND) ├─── C1 ──┐  Cin ───┤  (XOR + AND) │
+            └──────────────┘         │         └──────┬───────┘
+                                     │                │ C2 (S1·Cin)
+                                     └───►┌─────┐◄────┘
+                                          │ OR  ├────────────────────► CARRY (Cout = C1+C2)
+                                          └─────┘
+
+─────────────────────────────────────────────────────────────────────────────
+[ ডায়াগ্রাম ২: John P. Hayes প্রসেসর লেভেল আর্কিটেকচার (I-Unit বনাম E-Unit) ]
+
+┌───────────────────────────────────────────────────────────────────────────┐
+│                       CENTRAL PROCESSING UNIT (CPU)                       │
+│                                                                           │
+│   ┌────────────────────────────────┐   ┌──────────────────────────────┐   │
+│   │   Instruction Unit (I-Unit)    │   │   Execution Unit (E-Unit)    │   │
+│   │  ────────────────────────────  │   │  ──────────────────────────  │   │
+│   │  • Program Counter (PC)        │   │  • Arithmetic Logic (ALU)    │   │
+│   │  • Instruction Register (IR)   ├──►│  • Accumulator (AC)          │   │
+│   │  • Instruction Decoder & Logic │   │  • General Purpose Regs      │   │
+│   │  [কাজের নির্দেশ আনে ও নিয়ন্ত্রণ করে] │   │  [গাণিতিক ও যৌক্তিক কাজ করে] │   │
+│   └────────────────▲───────────────┘   └──────────────▲───────────────┘   │
+└────────────────────┼──────────────────────────────────┼───────────────────┘
+                     │ Controls / Address               │ Data Words
+             ┌───────┴──────────────────────────────────┴───────┐
+             │       SYSTEM BUS (Address, Data, Control)        │
+             └───────┬──────────────────────────────────┬───────┘
+                     ▼                                  ▼
+           ┌───────────────────┐              ┌───────────────────┐
+           │   CACHE MEMORY    │              │    MAIN MEMORY    │
+           │  (High-Speed SRAM)│◄────────────►│      (DRAM)       │
+           └───────────────────┘              └───────────────────┘
+            </div>
+            <p class="diagram-tip" data-i18n="l3_bp_tip">
+              💡 <strong>Exam Marking Tip:</strong> ফুল অ্যাডারের ক্ষেত্রে অভ্যন্তরীণ সিগন্যাল $S_1, C_1, C_2$ মার্ক করে সমীকরণ $S_1 = A \oplus B$, $C_1 = AB$, $C_2 = S_1 \cdot C_{in}$ এবং $C_{out} = C_1 + C_2$ লিখে দিলে ফুল মার্কস নিশ্চিত!
+            </p>
+          </div>
+        </div>
+
+        <!-- Fascinating Engineering Facts -->
+        <div class="fun-fact-card">
+          <div class="fun-fact-header">
+            <span class="fun-fact-badge" data-i18n="l3_fact_badge">রোমাঞ্চকর অজানা তথ্য • Did You Know?</span>
+            <span class="fun-fact-title" data-i18n="l3_fact_title">"The Memory Wall" সংকট ও প্রসেসরের ক্যাশ মেমরি বিপ্লব!</span>
+          </div>
+          <div class="fun-fact-body" data-i18n="l3_fact_body">
+            কম্পিউটার প্রযুক্তির ইতিহাসে ১৯৮০ থেকে ২০০০ সাল পর্যন্ত সিপিইউর কাজের গতি প্রতি বছর <strong>৫০%</strong> করে বেড়েছে, কিন্তু প্রধান মেমরি (DRAM)-এর অ্যাক্সেস স্পিড উন্নত হয়েছে মাত্র <strong>৭%</strong> হারে! এই বিশাল বৈষম্যকে কম্পিউটার বিজ্ঞানে <strong>"The Memory Wall"</strong> বলা হয়।
+            যদি আধুনিক প্রসেসরে L1, L2 ও L3 ক্যাশ মেমরি না থাকত, তবে একটি আধুনিক ৪ গিগাহার্টজ প্রসেসর তার মোট কর্মসময়ের <strong>৮০% সময়ই অলস বসে থাকত</strong> শুধু র‍্যাম থেকে ডেটা পৌঁছানোর অপেক্ষায়! এই কারণেই আজকের আধুনিক প্রসেসর চিপের ৬০%-এরও বেশি সিলিকন জুড়ে থাকে শুধু ক্যাশ মেমরি!
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-container">
+      <p data-i18n="footer_title">কম্পিউটার আর্কিটেকচার অ্যান্ড অর্গানাইজেশন (CAO) — লেকচার ৩ মাস্টারক্লাস</p>
+      <p class="sub-credit" data-i18n="footer_sub">ডিজাইন করা হয়েছে স্পষ্টতা, গভীর বোধগম্যতা ও পরীক্ষার পূর্ণ প্রস্তুতির জন্য।</p>
+    </div>
+  </footer>
+
+  <script src="../shared-gamification.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

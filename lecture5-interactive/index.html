@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CAO Lecture 5: Processor Basics - Interactive Masterclass</title>
+  <meta name="description" content="Computer Architecture and Organization (CAO) Lecture 5: Processor Basics - Interactive visual learning platform covering Instruction Set Design, 0/1/2/3 Operands, Big vs Little Endian, Addressing Modes, and Instruction Pipelining.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Hind+Siliguri:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="../shared-gamification.css">
+</head>
+<body>
+  <!-- Ambient Background Glows -->
+  <div class="glow-orb orb-1"></div>
+  <div class="glow-orb orb-2"></div>
+  <div class="glow-orb orb-3"></div>
+
+  <!-- Navigation Bar -->
+  <header class="navbar" id="navbar">
+    <div class="nav-container">
+      <div class="brand">
+        <a href="../index.html" style="text-decoration: none; color: inherit; display: flex; align-items: center; gap: 0.75rem;">
+          <span class="brand-badge">CAO L-05</span>
+          <div class="brand-title">
+            <span class="main-title">Processor Basics</span>
+            <span class="sub-title" data-i18n="nav_brand_sub">DIU CSE • John P. Hayes</span>
+          </div>
+        </a>
+      </div>
+      <nav class="nav-links" id="navLinks">
+        <a href="#operands-lab" class="nav-link" data-i18n="nav_operands">0/1/2/3 Operands</a>
+        <a href="#endian-mode" class="nav-link" data-i18n="nav_endian">Endian Mode</a>
+        <a href="#pipelining" class="nav-link" data-i18n="nav_pipeline">Pipelining</a>
+        <a href="#addressing-modes" class="nav-link" data-i18n="nav_addr">Addressing Modes</a>
+        <a href="#instruction-formats" class="nav-link" data-i18n="nav_formats">Instruction Formats</a>
+        <a href="#quiz-zone" class="nav-link" data-i18n="nav_quiz">Exam Quiz</a>
+      </nav>
+      <div class="nav-actions">
+        <!-- Language Switcher Toggle -->
+        <div class="lang-switch-group" id="langSwitchGroup">
+          <button id="langBnBtn" class="lang-btn active" data-lang="bn">বাংলা</button>
+          <button id="langEnBtn" class="lang-btn" data-lang="en">English</button>
+        </div>
+
+        <button id="soundToggleBtn" class="action-btn" title="Toggle Sound FX">
+          <span class="icon">🔊</span>
+        </button>
+
+        <!-- Lecture Switcher Dropdown (Replaces static L-01, L-02, etc.) -->
+        <div class="lecture-dropdown" id="lectureDropdown">
+          <button class="action-btn dropdown-toggle" id="lectureDropdownBtn" type="button" aria-haspopup="true" aria-expanded="false" title="Switch Lecture">
+            <span class="icon">📚</span>
+            <span class="dropdown-label">Lectures</span>
+            <span class="dropdown-arrow">▾</span>
+          </button>
+          <div class="dropdown-menu" id="lectureDropdownMenu">
+            <a href="../index.html" class="dropdown-item">
+              <span class="dropdown-badge b-portal">🏠 Portal</span>
+              <span class="dropdown-item-title">Course Overview & Home</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="../lecture1-interactive/index.html" class="dropdown-item">
+              <span class="dropdown-badge b-l1">L-01</span>
+              <span class="dropdown-item-title">Intro & Architecture</span>
+            </a>
+            <a href="../lecture2-interactive/index.html" class="dropdown-item">
+              <span class="dropdown-badge b-l2">L-02</span>
+              <span class="dropdown-item-title">Evolution of Computers</span>
+            </a>
+            <a href="../lecture3-interactive/index.html" class="dropdown-item">
+              <span class="dropdown-badge b-l3">L-03</span>
+              <span class="dropdown-item-title">Design Methodology</span>
+            </a>
+            <a href="../lecture4-interactive/index.html" class="dropdown-item">
+              <span class="dropdown-badge b-l4">L-04</span>
+              <span class="dropdown-item-title">Data Representation</span>
+            </a>
+            <a href="../lecture5-interactive/index.html" class="dropdown-item current-lecture">
+              <span class="dropdown-badge b-l5">L-05</span>
+              <span class="dropdown-item-title">Processor Basics</span>
+              <span class="current-dot"></span>
+            </a>
+          </div>
+        </div>
+
+        <a href="#quiz-zone" class="action-btn primary-btn quiz-nav-btn">
+          <span data-i18n="nav_take_test">টেস্ট দাও</span>
+        </a>
+
+        <!-- Mobile Hamburger Toggle Button -->
+        <button class="nav-toggle-btn" id="navToggleBtn" type="button" aria-label="Toggle Navigation Menu" aria-expanded="false">
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+          <span class="hamburger-bar"></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="hero-badge">
+        <span class="badge-dot"></span> <span data-i18n="hero_badge">লেকচার ৫ এর সম্পূর্ণ ইন্টারেক্টিভ গাইড</span>
+      </div>
+      <h1 class="hero-title" data-i18n="hero_title">
+        প্রসেসর বেসিকস ও পাইপলাইনিং (Processor Basics)<br>
+        <span class="gradient-text">ইন্সট্রাকশন সেট, এন্ডিয়ান মোড ও ২-স্টেজ পাইপলাইন</span>
+      </h1>
+      <p class="hero-subtitle" data-i18n="hero_subtitle">
+        ০/১/২/৩ অপারেন্ড আর্কিটেকচার থেকে শুরু করে বিগ-এন্ডিয়ান বনাম লিটল-এন্ডিয়ান মেমরি ম্যাপিং 
+        এবং সিপিইউ-এর দ্বিগুণ গতি বাড়ানোর ২-স্টেজ ইন্সট্রাকশন পাইপলাইনিংয়ের লাইভ সিমুলেশন!
+      </p>
+
+      <div class="hero-stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon">🎛️</div>
+          <div class="stat-data">
+            <span class="stat-number">0, 1, 2, 3 Operands</span>
+            <span class="stat-label" data-i18n="stat_operands">স্ট্যাক বনাম অ্যাকুমুলেটর</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🔀</div>
+          <div class="stat-data">
+            <span class="stat-number">Big vs Little Endian</span>
+            <span class="stat-label" data-i18n="stat_endian">মেমরিতে বাইটের অনুক্রম</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">⚡</div>
+          <div class="stat-data">
+            <span class="stat-number">2-Stage Pipeline</span>
+            <span class="stat-label" data-i18n="stat_pipeline">Fetch & Execute ওভারল্যাপিং</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🎯</div>
+          <div class="stat-data">
+            <span class="stat-number">Addressing Modes</span>
+            <span class="stat-label" data-i18n="stat_addr">মেমরি ও রেজিস্টার অ্যাড্রেসিং</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 1: 0, 1, 2, 3-Operand Architectures (Slides 7 & 8) -->
+    <section id="operands-lab" class="content-section">
+      <div class="section-header">
+        <div class="section-tag" data-i18n="sec1_tag">মডিউল ১ • স্লাইড ৭ ও ৮</div>
+        <h2 data-i18n="sec1_title">০, ১, ২ ও ৩-অপারেন্ড আর্কিটেকচার (Number of Operands)</h2>
+        <p class="section-desc" data-i18n="sec1_desc">
+          একটি সমীকরণ <strong>z ⬅ x + y</strong> সম্পন্ন করতে ৪টি ভিন্ন আর্কিটেকচার কীভাবে কাজ করে তার লাইভ তুলনা দেখুন!
+        </p>
+      </div>
+
+      <!-- Operands Interactive Switcher -->
+      <div class="interactive-lab-card" id="operands-interactive">
+        <div class="lab-header">
+          <div>
+            <span class="badge-status highlight-indigo" data-i18n="op_badge">স্লাইড ৮ এর সুপারহিট টেবিল</span>
+            <h3 data-i18n="op_title">💻 ৪টি আর্কিটেকচারের কোড ও রেজিস্টার এক্সিকিউশন</h3>
+            <p data-i18n="op_desc">নিচের যেকোনো আর্কিটেকচার সিলেক্ট করে কোড সিকোয়েন্স ও ডেটা ফ্লো পর্যবেক্ষণ করো:</p>
+          </div>
+          <div class="toggle-group" id="operandToggleGroup">
+            <button class="toggle-btn active" data-op="0">0-Operand (Stack)</button>
+            <button class="toggle-btn" data-op="1">1-Operand (ACC)</button>
+            <button class="toggle-btn" data-op="2">2-Operand</button>
+            <button class="toggle-btn" data-op="3">3-Operand</button>
+          </div>
+        </div>
+
+        <div class="operand-display-grid">
+          <div class="code-flow-panel">
+            <div class="panel-tag" id="opArchTitle">0-Operand Stack Architecture (LIFO)</div>
+            <pre><code id="opAsmCode">PUSH Rx     ; Push x onto Stack
+PUSH Ry     ; Push y onto Stack
+ADD         ; Add top two items
+POP  Rz     ; Pop result into z</code></pre>
+            <div class="op-note" id="opArchNote">
+              💡 <strong>0-Operand Architecture:</strong> Arithmetic instructions carry no explicit operand addresses. Operations implicitly pop top elements from the LIFO stack and push the result.
+            </div>
+          </div>
+
+          <div class="visual-hardware-panel">
+            <div class="panel-box-title" id="opHardwareTitle" data-i18n="op_hw_title">LIFO স্ট্যাক সিমুলেটর</div>
+            <div class="hardware-canvas" id="opCanvas">
+              <!-- Dynamically populated -->
+            </div>
+            <button id="btnStepOperand" class="action-btn" data-i18n="btn_step_exec">▶ পরবর্তী নির্দেশ এক্সিকিউট করো</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: Endian Mode (Big-Endian vs Little-Endian) -->
+    <section id="endian-mode" class="content-section">
+      <div class="section-header">
+        <div class="section-tag" data-i18n="sec2_tag">মডিউল ২ • স্লাইড ৯</div>
+        <h2 data-i18n="sec2_title">এন্ডিয়ান মোড: Big-Endian বনাম Little-Endian</h2>
+        <p class="section-desc" data-i18n="sec2_desc">
+          কম্পিউটার মেমরির পরপর ৪টি অ্যাড্রেসে মাল্টি-বাইট ডেটা কোন ক্রমে (Sequence of Bytes) সাজিয়ে রাখা হবে, তাই হলো Endian Mode।
+        </p>
+      </div>
+
+      <!-- Endian Mode Interactive Simulator (Slide 9) -->
+      <div class="interactive-lab-card" id="endian-lab">
+        <div class="endian-input-bar">
+          <label for="hexWordInput" data-i18n="endian_input_label">৩২-বিট হেক্সাডেসিমেল ডেটা:</label>
+          <input type="text" id="hexWordInput" value="12345678H" maxlength="9">
+          <span class="base-addr-label" data-i18n="endian_addr_label">বেস অ্যাড্রেস: <code>ABCDE0H</code></span>
+          <div class="preset-pills">
+            <button class="pill-btn active" data-hex="12345678H">12345678H (Slide 9)</button>
+            <button class="pill-btn" data-hex="DEADBEEFH">DEADBEEFH</button>
+            <button class="pill-btn" data-hex="A1B2C3D4H">A1B2C3D4H</button>
+          </div>
+        </div>
+
+        <div class="endian-two-col-grid">
+          <!-- Big Endian Column -->
+          <div class="endian-column big-col">
+            <div class="endian-col-header">
+              <span class="col-icon">🐘</span>
+              <div>
+                <h3>Big-Endian Mode</h3>
+                <span class="col-sub" data-i18n="big_sub">সবচেয়ে গুরুত্বপূর্ণ বাইট (MSB) সর্বনিম্ন ঠিকানায় থাকে</span>
+              </div>
+            </div>
+            <div class="memory-stack-visual" id="bigMemoryStack">
+              <!-- Populated by JS -->
+            </div>
+            <div class="endian-rule-pill">
+              <code>ABCDE0H (Low Addr) ➔ 12H (MSB)</code>
+            </div>
+          </div>
+
+          <!-- Little Endian Column -->
+          <div class="endian-column little-col">
+            <div class="endian-col-header">
+              <span class="col-icon">🐜</span>
+              <div>
+                <h3>Little-Endian Mode</h3>
+                <span class="col-sub" data-i18n="little_sub">সর্বনিম্ন গুরুত্বপূর্ণ বাইট (LSB) সর্বনিম্ন ঠিকানায় থাকে</span>
+              </div>
+            </div>
+            <div class="memory-stack-visual" id="littleMemoryStack">
+              <!-- Populated by JS -->
+            </div>
+            <div class="endian-rule-pill highlight-orange-pill">
+              <code>ABCDE0H (Low Addr) ➔ 78H (LSB)</code>
+            </div>
+          </div>
+        </div>
+
+        <div class="endian-summary-note">
+          <span class="check-icon">✓</span>
+          <div>
+            <strong data-i18n="endian_exam_tip">পরীক্ষার গোল্ডেন রুল:</strong><br>
+            <span data-i18n="endian_exam_body"><strong>Big-Endian</strong> হলো মানুষের লেখার মতো (বাম থেকে ডানে স্বাভাবিক: 12 ➔ 34 ➔ 56 ➔ 78)। আর <strong>Little-Endian</strong> হলো উল্টো—ডানদিকের ছোট বাইট আগে বসে (78 ➔ 56 ➔ 34 ➔ 12)! Intel x86 প্রসেসর Little-Endian ব্যবহার করে।</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: Instruction Pipelining -->
+    <section id="pipelining" class="content-section">
+      <div class="section-header">
+        <div class="section-tag" data-i18n="sec3_tag">মডিউল ৩ • স্লাইড ১৩, ১৪ ও ১৫</div>
+        <h2 data-i18n="sec3_title">২-স্টেজ ইন্সট্রাকশন পাইপলাইনিং (Instruction Pipelining)</h2>
+        <p class="section-desc" data-i18n="sec3_desc">
+          প্রোগ্রাম কন্ট্রোল ইউনিট (Fetch) এবং ডেটা প্রসেসিং ইউনিট (Execute) একসাথে কাজ করে কীভাবে সিপিইউ-এর পারফরম্যান্স দ্বিগুণ করে!
+        </p>
+      </div>
+
+      <div class="interactive-lab-card" id="pipeline-lab-card">
+        <div class="lab-header">
+          <div>
+            <span class="badge-status highlight-cyan" data-i18n="pipe_badge">স্লাইড ১৫ এর লাইভ ওভারল্যাপ চার্ট</span>
+            <h3 data-i18n="pipe_title">⚡ ক্লক সাইকেল বাই সাইকেল ওভারল্যাপিং অ্যানিমেশন (Fig 3.8)</h3>
+            <p data-i18n="pipe_desc">
+              যখন ১ম নির্দেশ Execute হচ্ছে, ঠিক তখনই ২য় নির্দেশ Fetch হচ্ছে! নিচে 'পরবর্তী ক্লক সাইকেল' বাটনে ক্লিক করে পাইপলাইনের জাদু দেখো:
+            </p>
+          </div>
+          <div class="pipe-controls">
+            <button id="btnNextClock" class="action-btn" data-i18n="btn_next_clock">⏱️ পরবর্তী ক্লক সাইকেল (Next Clock)</button>
+            <button id="btnResetPipe" class="action-btn secondary-btn" data-i18n="btn_reset_pipe">রিসেট করো</button>
+            <span class="clock-display">Clock Cycle: <strong id="clockCounter">1</strong></span>
+          </div>
+        </div>
+
+        <!-- Pipelining Overlap Table -->
+        <div class="pipeline-chart-wrapper">
+          <table class="pipeline-chart-table">
+            <thead>
+              <tr>
+                <th style="width: 20%;" data-i18n="th_inst">Instruction</th>
+                <th id="thC1">Cycle 1</th>
+                <th id="thC2">Cycle 2</th>
+                <th id="thC3">Cycle 3</th>
+                <th id="thC4">Cycle 4</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr id="rowI1">
+                <td><strong class="inst-tag">I₁</strong> (Add R1, R2)</td>
+                <td class="pipe-cell fetch-cell" id="c1_i1">FETCH (PCU)</td>
+                <td class="pipe-cell exec-cell" id="c2_i1">EXECUTE (DPU)</td>
+                <td class="pipe-cell idle-cell">-</td>
+                <td class="pipe-cell idle-cell">-</td>
+              </tr>
+              <tr id="rowI2">
+                <td><strong class="inst-tag">I₂</strong> (Sub R3, R4)</td>
+                <td class="pipe-cell idle-cell">-</td>
+                <td class="pipe-cell fetch-cell" id="c2_i2">FETCH (PCU)</td>
+                <td class="pipe-cell exec-cell" id="c3_i2">EXECUTE (DPU)</td>
+                <td class="pipe-cell idle-cell">-</td>
+              </tr>
+              <tr id="rowI3">
+                <td><strong class="inst-tag">I₃</strong> (Mov R5, R6)</td>
+                <td class="pipe-cell idle-cell">-</td>
+                <td class="pipe-cell idle-cell">-</td>
+                <td class="pipe-cell fetch-cell" id="c3_i3">FETCH (PCU)</td>
+                <td class="pipe-cell exec-cell" id="c4_i3">EXECUTE (DPU)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="pipeline-narrator-box" id="pipeNarrator">
+          💡 <strong>Clock 1:</strong> Program Control Unit (PCU) is fetching Instruction 1 ($I_1$) from memory.
+        </div>
+      </div>
+
+      <!-- Mini-Game: Pipeline Traffic Controller & Branch Hazard Buster -->
+      <div class="minigame-card" id="pipelineHazardGame">
+        <div class="minigame-header">
+          <div class="minigame-badge" data-i18n="hazard_badge">🚦 Mini-Game • Pipeline Hazard Buster</div>
+          <div class="minigame-score"><span data-i18n="hazard_score_label">Throughput</span>: <span id="pipeThroughput">100%</span> | <span data-i18n="hazard_cycles_label">Cycles</span>: <span id="gameClock">1</span></div>
+        </div>
+        <h3 style="color:#f8fafc; margin-bottom:8px;" data-i18n="hazard_title">পাইপলাইন ট্রাফিক কন্ট্রোলার: ব্রাঞ্চ হ্যাজার্ড সমাধান (Pipeline Hazard Buster)</h3>
+        <p style="color:#cbd5e1; font-size:0.92rem; margin-bottom:16px;" data-i18n="hazard_desc">
+          একটি ৫-ইন্সট্রাকশন ব্যাচে ৩য় নির্দেশটি হলো একটি শর্তাধীন ব্রাঞ্চ (Conditional Jump)। 
+          সিপিইউ ফেচ করবে নাকি ব্রাঞ্চ প্রেডিকশন সক্রিয় করবে? সিদ্ধান্ত নিয়ে পাইপলাইন বাবল (Stall) এড়িয়ে ১০০% থ্রুপুট বজায় রাখো!
+        </p>
+
+        <div class="hazard-arena">
+          <div class="stream-line">
+            <span class="stream-badge done-inst">I1: ADD</span>
+            <span class="stream-badge done-inst">I2: SUB</span>
+            <span class="stream-badge hazard-inst" id="instBranchBadge">I3: JUMP_IF_ZERO</span>
+            <span class="stream-badge pending-inst">I4: MOV</span>
+            <span class="stream-badge pending-inst">I5: AND</span>
+          </div>
+
+          <div class="hazard-decision-box" id="hazardDecisionBox">
+            <div class="hazard-alert-text" id="hazardAlertText" data-i18n="hazard_alert">
+              ⚠️ ব্রাঞ্চ ডিটেক্টেড! পরবর্তী নির্দেশ I4 কি ফেচ করা ঠিক হবে?
+            </div>
+            <div class="hazard-buttons-row">
+              <button id="btnStallBubble" class="action-btn secondary-btn" data-i18n="btn_stall">🛑 Stall (Wait 2 Cycles)</button>
+              <button id="btnPredictBranch" class="action-btn primary-btn" data-i18n="btn_predict">⚡ Speculative Branch Prediction</button>
+            </div>
+          </div>
+
+          <div class="hazard-feedback" id="hazardFeedback" style="margin-top: 14px; text-align: center; font-size: 0.95rem; font-weight: 600; min-height: 24px;"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: Addressing Modes -->
+    <section id="addressing-modes" class="content-section">
+      <div class="section-header">
+        <div class="section-tag" data-i18n="sec4_tag">মডিউল ৪ • স্লাইড ১০</div>
+        <h2 data-i18n="sec4_title">অ্যাড্রেসিং মোডস (Addressing Modes)</h2>
+        <p class="section-desc" data-i18n="sec4_desc">
+          সিপিইউ কীভাবে নির্দেশ থেকে অপারেন্ড বা ডেটার আসল অবস্থান (Location of Data) খুঁজে পায়:
+        </p>
+      </div>
+
+      <div class="addressing-grid">
+        <div class="addr-card">
+          <span class="addr-type">Immediate Addressing</span>
+          <h4 data-i18n="addr_title_imm">ডেটা সরাসরি নির্দেশে থাকে</h4>
+          <p data-i18n="addr_imm">অপারেন্ড কোনো মেমরি বা রেজিস্টারে নয়, নির্দেশের ভেতরেই দেওয়া থাকে (যেমন: <code>MOV R1, #25</code>)।</p>
+          <div class="addr-loc">Location: <code>data</code></div>
+        </div>
+
+        <div class="addr-card">
+          <span class="addr-type">Register (Direct)</span>
+          <h4 data-i18n="addr_title_reg">রেজিস্টারে ডেটা সংরক্ষিত</h4>
+          <p data-i18n="addr_reg">নির্দেশে একটি সিপিইউ রেজিস্টারের নাম দেওয়া থাকে যার মধ্যে আসল ডেটা থাকে (যেমন: <code>ADD R1, R2</code>)।</p>
+          <div class="addr-loc">Location: <code>R1</code></div>
+        </div>
+
+        <div class="addr-card">
+          <span class="addr-type">Direct (Absolute)</span>
+          <h4 data-i18n="addr_title_dir">সরাসরি মেমরি অ্যাড্রেস</h4>
+          <p data-i18n="addr_dir">নির্দেশে সরাসরি একটি মেমরি ঠিকানা উল্লেখ থাকে যেখানে ডেটা পাওয়া যাবে (যেমন: <code>LDA 0x1000</code>)।</p>
+          <div class="addr-loc">Location: <code>M[address]</code></div>
+        </div>
+
+        <div class="addr-card">
+          <span class="addr-type">Register Indirect</span>
+          <h4 data-i18n="addr_title_reg_ind">রেজিস্টারে মেমরি ঠিকানা</h4>
+          <p data-i18n="addr_reg_ind">রেজিস্টারের ভেতরে ডেটা থাকে না, বরং ডেটার মেমরি ঠিকানা রাখা থাকে (যেমন: <code>MOV A, @R1</code>)।</p>
+          <div class="addr-loc">Location: <code>M[R1]</code></div>
+        </div>
+
+        <div class="addr-card">
+          <span class="addr-type">Indirect Addressing</span>
+          <h4 data-i18n="addr_title_ind">পয়েন্টারের পয়েন্টার</h4>
+          <p data-i18n="addr_ind">নির্দেশের মেমরি ঠিকানায় আরেকটি মেমরি ঠিকানা থাকে, এবং সেই দ্বিতীয় ঠিকানায় আসল ডেটা পাওয়া যায়।</p>
+          <div class="addr-loc">Location: <code>M[M[address]]</code></div>
+        </div>
+
+        <div class="addr-card">
+          <span class="addr-type">Indexed & Relative</span>
+          <h4 data-i18n="addr_title_indexed">অফসেট যোগ করে ঠিকানা</h4>
+          <p data-i18n="addr_indexed">বেস বা ইনডেক্স রেজিস্টারের সাথে অফসেট অ্যাড্রেস যোগ করে আসল ঠিকানা বের করা হয়।</p>
+          <div class="addr-loc">Location: <code>M[R1 + address]</code></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 5: Fixed vs Variable-Length Instruction Formats -->
+    <section id="instruction-formats" class="content-section">
+      <div class="section-header">
+        <div class="section-tag" data-i18n="sec5_tag">মডিউল ৫ • স্লাইড ৪, ৫, ৬ ও ১২</div>
+        <h2 data-i18n="sec5_title">ইন্সট্রাকশন ফরম্যাট: MIPS (Fixed) বনাম Intel 8080 (Variable)</h2>
+        <p class="section-desc" data-i18n="sec5_desc">
+          ফিক্সড-লেংথ (সহজ ডিকোডিং ও প্রফেচিং) বনাম ভ্যারিয়েবল-লেংথ (মেমরি সাশ্রয়ী কিন্তু জটিল ডিকোডিং)।
+        </p>
+      </div>
+
+      <div class="formats-two-col">
+        <!-- MIPS Fixed -->
+        <div class="format-card">
+          <div class="card-top-tag">MIPS (32-Bit Fixed Length)</div>
+          <h3>MIPS Microprocessor Formats</h3>
+          <p data-i18n="mips_desc">
+            সমস্ত নির্দেশ ঠিক ৩২-বিট বিশিষ্ট। ফলে ডিকোডিং অতি দ্রুত হয় এবং প্রফেচিং সহজ।
+          </p>
+
+          <div class="mips-spec-box">
+            <strong>R-type Format (Register to Register):</strong>
+            <div class="bit-breakdown">
+              <span class="b-box b-op">Op (6)</span>
+              <span class="b-box b-rs">Rs (5)</span>
+              <span class="b-box b-rt">Rt (5)</span>
+              <span class="b-box b-rd">Rd (5)</span>
+              <span class="b-box b-sh">Shamt (5)</span>
+              <span class="b-box b-fn">Funct (6)</span>
+            </div>
+
+            <strong style="margin-top: 1rem; display: block;">I-type Format (Immediate / Memory):</strong>
+            <div class="bit-breakdown">
+              <span class="b-box b-op">Op (6)</span>
+              <span class="b-box b-rs">Rs (5)</span>
+              <span class="b-box b-rt">Rt (5)</span>
+              <span class="b-box b-addr" style="flex: 2;">Address / Immediate (16 bits)</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Intel 8080 Variable -->
+        <div class="format-card">
+          <div class="card-top-tag highlight-orange-tag">Intel 8080 (Variable Length)</div>
+          <h3>Intel 8080 Formats</h3>
+          <p data-i18n="intel_desc">
+            নির্দেশের আকার ১-বাইট, ২-বাইট অথবা ৩-বাইট হতে পারে। মেমরি অপচয় রোধ হলেও ডিকোডিং জটিল।
+          </p>
+
+          <div class="intel-spec-box">
+            <div class="byte-format-row">
+              <span class="f-name">One-Byte:</span>
+              <span class="f-strip">Opcode (8 bits)</span>
+            </div>
+            <div class="byte-format-row">
+              <span class="f-name">Two-Byte:</span>
+              <span class="f-strip">Opcode (8)</span>
+              <span class="f-strip highlight-data">Data / Addr (8)</span>
+            </div>
+            <div class="byte-format-row">
+              <span class="f-name">Three-Byte:</span>
+              <span class="f-strip">Opcode (8)</span>
+              <span class="f-strip highlight-data">Low Byte (8)</span>
+              <span class="f-strip highlight-data">High Byte (8)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 6: Exam Quiz & Mastery Zone -->
+    <section id="quiz-zone" class="content-section">
+      <div class="section-header">
+        <div class="section-tag" data-i18n="sec6_tag">পরীক্ষা প্রস্তুতি • কুইজ জোন</div>
+        <h2 data-i18n="sec6_title">লেকচার ৫ এর স্ব-মূল্যায়ন টেস্ট (Lecture 5 Self Quiz)</h2>
+        <p class="section-desc" data-i18n="sec6_desc">
+          লেকচার ৫ এর এন্ডিয়ান মোড, অপারেন্ড আর্কিটেকচার, পাইপলাইনিং এবং অ্যাড্রেসিং মোডস সম্পর্কে পরীক্ষা দিন!
+        </p>
+      </div>
+
+      <div class="quiz-container-card">
+        <div class="quiz-progress-bar">
+          <div class="progress-fill" id="quizProgressFill" style="width: 20%;"></div>
+        </div>
+
+        <div class="quiz-card-content" id="quizCardContent">
+          <div class="quiz-question-header">
+            <span class="question-number" id="questionNumberBadge">Question 1 / 5</span>
+            <span class="score-badge"><span data-i18n="quiz_score_prefix">স্কোর:</span> <strong id="scoreBadge">0</strong> / 5</span>
+          </div>
+
+          <h3 class="quiz-question-text" id="quizQuestionText"></h3>
+          <div class="quiz-options-list" id="quizOptionsList"></div>
+
+          <div class="quiz-explanation-box" id="quizExplanationBox">
+            <div class="exp-title" id="expTitle">Explanation:</div>
+            <div class="exp-body" id="expBody"></div>
+          </div>
+        </div>
+
+        <div class="quiz-footer">
+          <button id="nextQuestionBtn" class="action-btn" disabled data-i18n="btn_next_q">পরবর্তী প্রশ্ন ➡️</button>
+        </div>
+      </div>
+
+      <!-- Quick Summary Card for Exam Night -->
+      <div class="exam-cheat-sheet">
+        <div class="cheat-header">
+          <span class="icon">⚡</span>
+          <h3 data-i18n="cheat_title">লেকচার ৫ এর ১০ মিনিটের কুইক রিভিশন সারাংশ (Exam Night Sheet)</h3>
+        </div>
+        <div class="cheat-grid">
+          <div class="cheat-item" data-i18n="cheat_l5_1">
+            <strong>Big vs Little Endian:</strong> Big-Endian এ MSB সর্বনিম্ন ঠিকানায় থাকে; Little-Endian এ LSB সর্বনিম্ন ঠিকানায় থাকে।
+          </div>
+          <div class="cheat-item" data-i18n="cheat_l5_2">
+            <strong>0, 1, 2, 3 Operands:</strong> 0-op = Stack (PUSH/POP) • 1-op = Accumulator (ACC) • 2-op = Destination is one input • 3-op = Separate dest and sources.
+          </div>
+          <div class="cheat-item" data-i18n="cheat_l5_3">
+            <strong>2-Stage Pipeline:</strong> Fetch (PCU) এবং Execute (DPU) ওভারল্যাপ করে কাজ করে ➔ প্রতি ক্লকে ১টি নির্দেশ শেষ হয়।
+          </div>
+          <div class="cheat-item" data-i18n="cheat_l5_4">
+            <strong>Fixed vs Variable:</strong> MIPS হলো ফিক্সড ৩২-বিট (দ্রুত ডিকোডিং); Intel 8080 হলো ভ্যারিয়েবল ১/২/৩ বাইট (মেমরি সাশ্রয়ী)।
+          </div>
+          <div class="cheat-item" data-i18n="cheat_l5_5">
+            <strong>Addressing Modes:</strong> Immediate (data in inst) • Direct (M[addr]) • Indirect (M[M[addr]]) • Reg Indirect (M[R1]).
+          </div>
+          <div class="cheat-item" data-i18n="cheat_l5_6">
+            <strong>Execution Chain:</strong> High-Level ➔ Compiler ➔ Assembly ➔ Assembler ➔ Machine Code ➔ Loader ➔ CPU Execution।
+          </div>
+        </div>
+      </div>
+
+      <!-- EXAM CORNER: SOLVED MATH & HIGH-YIELD BLUEPRINTS -->
+      <div class="exam-vault-container" id="examVaultL5">
+        <div class="vault-header">
+          <span class="vault-badge" data-i18n="vault_badge">🎯 EXAM MASTER VAULT • DIU CSE</span>
+          <h3 data-i18n="l5_math_title">পরীক্ষার গাণিতিক সমস্যা ও মডেল সমাধান (Exam Math & Model Answers)</h3>
+          <p data-i18n="l5_math_sub">পাইপলাইন স্পিডআপ ($S_k$), বিগ-এন্ডিয়ান বনাম লিটল-এন্ডিয়ান মেমরি লেআউট ও অপারেন্ড ফরম্যাট:</p>
+        </div>
+
+        <div class="math-problems-grid">
+          <!-- Problem 1: Pipeline Speedup Math -->
+          <div class="math-card">
+            <div class="problem-tag" data-i18n="l5_p1_tag">Math Problem 1 • Bloom's Level 3 (Apply)</div>
+            <h4 data-i18n="l5_p1_title">ইনস্ট্রাকশন পাইপলাইনিং স্পিডআপ ($S_k$) ও ক্লক সাইকেল হিসাব</h4>
+            <div class="problem-statement" data-i18n="l5_p1_statement">
+              <strong>প্রশ্ন:</strong> একটি ২-স্টেজ ইনস্ট্রাকশন পাইপলাইনে ($k = 2$: Fetch ও Execute) $n = 1000$ টি নির্দেশের একটি প্রোগ্রাম এক্সিকিউট করা হচ্ছে। প্রতিটি স্টেজের সময় ১ ক্লক সাইকেল ($10\text{ ns}$)।
+              <br>(ক) নন-পাইপলাইন্ড এবং ২-স্টেজ পাইপলাইন্ড প্রসেসরে মোট প্রয়োজনীয় ক্লক সাইকেল ও এক্সিকিউশন সময় কত?
+              <br>(খ) পাইপলাইনের স্পিডআপ ($S_2$) নির্ণয় করো এবং $n \to \infty$ হলে সর্বোচ্চ তাত্ত্বিক স্পিডআপ কত হবে?
+            </div>
+            <div class="problem-solution" data-i18n="l5_p1_solution">
+              <div class="step-line"><strong>(ক) মোট সাইকেল ও সময় নির্ণয়:</strong></div>
+              <div class="step-line">↳ নন-পাইপলাইন্ড সাইকেল: $T_{non-pipe} = n \times k = 1000 \times 2 = 2000$ সাইকেল।</div>
+              <div class="step-line">↳ নন-পাইপলাইন্ড সময়: $2000 \times 10\text{ ns} = 20,000\text{ ns} = 20\text{ }\mu\text{s}$।</div>
+              <div class="step-line">↳ পাইপলাইন্ড সাইকেল: $T_{pipe} = k + (n - 1) = 2 + (1000 - 1) = 1001$ সাইকেল।</div>
+              <div class="step-line">↳ পাইপলাইন্ড সময়: $1001 \times 10\text{ ns} = 10,010\text{ ns} \approx 10.01\text{ }\mu\text{s}$।</div>
+              <div class="step-line"><strong>(খ) স্পিডআপ ($S_k$) নির্ণয়:</strong></div>
+              <div class="step-line">↳ $S_k = \frac{T_{non-pipe}}{T_{pipe}} = \frac{n \cdot k}{k + n - 1} = \frac{2000}{1001} \approx 1.998$</div>
+              <div class="step-line">↳ $n \to \infty$ হলে সর্বোচ্চ গতি: $\lim_{n \to \infty} S_k = k = 2$ গুণ (Theoretical Limit)।</div>
+              <div class="solution-highlight">
+                ✅ <strong>ফলাফল:</strong> পাইপলাইনে সময় লাগে ১০০১ সাইকেল ($10.01\text{ }\mu\text{s}$); স্পিডআপ = <strong>১.৯৯৮ গুণ</strong> (প্রায় দ্বিগুণ দ্রুত)!
+              </div>
+            </div>
+          </div>
+
+          <!-- Problem 2: Big-Endian vs Little-Endian Memory Mapping -->
+          <div class="math-card">
+            <div class="problem-tag" data-i18n="l5_p2_tag">Math Problem 2 • Bloom's Level 3 (Apply)</div>
+            <h4 data-i18n="l5_p2_title">মেমরি ম্যাপিং: Big-Endian বনাম Little-Endian বিন্যাস</h4>
+            <div class="problem-statement" data-i18n="l5_p2_statement">
+              <strong>প্রশ্ন:</strong> একটি ৩২-বিট হেক্সাডেসিমেল ডেটা <code>12345678H</code> মেমরি অ্যাড্রেস <code>ABCDE0H</code> থেকে শুরু করে সংরক্ষণ করতে হবে। Big-Endian এবং Little-Endian উভয় আর্কিটেকচারে বাইট-বাই-বাইট মেমরি বিন্যাস ছকসহ দেখাও।
+            </div>
+            <div class="problem-solution" data-i18n="l5_p2_solution">
+              <div class="step-line">৩২-বিট ডেটা <code>12345678H</code> এর ৪টি বাইট:</div>
+              <div class="step-line">↳ MSB (Most Significant Byte) = <code>12H</code>, Byte 2 = <code>34H</code>, Byte 1 = <code>56H</code>, LSB = <code>78H</code>।</div>
+              <div class="step-line"><strong>Big-Endian বিন্যাস (MSB সর্বনিম্ন ঠিকানায়):</strong></div>
+              <div class="step-line">↳ <code>ABCDE0H</code>: <code>12H</code> (MSB) | <code>ABCDE1H</code>: <code>34H</code> | <code>ABCDE2H</code>: <code>56H</code> | <code>ABCDE3H</code>: <code>78H</code> (LSB)</div>
+              <div class="step-line"><strong>Little-Endian বিন্যাস (LSB সর্বনিম্ন ঠিকানায়):</strong></div>
+              <div class="step-line">↳ <code>ABCDE0H</code>: <code>78H</code> (LSB) | <code>ABCDE1H</code>: <code>56H</code> | <code>ABCDE2H</code>: <code>34H</code> | <code>ABCDE3H</code>: <code>12H</code> (MSB)</div>
+              <div class="solution-highlight">
+                ✅ <strong>Exam Mnemonic:</strong> Big-Endian বড় মাথা (MSB) আগে রাখে; Little-Endian ছোট মাথা (LSB) আগে রাখে!
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- High-Yield Exam Diagram Blueprint -->
+        <div class="diagram-blueprint-card">
+          <div class="blueprint-header">
+            <span class="icon">📐</span>
+            <h4 data-i18n="l5_bp_title">পরীক্ষার মডেল প্রশ্ন: 0, 1, 2, 3 Operand Instruction Sequence for $X = (A + B) \times (C + D)$</h4>
+          </div>
+          <div class="blueprint-content">
+            <div class="ascii-diagram-box">
+┌──────────────────────────────────────┬──────────────────────────────────────┐
+│  3-ADDRESS INSTRUCTIONS (3 Lines)    │  2-ADDRESS INSTRUCTIONS (6 Lines)    │
+├──────────────────────────────────────┼──────────────────────────────────────┤
+│  ADD  R1, A, B     ; R1 := A + B     │  MOV  R1, A        ; R1 := A         │
+│  ADD  R2, C, D     ; R2 := C + D     │  ADD  R1, B        ; R1 := R1 + B    │
+│  MUL  X, R1, R2    ; X  := R1 * R2   │  MOV  R2, C        ; R2 := C         │
+│                                      │  ADD  R2, D        ; R2 := R2 + D    │
+│                                      │  MUL  R1, R2       ; R1 := R1 * R2   │
+│                                      │  MOV  X, R1        ; X  := R1        │
+├──────────────────────────────────────┼──────────────────────────────────────┤
+│  1-ADDRESS (Accumulator - 7 Lines)   │  0-ADDRESS (Stack Architecture - 8 L)│
+├──────────────────────────────────────┼──────────────────────────────────────┤
+│  LOAD   A          ; AC := A         │  PUSH A            ; Top := A        │
+│  ADD    B          ; AC := AC + B    │  PUSH B            ; Top := B        │
+│  STORE  T          ; Mem[T] := AC    │  ADD               ; Pop 2, Add, Push│
+│  LOAD   C          ; AC := C         │  PUSH C            ; Top := C        │
+│  ADD    D          ; AC := AC + D    │  PUSH D            ; Top := D        │
+│  MUL    T          ; AC := AC * T    │  ADD               ; Pop 2, Add, Push│
+│  STORE  X          ; Mem[X] := AC    │  MUL               ; Pop 2, Mul, Push│
+│                                      │  POP  X            ; Pop Top to X    │
+└──────────────────────────────────────┴──────────────────────────────────────┘
+            </div>
+            <p class="diagram-tip" data-i18n="l5_bp_tip">
+              💡 <strong>Exam Marking Key:</strong> পরীক্ষায় এই ৪টি ফরম্যাটের মধ্যে যেকোনো একটি দিয়ে রাশিমালা ($X$) সমাধান করতে প্রায়ই আসে। ১-অ্যাড্রেসে Accumulator এবং ০-অ্যাড্রেসে Stack শীর্ষের ডেটা ব্যবহৃত হয় তা ব্যাখ্যা করলেই পূর্ণ নম্বর নিশ্চিত!
+            </p>
+          </div>
+        </div>
+
+        <!-- Fascinating Engineering Facts -->
+        <div class="fun-fact-card">
+          <div class="fun-fact-header">
+            <span class="fun-fact-badge" data-i18n="l5_fact_badge">রোমাঞ্চকর অজানা তথ্য • Did You Know?</span>
+            <span class="fun-fact-title" data-i18n="l5_fact_title">ডিম ভাঙার যুদ্ধ থেকে বিগ-এন্ডিয়ান ও লিটল-এন্ডিয়ান!</span>
+          </div>
+          <div class="fun-fact-body" data-i18n="l5_fact_body">
+            কম্পিউটার বিজ্ঞানে 'Big-Endian' ও 'Little-Endian' শব্দের অদ্ভুত উৎপত্তি কোথায় জানো? ১৭২৬ সালে প্রকাশিত জোনাথন সুইফটের বিখ্যাত ব্যঙ্গাত্মক উপন্যাস <em>গালিভার্স ট্রাভেলস</em> (Gulliver's Travels)-এ লিলিপুট রাজ্যের সম্রাট আইন জারি করেছিলেন যে সেদ্ধ ডিম খাওয়ার সময় সবসময় ছোট মাথা (Little End) থেকে ভেঙে খেতে হবে! কিন্তু পুরোনো প্রথা অনুযায়ী বড় মাথা (Big End) থেকে ডিম ভাঙার পক্ষপাতী মানুষরা এর বিরুদ্ধে রক্তক্ষয়ী বিদ্রোহ ঘোষণা করে এবং ১১,০০০ মানুষ প্রাণ হারায়!
+            ১৯৮০ সালে ইন্টারনেট পথিকৃৎ <strong>ড্যানি কোহেন</strong> তার একটি আইকনিক গবেষণাপত্রে তুলে ধরেন যে কম্পিউটার ইঞ্জিনিয়াররাও মেমরিতে MSB আগে রাখবে নাকি LSB আগে রাখবে তা নিয়ে ঠিক একই রকম পাগলামি ও রক্তক্ষয়ী তর্কে লিপ্ত! সেই ঐতিহাসিক পেপারের পর থেকেই প্রসেসর মেমরির দুই রীতির নাম স্থায়ীভাবে হয়ে যায় <strong>Big-Endian</strong> এবং <strong>Little-Endian</strong>!
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-container">
+      <p data-i18n="footer_title">কম্পিউটার আর্কিটেকচার অ্যান্ড অর্গানাইজেশন (CAO) — লেকচার ৫ মাস্টারক্লাস</p>
+      <p class="sub-credit" data-i18n="footer_sub">ডিজাইন করা হয়েছে স্পষ্টতা, গভীর বোধগম্যতা ও পরীক্ষার পূর্ণ প্রস্তুতির জন্য।</p>
+    </div>
+  </footer>
+
+  <script src="../shared-gamification.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
